@@ -60,7 +60,7 @@ public class OrganizerController {
 		ModelAndView model = new ModelAndView("organizer/orgnizerList");
 		try
 		{ 
-			Organiser[] organiser = rest.getForObject(Constants.url + "/getOrganisersByIsUsed", 
+			Organiser[] organiser = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsed", 
 					Organiser[].class); 
 			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
 			

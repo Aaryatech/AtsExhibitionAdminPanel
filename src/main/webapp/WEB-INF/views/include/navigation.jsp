@@ -138,26 +138,26 @@
 				</c:choose>
 		<%--   <c:choose>
 						<c:when test="${sessionScope.employee.empType==2}">  --%>
-				<a href="${pageContext.request.contextPath}/addOrganizer" class="dropdown-toggle"> <i class="fa fa-list"></i>
-					<span>Add Organizer</span>  
+				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
+					<span>Super Admin</span>  <b class="arrow fa fa-angle-right"></b>
 				</a>
 				<!-- BEGIN Submenu -->
-				<%-- <ul class="submenu">
+				  <ul class="submenu">
 				
 					<li> 
-					<a href="${pageContext.request.contextPath}/formListForAssignTask">Assign Task</a>
+					<a href="${pageContext.request.contextPath}/addOrganizer">Add Organizer</a>
 					</li>
 					<li> 
-					<a href="${pageContext.request.contextPath}/assignSpecialTask">Assign Special Task</a>
+					<a href="${pageContext.request.contextPath}/showEventList">All Event List By Organizer</a>
 					</li>
 					
 				    <li>
-				  	<a href="${pageContext.request.contextPath}/viewAllSpecialTask">View Special Task</a>
+				  	<a href="${pageContext.request.contextPath}/showExhibitorList">All Exhibitor List By Organizer</a>
 					</li>
 					 
 					
 				
-					</ul> --%>
+					</ul>  
 				
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Organizer</span> <b class="arrow fa fa-angle-right"></b>
