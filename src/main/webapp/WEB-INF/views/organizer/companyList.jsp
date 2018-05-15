@@ -31,7 +31,7 @@
 		<div class="page-title">
 			<div>
 				<h1>
-					<i class="fa fa-file-o"></i>Location List
+					<i class="fa fa-file-o"></i>Company Type List
 				</h1>
 
 				<!-- <h4>Bill for franchises</h4> -->
@@ -44,11 +44,11 @@
 		<div class="box" id="pending">
 			<div class="box-title">
 				<h3>
-					<i class="fa fa-bars"></i>Location List
+					<i class="fa fa-bars"></i>Company Type List
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/addLocation">Add
-						Location</a> <a data-action="collapse" href="#"><i
+					<a href="${pageContext.request.contextPath}/addCompanyType">Add
+						Company Type</a> <a data-action="collapse" href="#"><i
 						class="fa fa-chevron-up"></i></a>
 				</div>
 
@@ -64,27 +64,24 @@
 							<thead>
 								<tr>
 									<th style="width: 18px">Sr No</th>
-									<th>Location Name</th>
-									<th>Location Latitude</th>
-									<th>Location Longitude</th>
-									<th>Remark</th>
-								
+									<th>Company Type Name</th>
+									<th>Company Type Desc</th>
 									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${locationList}" var="locationList" varStatus="count">
+								<c:forEach items="${companyList}" var="companyList"
+									varStatus="count">
 									<tr class="table-flag-blue">
 										<td>${count.index+1}</td>
-										<td>${locationList.locationName}</td>
-										<td>${locationList.locationLat}</td>
-										<td>${locationList.locationLong}</td>
-										<td>${locationList.remark}</td>
-										
-										
-										 <td><a href="${pageContext.request.contextPath}/editLocation/${locationList.locationId}"><span
-												class="glyphicon glyphicon-edit"></span></a> 
-											<a href="${pageContext.request.contextPath}/deleteLocation/${locationList.locationId}"
+										<td>${companyList.companyTypeName}</td>
+										<td>${companyList.companyTypeDesc}</td>
+
+
+										<td><a
+											href="${pageContext.request.contextPath}/editCompanyType/${companyList.companyTypeId}"><span
+												class="glyphicon glyphicon-edit"></span></a> <a
+											href="${pageContext.request.contextPath}/deleteCompanyType/${companyList.companyTypeId}"
 											onClick="return confirm('Are you sure want to delete this record');"><span
 												class="glyphicon glyphicon-remove"></span></a></td>
 									</tr>

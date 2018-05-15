@@ -32,7 +32,7 @@
 				<div>
 					<h1>
 
-						<i class="fa fa-file-o"></i>Add Location
+						<i class="fa fa-file-o"></i>Add Company Type
 
 					</h1>
 				</div>
@@ -45,65 +45,38 @@
 					<div class="box" id="todayslist">
 						<div class="box-title">
 							<h3>
-								<i class="fa fa-table"></i>Add Location
+								<i class="fa fa-table"></i>Add Company Type
 							</h3>
 							<div class="box-tool">
-								<a href="${pageContext.request.contextPath}/loctionList"> Location List</a> <a
-									data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
+								<a href="${pageContext.request.contextPath}/companyTypeList">
+									Company Type List</a> <a data-action="collapse" href="#"><i
+									class="fa fa-chevron-up"></i></a>
 							</div>
 
 						</div>
 
 						<div class=" box-content">
 							<form id="addSupplier"
-								action="${pageContext.request.contextPath}/insertLocation"
+								action="${pageContext.request.contextPath}/insertCompanyType"
 								method="post">
-
 								<div class="box-content">
 
-									<div class="col-md-2">Location Name*</div>
+									<div class="col-md-2">Company Type Name*</div>
 									<div class="col-md-3">
-										<input type="text" id="locationName" name="locationName"
-											class="form-control" value="${editLocation.locationName}"
-											placeholder=" Location Name " required /> <input
-											type="hidden" name="locationId"
-											value="${editLocation.locationId}" />
+										<input type="text" id="companyTypeName" name="companyTypeName"
+											class="form-control" value="${editCompanyType.companyTypeName}"
+											placeholder=" Company Type Name" required /> <input
+											type="hidden" name="companyTypeId"
+											value="${editCompanyType.companyTypeId}" />
 									</div>
 									<div class="col-md-1"></div>
-									<div class="col-md-2">Location Longitude*</div>
+									<div class="col-md-2">Company Type Desc</div>
 									<div class="col-md-3">
-										<input type="text" id="locationLongi" name="locationLongi"
-											class="form-control" value="${editLocation.locationLong}"
-											placeholder=" Location Longitude" required /> <input
-											type="hidden" name="locationId"
-											value="${editLocation.locationId}" />
-									</div>
-
-
-								</div>
-								<br>
-
-								<div class="box-content">
-
-									<div class="col-md-2">Location Latitude.*</div>
-									<div class="col-md-3">
-										<input type="text" id="locationLat" name="locationLat"
-											class="form-control" value="${editLocation.locationLat}"
-											placeholder=" Location Latitude" required /> <input
-											type="hidden" name="locationLat"
-											value="${editLocation.locationId}" />
-									</div>
-
-
-									<div class="col-md-1"></div>
-									<div class="col-md-2">Remark</div>
-									<div class="col-md-3">
-										<input type="text" name="remark" placeholder="Remark"
-											value="${editLocation.remark}" id="remark"
-											class="form-control " required />
-											<input
-											type="hidden" name="locationLat"
-											value="${editLocation.locationId}" />
+										<input type="text" id="companyTypeDesc" name="companyTypeDesc"
+											class="form-control" value="${editCompanyType.companyTypeDesc}"
+											placeholder=" Company Type Desc" required /> <input
+											type="hidden" name="companyTypeId"
+											value="${editCompanyType.companyTypeId}" />
 									</div>
 
 
