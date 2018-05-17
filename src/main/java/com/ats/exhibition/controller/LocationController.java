@@ -2,6 +2,7 @@ package com.ats.exhibition.controller;
 
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -265,10 +266,13 @@ public class LocationController {
 		try {
 			
 			SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+			
+			SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
+			   SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd" );
+			
 			Date now = new Date();
 			String strDate = sdfDate.format(now);
 			
-			String subId = request.getParameter("subId");
 			String orgId = request.getParameter("orgId");
 			String pkgId = request.getParameter("pkgId");
 			String fromDate = request.getParameter("fromDate");
@@ -287,16 +291,30 @@ public class LocationController {
 
 		//	System.out.println("orgId"+isCheque);
 
+			 Date ymdFromDate = null;
+			 Date ymdToDate=null;
+			   try {
+				   ymdFromDate = originalFormat.parse(fromDate);
+				   ymdToDate=originalFormat.parse(toDate);
+				   
+			     System.out.println("From date :   " + targetFormat.format(ymdFromDate));
+			     System.out.println("To Date :   " +targetFormat.format(ymdToDate) );
 
+			    } catch (ParseException ex) {
+			      // Handle Exception.
+			    }
 
+			   
+			
+				
 			OrgSubscription orgSubscription = new OrgSubscription();
 			OrgSubscriptionDetail orgSubscriptionDetail = new OrgSubscriptionDetail();
 
-			orgSubscription.setSubId(Integer.parseInt(subId));
+			orgSubscription.setSubId(0);
 			orgSubscription.setOrgId(Integer.parseInt(orgId));
 			orgSubscription.setPkgId(Integer.parseInt(pkgId));
-			orgSubscription.setFromDate(fromDate);
-			orgSubscription.setToDate(toDate);
+			orgSubscription.setFromDate(targetFormat.format(ymdFromDate));
+			orgSubscription.setToDate(targetFormat.format(ymdToDate));
 			orgSubscription.setIsUsed(1);
 			orgSubscription.setStatus(1);
 			orgSubscription.setPkgAmt(1000);
@@ -334,6 +352,11 @@ public class LocationController {
 			} else {
 				orgSubscription.setPaidAmt(0);
 				orgSubscription.setRemAmt(0);
+				orgSubscriptionDetail.setBankName("");
+				orgSubscriptionDetail.setChequeDate("");
+				orgSubscriptionDetail.setTrNo("");
+				
+				
 			}
 
 			OrgSubscription res = rest.postForObject(Constants.url + "/saveOrgSubscription", orgSubscription,
