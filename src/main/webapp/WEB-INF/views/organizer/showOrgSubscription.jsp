@@ -47,14 +47,14 @@
 					<i class="fa fa-bars"></i>Org Subscription
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/addOrganizer">Add
-					</a> <a data-action="collapse" href="#"><i
-						class="fa fa-chevron-up"></i></a>
+					<a href="${pageContext.request.contextPath}/addOrganizer">Add </a>
+					<a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
 				</div>
 
 			</div>
 			<div class=" box-content">
-				<form action="${pageContext.request.contextPath}/insertOrgSubscription"
+				<form
+					action="${pageContext.request.contextPath}/insertOrgSubscription"
 					method="post">
 					<div class="box-content">
 
@@ -71,8 +71,8 @@
 						</div>
 						<div class="col-md-2">Select Package*</div>
 						<div class="col-md-3">
-							<select id="pkgId" name="pkgId" class="form-control chosen"
-								required>
+							<select id="pkgId" name="pkgId" onchange="onPackage(this.value)"
+								class="form-control chosen" required>
 								<option value=" ">Select Package</option>
 								<c:forEach items="${packageList}" var="packageList">
 
@@ -83,9 +83,7 @@
 							</select>
 						</div>
 					</div>
-					<br>
-
-
+					<br> <input type="hidden" name="pkgAmt" id="pkgAmt">
 
 					<div class="box-content">
 
@@ -108,7 +106,7 @@
 					</div>
 					<br>
 
-				<div class=" box-content">
+					<div class=" box-content">
 						<div class="col-md-12" style="text-align: center">
 							<select id="isPay" name="isPay" required>
 								<option value=" ">Do you Want to pay Amount??</option>
@@ -130,7 +128,7 @@
 							<div class="col-md-3">
 								<input type="text" id="paidAmt" name="paidAmt"
 									class="form-control" value="${editEmployee.empName}"
-									placeholder=" Paid Amount"  /> <input type="hidden"
+									placeholder=" Paid Amount" /> <input type="hidden"
 									name="empId" value="${editEmployee.empId}" />
 							</div>
 							<div class="col-md-1"></div>
@@ -138,8 +136,8 @@
 							<div class="col-md-3">
 								<input type="text" id="remAmt" name="remAmt"
 									value="${editEmployee.empMobile}" class="form-control"
-									placeholder=" Received Amount "  /> <input
-									type="hidden" name="empId" value="${editEmployee.empId}" />
+									placeholder=" Received Amount " /> <input type="hidden"
+									name="empId" value="${editEmployee.empId}" />
 
 							</div>
 
@@ -174,7 +172,7 @@
 								<div class="col-md-3">
 									<input type="text" id="bankName" name="bankName"
 										value="${editEmployee.empDesignation}" class="form-control"
-										placeholder="Bank Name"  />
+										placeholder="Bank Name" />
 								</div>
 
 								<div class="col-md-1"></div>
@@ -182,7 +180,7 @@
 								<div class="col-md-3">
 									<input type="text" id=chequeDate name="chequeDate"
 										value="${editEmployee.empPerHrRate}" class="form-control"
-										placeholder="Cheque Date"  />
+										placeholder="Cheque Date" />
 								</div>
 							</div>
 						</div>
@@ -195,149 +193,172 @@
 								<div class="col-md-3">
 									<input type="text" id="trNo" name="trNo"
 										value="${editEmployee.empDesignation}" class="form-control"
-										placeholder="Transaction No"  />
-								</div>
+										placeholder="Transaction No" />
 								</div>
 							</div>
-							<br>
 						</div>
-				
-		
+						<br>
+					</div>
 
-			<div class=" box-content">
-				<div class="col-md-12" style="text-align: center">
-					<input type="submit" class="btn btn-info" value="Submit"
-						id="submit">
-				</div>
-			</div></form>
-		</div>
-		</div>
+
+
+					<div class=" box-content">
+						<div class="col-md-12" style="text-align: center">
+							<input type="submit" class="btn btn-info" value="Submit"
+								id="submit">
+						</div>
+					</div>
+				</form>
 			</div>
-			
-		<!-- END Main Content -->
+		</div>
+	</div>
 
-		<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
-			class="fa fa-chevron-up"></i></a>
-		<!--basic scripts-->
-		<script
-			src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-		<script>
-			window.jQuery
-					|| document
-							.write('<script src="${pageContext.request.contextPath}/resources/assets/jquery/jquery-2.0.3.min.js"><\/script>')
-		</script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/bootstrap/js/bootstrap.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/jquery-cookie/jquery.cookie.js"></script>
+	<!-- END Main Content -->
 
-		<!--page specific plugin scripts-->
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/chosen-bootstrap/chosen.jquery.min.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/jquery-tags-input/jquery.tagsinput.min.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/jquery-pwstrength/jquery.pwstrength.min.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/bootstrap-duallistbox/duallistbox/bootstrap-duallistbox.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/dropzone/downloads/dropzone.min.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/clockface/js/clockface.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/bootstrap-daterangepicker/date.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/bootstrap-daterangepicker/daterangepicker.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/bootstrap-switch/static/js/bootstrap-switch.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/ckeditor/ckeditor.js"></script>
+	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
+		class="fa fa-chevron-up"></i></a>
+	<!--basic scripts-->
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script>
+		window.jQuery
+				|| document
+						.write('<script src="${pageContext.request.contextPath}/resources/assets/jquery/jquery-2.0.3.min.js"><\/script>')
+	</script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/bootstrap/js/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/jquery-cookie/jquery.cookie.js"></script>
 
-		<!--flaty scripts-->
-		<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
-		<script type="text/javascript"
-			src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
-		<script>
-			function searchEventList() {
+	<!--page specific plugin scripts-->
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/chosen-bootstrap/chosen.jquery.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/jquery-tags-input/jquery.tagsinput.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/jquery-pwstrength/jquery.pwstrength.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/bootstrap-duallistbox/duallistbox/bootstrap-duallistbox.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/dropzone/downloads/dropzone.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/clockface/js/clockface.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/bootstrap-daterangepicker/date.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/bootstrap-switch/static/js/bootstrap-switch.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/ckeditor/ckeditor.js"></script>
 
-				var orgId = $('#orgId').val();
+	<!--flaty scripts-->
+	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
+	<script>
+		function searchEventList() {
 
-				if (orgId != "" && orgId != null) {
-					window.location.href = '${pageContext.request.contextPath}/eventListByOrgId/'
-							+ orgId + '';
+			var orgId = $('#orgId').val();
 
-				}
+			if (orgId != "" && orgId != null) {
+				window.location.href = '${pageContext.request.contextPath}/eventListByOrgId/'
+						+ orgId + '';
 
 			}
-		</script>
 
-		<script>
-			document
-					.getElementById('isPay')
-					.addEventListener(
-							'change',
-							function() {
-								var style = this.value == 1 ? 'block' : 'none';
-								document.getElementById('hidden_div').style.display = style;
+		}
+	</script>
 
-							});
-		</script>
+	<script>
+		document.getElementById('isPay').addEventListener('change', function() {
+			var style = this.value == 1 ? 'block' : 'none';
+			document.getElementById('hidden_div').style.display = style;
+
+		});
+	</script>
 
 
-		<script type="text/javascript">
-			$(function() {
-				$('#fromDate').datetimepicker();
-			});
-		</script>
-		<script type="text/javascript">
-			$('#fromDate').datetimepicker().on('dp.change', function() {
-				alert("dasd");
-			})
-		</script>
-		<script>
-			document
-					.getElementById('isCheque')
-					.addEventListener(
-							'change',
-							function() {
+	<script type="text/javascript">
+		$(function() {
+			$('#fromDate').datetimepicker();
+		});
+	</script>
+	<script type="text/javascript">
+		$('#fromDate').datetimepicker().on('dp.change', function() {
+			alert("dasd");
+		})
+	</script>
+	<script>
+		document
+				.getElementById('isCheque')
+				.addEventListener(
+						'change',
+						function() {
 
-								var style = this.value == 2 ? 'block' : 'none';
+							var style = this.value == 2 ? 'block' : 'none';
 
-								document.getElementById('hidden_div2').style.display = style;
+							document.getElementById('hidden_div2').style.display = style;
 
-							});
-		</script>
-		
-		<script>
-			document
-					.getElementById('isCheque')
-					.addEventListener(
-							'change',
-							function() {
+						});
+	</script>
 
-								var style = this.value == 3 ? 'block' : 'none';
+	<script>
+		document
+				.getElementById('isCheque')
+				.addEventListener(
+						'change',
+						function() {
 
-								document.getElementById('hidden_div3').style.display = style;
+							var style = this.value == 3 ? 'block' : 'none';
 
-							});
-		</script>
+							document.getElementById('hidden_div3').style.display = style;
+
+						});
+	</script>
+
+	<script  type="text/javascript">
+function onPackage(pkgId) {
+ 
+	
+	//pkgId
+	
+	
+	alert(pkgId);
+	$.getJSON(
+					'${getPackage}',
+					{
+						pkgId : pkgId, 
+						ajax : 'true'
+
+					},
+					function(data) { 
+						
+						document.getElementById("pkgId").value=data.pkgAmt;
+						
+					});
+
+ 
+	</script>
+
+	}
 </body>
 </html>
