@@ -69,24 +69,26 @@
 									<th>From Date </th>
 									<th>To Date</th> 
 									<th>Cost</th>
-									<th>Cost</th>
 									<th>Paid Amount</th>
 									<th>Remaining Amount</th>
 									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${eventList}" var="eventList" varStatus="count">
+								<c:forEach items="${orgSubscriptionList}" var="orgSubscriptionList" varStatus="count">
 									<tr class="table-flag-blue">
 										<td>${count.index+1}</td>
-										<td>${eventList.eventName}</td>
-										<td>${eventList.eventLocation}</td>
-										<td>${eventList.eventFromDate}</td>
-										<td>${eventList.eventToDate}</td>
+										<td>${orgSubscriptionList.orgId}</td>
+											<td>${orgSubscriptionList.pkgId}</td>
+										<td>${orgSubscriptionList.fromDate}</td>
+										<td>${orgSubscriptionList.toDate}</td>
+										<td>${orgSubscriptionList.pkgAmt}</td>
+											<td>${orgSubscriptionList.paidAmt}</td>
+												<td>${orgSubscriptionList.remAmt}</td>
 										 
-										 <td><a href="${pageContext.request.contextPath}/editEvent/${eventList.eventId}"><span
+										 <td><a href="${pageContext.request.contextPath}/editEvent/${orgSubscriptionList.subId}"><span
 												class="glyphicon glyphicon-edit"></span></a> 
-											<a href="${pageContext.request.contextPath}/deleteEvent/${eventList.eventId}"
+											<a href="${pageContext.request.contextPath}/deleteEvent/${orgSubscriptionList.subId}"
 											onClick="return confirm('Are you sure want to delete this record');"><span
 												class="glyphicon glyphicon-remove"></span></a></td>  
 									</tr>

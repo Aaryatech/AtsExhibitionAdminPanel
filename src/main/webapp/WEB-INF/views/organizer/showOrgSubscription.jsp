@@ -187,7 +187,7 @@
 							<div class="col-md-2">Cheque Date*</div>
 							<div class="col-md-3">
 								<input type="text" id=chequeDate name="chequeDate"
-									value="${editEmployee.empPerHrRate}" class="form-control"
+									value="${editEmployee.empPerHrRate}" class="form-control date-picker"
 									placeholder="Cheque Date" />
 							</div>
 						</div>
