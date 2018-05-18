@@ -344,15 +344,15 @@ public class LocationController {
 			String pkgAmt = request.getParameter("pkgAmt");
 			String isCheque = request.getParameter("isCheque");
 			String paymentDate = request.getParameter("trDate");
-
-			String chequeDate = request.getParameter("chequeDat");			
+			String chequeDate = request.getParameter("chequeDate");			
 			
 			
 			System.out.println("orgId" + orgId);
 			System.out.println("pkgId" + pkgId);
-			System.out.println("orgId" + fromDate);
+			System.out.println("fromDate" + fromDate);
 			System.out.println("toDate" + toDate);
 			System.out.println("IsPay" + isPay);
+			System.out.println("chequeDate" + chequeDate);
 
 			Date ymdFromDate = null;
 			Date ymdToDate = null;
@@ -464,10 +464,10 @@ ymdPayDate=originalFormat.parse(paymentDate);
 		ModelAndView model = new ModelAndView("organizer/orgSubscriptionList");
 		try {
 
-			Organiser[] organiser = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsed", Organiser[].class);
-			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
+			OrgSubscription[] orgSubscription = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsed", OrgSubscription[].class);
+			List<OrgSubscription> orgSubscriptionList = new ArrayList<OrgSubscription>(Arrays.asList(orgSubscription));
 
-			model.addObject("organiserList", organiserList);
+			model.addObject("orgSubscriptionList", orgSubscriptionList);
 
 		} catch (Exception e) {
 			e.printStackTrace();
