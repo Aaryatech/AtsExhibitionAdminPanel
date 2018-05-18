@@ -10,6 +10,9 @@
 
 	<c:url var="allRecordwithDate" value="/allRecordwithDate"></c:url>
 
+	<c:url var="getPackage" value="/getPackage"></c:url>
+	<c:url var="getToDate" value="/calculateToDate"></c:url>
+
 
 	<!-- BEGIN Sidebar -->
 	<div id="sidebar" class="navbar-collapse collapse">
@@ -83,7 +86,15 @@
 							</select>
 						</div>
 					</div>
-					<br> <input type="hidden" name="pkgAmt" id="pkgAmt">
+					<br>
+					<div class="box-content">
+						<div class="col-md-2">Package Amount*</div>
+						<div class="col-md-3">
+							<input type="text" name="pkgAmt" id="pkgAmt" class="form-control"readonly/ >
+						</div>
+
+					</div>
+					<br>
 
 					<div class="box-content">
 
@@ -91,7 +102,8 @@
 						<div class="col-md-3">
 							<input type="text" name="fromDate"
 								value="${editEmployee.empJoiningDate}" placeholder="From Date"
-								id="fromDate" class="form-control date-picker" required />
+								onblur="calculateToDate()" id="fromDate"
+								class="form-control date-picker" required />
 						</div>
 
 
@@ -104,12 +116,11 @@
 
 
 					</div>
-					<br>
-
+					<br> <br>
 					<div class=" box-content">
-						<div class="col-md-12" style="text-align: center">
-							<select id="isPay" name="isPay" required>
-								<option value=" ">Do you Want to pay Amount??</option>
+						<div class="col-md-2">Do you Want to pay Amount??</div>
+						<div class="col-md-3">
+							<select id="isPay" name="isPay" class="form-control">
 
 								<option value="0">No</option>
 								<option value="1">Yes</option>
@@ -119,6 +130,7 @@
 
 					</div>
 
+<br>
 
 
 					<div id="hidden_div" style="display: none;">
@@ -127,10 +139,11 @@
 							<div class="col-md-2">Paid Amount*</div>
 							<div class="col-md-3">
 								<input type="text" id="paidAmt" name="paidAmt"
-									class="form-control" value="${editEmployee.empName}"
-									placeholder=" Paid Amount" /> <input type="hidden"
-									name="empId" value="${editEmployee.empId}" />
+									onchange="onAmount(this.value)" class="form-control"
+									value="${editEmployee.empName}" placeholder=" Paid Amount" />
+								<input type="hidden" name="empId" value="${editEmployee.empId}" />
 							</div>
+							
 							<div class="col-md-1"></div>
 							<div class="col-md-2">Remaining Amount.*</div>
 							<div class="col-md-3">
@@ -140,20 +153,15 @@
 									name="empId" value="${editEmployee.empId}" />
 
 							</div>
-
-
 						</div>
 						<br>
-
-
-
 						<div class="box-content">
 
 							<div class="col-md-2">Select Mode Of Payment*</div>
 							<div class="col-md-3">
-								<select id="isCheque" name="isCheque">
-									<option value=" ">Select Mode Of Payment</option>
-
+								
+								<select id="isCheque" name="isCheque"
+									class="form-control">
 
 									<option value="1">Cash</option>
 									<option value="2">Cheque</option>
@@ -161,46 +169,53 @@
 
 								</select>
 							</div>
-
-
 						</div>
-						<br> <br>
-						<div id="hidden_div2" style="display: none;">
-							<div class="box-content">
 
-								<div class="col-md-2">Bank Name*</div>
-								<div class="col-md-3">
-									<input type="text" id="bankName" name="bankName"
-										value="${editEmployee.empDesignation}" class="form-control"
-										placeholder="Bank Name" />
-								</div>
+				</div>
+					<br> <br>
+					<div id="hidden_div2" style="display: none;">
+						<div class="box-content">
 
-								<div class="col-md-1"></div>
-								<div class="col-md-2">Cheque Date*</div>
-								<div class="col-md-3">
-									<input type="text" id=chequeDate name="chequeDate"
-										value="${editEmployee.empPerHrRate}" class="form-control"
-										placeholder="Cheque Date" />
-								</div>
+							<div class="col-md-2">Bank Name*</div>
+							<div class="col-md-3">
+								<input type="text" id="bankName" name="bankName"
+									value="${editEmployee.empDesignation}" class="form-control"
+									placeholder="Bank Name" />
+							</div>
+
+							<div class="col-md-1"></div>
+							<div class="col-md-2">Cheque Date*</div>
+							<div class="col-md-3">
+								<input type="text" id=chequeDate name="chequeDate"
+									value="${editEmployee.empPerHrRate}" class="form-control"
+									placeholder="Cheque Date" />
 							</div>
 						</div>
-						<br>
-
-						<div id="hidden_div3" style="display: none;">
-							<div class="box-content">
-
-								<div class="col-md-2">Transaction No*</div>
-								<div class="col-md-3">
-									<input type="text" id="trNo" name="trNo"
-										value="${editEmployee.empDesignation}" class="form-control"
-										placeholder="Transaction No" />
-								</div>
-							</div>
-						</div>
-						<br>
 					</div>
+					<br>
+
+					<div id="hidden_div3" style="display: none;">
+						<div class="box-content">
+
+							<div class="col-md-2">Transaction No*</div>
+							<div class="col-md-3">
+								<input type="text" id="trNo" name="trNo"
+									value="${editEmployee.empDesignation}" class="form-control"
+									placeholder="Transaction No" />
+							</div>
 
 
+							<div class="col-md-2">Transaction Date</div>
+							<div class="col-md-3">
+								<input type="text" name="trDate"
+									value="${editEmployee.empJoiningDate}"
+									placeholder="Transaction Date" id="trDate"
+									class="form-control date-picker" />
+							</div>
+
+						</div>
+					</div>
+					<br>
 
 					<div class=" box-content">
 						<div class="col-md-12" style="text-align: center">
@@ -296,16 +311,22 @@
 		});
 	</script>
 
+	<script type="text/javascript">
+		function calculateToDate() {
 
-	<script type="text/javascript">
-		$(function() {
-			$('#fromDate').datetimepicker();
-		});
-	</script>
-	<script type="text/javascript">
-		$('#fromDate').datetimepicker().on('dp.change', function() {
-			alert("dasd");
-		})
+			var pkgId = $('#pkgId').val();
+			var fromDate = $('#fromDate').val();
+
+			$.getJSON('${getToDate}', {
+				pkgId : pkgId,
+				fromDate : fromDate,
+				ajax : 'true'
+			}, function(data) {
+
+				document.getElementById("toDate").value = data;
+			});
+
+		}
 	</script>
 	<script>
 		document
@@ -335,30 +356,35 @@
 						});
 	</script>
 
-	<script  type="text/javascript">
-function onPackage(pkgId) {
- 
-	
-	//pkgId
-	
-	
-	alert(pkgId);
-	$.getJSON(
-					'${getPackage}',
-					{
-						pkgId : pkgId, 
-						ajax : 'true'
+	<script type="text/javascript">
+		function onPackage(pkgId) {
 
-					},
-					function(data) { 
-						
-						document.getElementById("pkgId").value=data.pkgAmt;
-						
-					});
+			//pkgId
 
- 
+			$.getJSON('${getPackage}', {
+				pkgId : pkgId,
+				ajax : 'true'
+
+			}, function(data) {
+				alert(data)
+
+				document.getElementById("pkgAmt").value = data.pkgAmt;
+
+			});
+
+		}
 	</script>
 
-	}
+
+	<script type="text/javascript">
+		function onAmount(paidAmt) {
+			var pkgAmt = parseFloat($('#pkgAmt').val());
+			var remAmt = pkgAmt - paidAmt;
+			document.getElementById("remAmt").value = remAmt;
+
+		}
+	</script>
+
+
 </body>
 </html>
