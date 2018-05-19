@@ -1,7 +1,10 @@
 package com.ats.exhibition.controller;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,21 +18,27 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
  
 import com.ats.exhibition.common.Constants;
 import com.ats.exhibition.common.DateConvertor;
+import com.ats.exhibition.common.VpsImageUpload;
 import com.ats.model.ComMemWithOrgName;
 import com.ats.model.CommitteeMembers;
+import com.ats.model.CompanyType;
 import com.ats.model.ErrorMessage;
 import com.ats.model.EventExhMapping;
 import com.ats.model.EventWithOrgName;
 import com.ats.model.Events;
 import com.ats.model.Exhibitor;
 import com.ats.model.ExhibitorWithOrgName;
+import com.ats.model.GetSponsor;
 import com.ats.model.LoginResponse;
 import com.ats.model.Organiser;
+import com.ats.model.Sponsor;
  
  
 @Controller
@@ -733,7 +742,188 @@ public class OrganizerController {
 
 		return "redirect:/eventMapList/"+eventId;
 	}
+	@RequestMapping(value = "/addSponsor", method = RequestMethod.GET)
+	public ModelAndView addSponsor(HttpServletRequest request, HttpServletResponse response) {
 
+		ModelAndView model = new ModelAndView("organizer/sponsor");
+		try
+		{ 
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", login.getOrganiser().getOrgId());
+			
+			GetSponsor[] sponsorList = rest.postForObject(Constants.url + "/findAllSponsors", 
+					map,GetSponsor[].class); 
+			List<GetSponsor> sponsorListRes = new ArrayList<GetSponsor>(Arrays.asList(sponsorList));
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
+					EventWithOrgName[].class); 
+			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed",
+					CompanyType[].class);
+			List<CompanyType> companyList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+
+			model.addObject("companyList", companyList);
+			model.addObject("eventList", eventList);
+			model.addObject("sponsorList", sponsorListRes);
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	@RequestMapping(value = "/deleteSponsor/{sponsorId}", method = RequestMethod.GET)
+	public String deleteSponsor(@PathVariable int sponsorId, HttpServletRequest request, HttpServletResponse response) {
+
+		try
+		{
+			 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("sponsorId", sponsorId);
+			ErrorMessage delete = rest.postForObject(Constants.url + "/deleteSponsor",map,
+					ErrorMessage.class); 
+			 
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return "redirect:/addSponsor";
+	}
+	@RequestMapping(value = "/editSponsor/{sponsorId}", method = RequestMethod.GET)
+	public ModelAndView editSponsor(@PathVariable int sponsorId, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView model = new ModelAndView("organizer/sponsor");
+
+		try
+		{
+
+			
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", login.getOrganiser().getOrgId());
+			
+			GetSponsor[] sponsorList = rest.postForObject(Constants.url + "/findAllSponsors", 
+					map,GetSponsor[].class); 
+			List<GetSponsor> sponsorListRes = new ArrayList<GetSponsor>(Arrays.asList(sponsorList));
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
+					EventWithOrgName[].class); 
+			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed",
+					CompanyType[].class);
+			List<CompanyType> companyList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+
+			
+			 map = new LinkedMultiValueMap<String, Object>();
+			map.add("sponsorId", sponsorId);
+			Sponsor sponsorRes = rest.postForObject(Constants.url + "/getSponsorById",map,
+					Sponsor.class); 
+
+            model.addObject("sponsor", sponsorRes);
+			model.addObject("companyList", companyList);
+			model.addObject("eventList", eventList);
+			model.addObject("sponsorList", sponsorListRes);
+			 
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	@RequestMapping(value = "/insertSponsor", method = RequestMethod.POST)
+	public String insertSponsor(HttpServletRequest request, HttpServletResponse response,@RequestParam("photo") List<MultipartFile> photo) {
+
+		 
+		try
+		{ 
+			int sponsorId=0;
+			try {
+			 sponsorId = Integer.parseInt(request.getParameter("sponsorId"));
+			}
+			catch (Exception e) {
+			  
+			   sponsorId=0;
+			}
+			int eventId = Integer.parseInt(request.getParameter("eventId"));
+			String sponsorName = request.getParameter("sponsorName");
+			int companyId = Integer.parseInt(request.getParameter("companyId"));
+			String designation = request.getParameter("designation");
+			String mobile = request.getParameter("mobile");
+			String email = request.getParameter("emailId");
+			String website = request.getParameter("website");
+			String remark = request.getParameter("remark"); 
+		
+			VpsImageUpload upload = new VpsImageUpload();
+
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			
+			String curTimeStamp = sdf.format(cal.getTime());
+			if(!photo.isEmpty())
+			{
+			try {
+				
+				upload.saveUploadedFiles(photo, Constants.SPONSOR_IMAGE_TYPE, curTimeStamp + "-" + photo.get(0).getOriginalFilename());
+				System.out.println("upload method called " + photo.toString());
+				
+				
+			} catch (IOException e) {
+				
+				System.out.println("Exce in File Upload In Product Insert " + e.getMessage());
+				e.printStackTrace();
+			}
+			}
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			
+			Sponsor sponsor = new Sponsor();
+			
+			sponsor.setSponsorId(sponsorId); 
+			sponsor.setName(sponsorName);
+			sponsor.setCompanyId(companyId);
+			sponsor.setDesignation(designation);
+			sponsor.setEmail(email);
+			sponsor.setEventId(eventId);
+			sponsor.setMobile(mobile);
+			sponsor.setOrgId(login.getOrganiser().getOrgId());
+			if(photo.isEmpty())
+			sponsor.setPhoto("");
+			else
+		    sponsor.setPhoto(photo.get(0).getOriginalFilename());		
+			sponsor.setRemark(remark);
+			sponsor.setWebsite(website);
+			sponsor.setIsUsed(1);
+			
+			
+			Sponsor res = rest.postForObject(Constants.url + "/saveSponsor",sponsor,
+					Sponsor.class); 
+			
+			System.out.println("res " + res);
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return "redirect:/addSponsor";
+	}
+	@RequestMapping(value = "/addSchedule", method = RequestMethod.GET)
+	public ModelAndView addSchedule(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/schedule");
+		try
+		{ 
+		
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return model;
+	}
 }
 
 
