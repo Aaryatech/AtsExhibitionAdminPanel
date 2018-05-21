@@ -7,6 +7,8 @@ public class Package1 {
 	private int subDuration;
 	private float pkgAmt;
 	private int isUsed;
+	private int pkgType;
+	
 	public int getPkgId() {
 		return pkgId;
 	}
@@ -37,10 +39,17 @@ public class Package1 {
 	public void setIsUsed(int isUsed) {
 		this.isUsed = isUsed;
 	}
+	
+	public int getPkgType() {
+		return pkgType;
+	}
+	public void setPkgType(int pkgType) {
+		this.pkgType = pkgType;
+	}
 	@Override
 	public String toString() {
 		return "Package1 [pkgId=" + pkgId + ", pkgName=" + pkgName + ", subDuration=" + subDuration + ", pkgAmt="
-				+ pkgAmt + ", isUsed=" + isUsed + "]";
+				+ pkgAmt + ", isUsed=" + isUsed + ", pkgType=" + pkgType + "]";
 	}
 	
 

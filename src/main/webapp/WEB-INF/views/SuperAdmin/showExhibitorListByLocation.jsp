@@ -9,7 +9,7 @@
 	
 	 
 <c:url var="eventListByOrganizerId" value="/eventListByOrganizerId"></c:url> 
-<c:url var="sortedExhibitorList" value="/sortedExhibitorList"></c:url> 
+<c:url var="sortedExhibitorListByLocationAndCompType" value="/sortedExhibitorListByLocationAndCompType"></c:url> 
 
 	<!-- BEGIN Sidebar -->
 	<div id="sidebar" class="navbar-collapse collapse">
@@ -55,40 +55,7 @@
 			
 			
 				<div class=" box-content">
-				
-				<div class="box-content">
- 
-									<div class="col-md-2">Select Organizer*</div>
-									<div class="col-md-3">
-										<select id="orgId" name="orgId" onchange="eventListByOrganizerId();" class="form-control chosen" required >  
-										<option value=" ">Select Organizer</option>
-										<c:forEach items="${organiserList}" var="organiserList" >
-										<c:choose>
-											<c:when test="${organiserList.orgId==orgId}">
-												<option value="${organiserList.orgId}" selected>${organiserList.orgName}</option>
-											</c:when>
-											<c:otherwise>
-											<option value="${organiserList.orgId}">${organiserList.orgName}</option>
-											</c:otherwise>
-										</c:choose>
-									 	
-											</c:forEach>
-											</select>
-
-									</div>
-									<div class="col-md-1"></div>
-									
-									<div class="col-md-2">Select Event*</div>
-									<div class="col-md-3">
-										<select id="eventId" name="eventId" multiple="multiple" class="form-control chosen" required >  
-										 
-										 
-											</select>
-
-									</div>
-
-
-								</div><br>
+				 
 								
 								<div class="box-content">
  
@@ -143,7 +110,7 @@
 								
 									<th style="width: 18px">Sr No</th>
 									<th>Exhibitor Name</th>
-									 <th>Event Name</th>
+									 <th>Organizer Name</th>
 									 <th>Location</th>
 									 <th>Company Type</th>
 									 
@@ -281,7 +248,7 @@
 		function searchExhibitorList() {
 			 
 			 
-			var eventId = $('#eventId').val();
+			 
 			var locationId = $('#locationId').val();
 			var compType = $('#compType').val();
 			var valid=0;
@@ -291,12 +258,7 @@
 				
 				} */
 				 
-				if(eventId==null || eventId=="")
-				{
-				alert("Select Event");
-				valid=1;
-				}
-				else if(locationId==null)
+				 if(locationId==null)
 				{
 				alert("Select Minimum One Loacation");
 				valid=1;
@@ -308,11 +270,11 @@
 				}
 			if(valid==0)
 				{
-			$.getJSON('${sortedExhibitorList}',
+			$.getJSON('${sortedExhibitorListByLocationAndCompType}',
 
 					{
 						 
-						eventId : eventId,
+						 
 						compType : compType,
 						locationId : locationId,
 						ajax : 'true'
@@ -334,7 +296,7 @@
 										var tr = $('<tr></tr>');
 									  	tr.append($('<td></td>').html(key+1)); 
 									  	tr.append($('<td></td>').html(itemList.exhName)); 
-									  	tr.append($('<td></td>').html(itemList.eventName)); 
+									  	tr.append($('<td></td>').html(itemList.orgName)); 
 									  	tr.append($('<td></td>').html(itemList.locationName)); 
 									  	tr.append($('<td></td>').html(itemList.companyTypeName)); 
 									  	
