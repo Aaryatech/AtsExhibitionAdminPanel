@@ -990,9 +990,41 @@ public class OrganizerController {
 					List.class); 
 			
 			model.addObject("scheduleList", scheduleList);
-	
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
+					EventWithOrgName[].class); 
+			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			
+			model.addObject("eventList", eventList);
 		}catch (Exception e) {
 			e.printStackTrace();
+		}
+		return model;
+	}
+	@RequestMapping(value = "/searchEventSchedule", method = RequestMethod.POST)
+	public ModelAndView searchEventSchedule(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/shedules");
+		try
+		{ 	
+			int eventId=Integer.parseInt(request.getParameter("eventId"));
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("eventId", eventId);
+			List<GetSchedule> scheduleList = rest.postForObject(Constants.url + "/getScheduleByEventId",map, 
+					List.class); 
+			model.addObject("scheduleList", scheduleList);
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			 map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", login.getOrganiser().getOrgId());
+			
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
+					EventWithOrgName[].class); 
+			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			
+			model.addObject("eventList", eventList);
+			model.addObject("eventId", eventId);
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
 		return model;
 	}

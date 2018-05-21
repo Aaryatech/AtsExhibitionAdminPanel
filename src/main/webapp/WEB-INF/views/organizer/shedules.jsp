@@ -53,6 +53,36 @@
 				</div>
 
 			</div>
+			   <form action="${pageContext.request.contextPath}/searchEventSchedule" method="post" enctype="multipart/form-data">
+						<div class=" box-content" >
+		<div class="box-content">
+		<div class="col-md-2">Event*</div>
+									<div class="col-md-3">
+										<select id="eventId" name="eventId" class="form-control"
+											required>
+											<option value="">Select Event</option>
+											<c:forEach items="${eventList}" var="eventList">
+												<c:choose>
+													<c:when test="${eventList.eventId==eventId}">
+														<option value="${eventList.eventId}" selected>${eventList.eventName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${eventList.eventId}">${eventList.eventName}</option>
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+										</select>
+									</div>
+				</div>
+			
+				
+									<div class="col-md-2" style="text-align: center">
+										<input type="submit" class="btn btn-info" value="Search"/>
+
+				</div><br><br>	</div>
+				</form>					
+			
 			<div class=" box-content">
 
 				<div class="box-content">
