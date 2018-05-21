@@ -169,6 +169,9 @@
 					<a href="${pageContext.request.contextPath}/addEvent">Add Event</a>
 					</li>
 					<li> 
+					<a href="${pageContext.request.contextPath}/scheduleList">Event Schedule</a>
+					</li>
+					<li> 
 					<a href="${pageContext.request.contextPath}/eventList">All Event List</a>
 					</li>
 					<li> 
@@ -189,6 +192,9 @@
 					
 					<li> 
 					<a href="${pageContext.request.contextPath}/eventMapToExhibitor">Event Map</a>
+					</li>
+					<li> 
+					<a href="${pageContext.request.contextPath}/showFloarMap">Floar Map</a>
 					</li>
 					<%-- <li> 
 					<a href="${pageContext.request.contextPath}/showAddNewForm">Add Form</a>

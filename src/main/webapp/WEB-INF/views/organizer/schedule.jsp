@@ -276,8 +276,8 @@
 		src="${pageContext.request.contextPath}/resources/assets/ckeditor/ckeditor.js"></script>
 
 	<!--flaty scripts-->
-	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
-	<script type="text/javascript"
+<%-- 	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
+ --%>	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
