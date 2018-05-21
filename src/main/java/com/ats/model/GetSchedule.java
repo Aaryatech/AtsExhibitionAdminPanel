@@ -3,31 +3,24 @@ package com.ats.model;
 import java.util.List;
 
 
-public class ScheduleHeader{
+public class GetSchedule{
+
 	
 	private int scheduleId;
 	
 	private int eventId;
-
-	private String eventName;
 	
+	private String eventName;
+
 	private String date;
 	
 	private String dayName;
 	
 	private int isUsed;
-
+	
 	List<ScheduleDetail>  scheduleDetailList;
 	
 	
-	
-	public String getEventName() {
-		return eventName;
-	}
-
-	public void setEventName(String eventName) {
-		this.eventName = eventName;
-	}
 
 	public List<ScheduleDetail> getScheduleDetailList() {
 		return scheduleDetailList;
@@ -43,6 +36,10 @@ public class ScheduleHeader{
 
 	public int getEventId() {
 		return eventId;
+	}
+
+	public String getEventName() {
+		return eventName;
 	}
 
 	public String getDate() {
@@ -65,6 +62,10 @@ public class ScheduleHeader{
 		this.eventId = eventId;
 	}
 
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
+
 	public void setDate(String date) {
 		this.date = date;
 	}
@@ -79,11 +80,9 @@ public class ScheduleHeader{
 
 	@Override
 	public String toString() {
-		return "ScheduleHeader [scheduleId=" + scheduleId + ", eventId=" + eventId + ", date=" + date + ", dayName="
-				+ dayName + ", isUsed=" + isUsed + "]";
+		return "GetSchedule [scheduleId=" + scheduleId + ", eventId=" + eventId + ", eventName=" + eventName + ", date="
+				+ date + ", dayName=" + dayName + ", isUsed=" + isUsed + "]";
 	}
-	
-	
-	
 
+	
 }

@@ -10,7 +10,10 @@
 
 		<!-- BEGIN Sidebar -->
 		<div id="sidebar" class="navbar-collapse collapse">
-
+<c:url var="insertScheduleDetail" value="/insertScheduleDetail"/>
+<c:url var="deleteScheduleDetail" value="/deleteScheduleDetail"/>
+<c:url var="editScheduleDetail" value="/editScheduleDetail"/>
+<c:url var="editSchedule" value="/editSchedule"/>
 			<jsp:include page="/WEB-INF/views/include/navigation.jsp"></jsp:include>
 
 			<div id="sidebar-collapse" class="visible-lg">
@@ -43,20 +46,22 @@
 								<i class="fa fa-table"></i>Schedule Exhibition
 							</h3>
 							<div class="box-tool">
-								<a href="${pageContext.request.contextPath}/addSponsor">Schedule
+								<a href="${pageContext.request.contextPath}/scheduleList">Schedule
 									Exhibition List</a> <a data-action="collapse" href="#"><i
 									class="fa fa-chevron-up"></i></a>
 							</div>
 
 						</div>
-            <form action="${pageContext.request.contextPath}/insertSponsor" method="post" enctype="multipart/form-data">
+            <form action="${pageContext.request.contextPath}/addScheduleDetail" method="post" enctype="multipart/form-data">
 						<div class=" box-content" style="border: 4px solid #b6d1f2;">
+							<input type="hidden" id="scheduleHeaderId" name="scheduleHeaderId"
+										 value="${scheduleRes.scheduleId}" required />
 							
 								<div class="box-content">
 									<div class="col-md-2">Date *</div>
 									<div class="col-md-3">
 										<input type="text" id="date" name="date"
-											class="form-control date-picker" placeholder="Date" required />
+											class="form-control date-picker" placeholder="Date" value="${scheduleRes.date}" required />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Event*</div>
@@ -66,7 +71,7 @@
 											<option value="">Select Event</option>
 											<c:forEach items="${eventList}" var="eventList">
 												<c:choose>
-													<c:when test="${eventList.eventId==sponsor.eventId}">
+													<c:when test="${eventList.eventId==scheduleRes.eventId}">
 														<option value="${eventList.eventId}" selected>${eventList.eventName}</option>
 													</c:when>
 													<c:otherwise>
@@ -83,7 +88,7 @@
 								<div class="box-content">
 									<div class="col-md-2">Day*</div>
 									<div class="col-md-3">
-										<input type="text" id="day" name="day" class="form-control"
+										<input type="text" id="day" name="day" value="${scheduleRes.dayName}" class="form-control"
 											placeholder="Day" required />
 									</div>
 								</div>
@@ -93,13 +98,13 @@
 									<div class="col-md-2">Topic *</div>
 									<div class="col-md-3">
 										<input type="text" id="topic" name="topic"
-											class="form-control" placeholder="Topic" required />
+											class="form-control" placeholder="Topic"  />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Speaker *</div>
 									<div class="col-md-3">
 										<input type="text" id="speaker" name="speaker"
-											class="form-control" placeholder="Speaker" required />
+											class="form-control" placeholder="Speaker"  />
 									</div>
 								</div>
 								</br>
@@ -108,14 +113,14 @@
 									<div class="col-md-2">From Time *</div>
 									<div class="col-md-3">
 										<input type="time" id="fromTime" name="fromTime"
-											class="form-control" placeholder="From Time" required />
+											class="form-control" placeholder="From Time"  />
 									</div>
 									<div class="col-md-1"></div>
 
 									<div class="col-md-2">To Time *</div>
 									<div class="col-md-3">
 										<input type="time" id="toTime" name="toTime"
-											class="form-control" placeholder="To Time" required />
+											class="form-control" placeholder="To Time"  />
 									</div>
 								</div>
 								</br>
@@ -123,25 +128,34 @@
 									<div class="col-md-2">Venue *</div>
 									<div class="col-md-3">
 										<textarea id="venue" name="venue" class="form-control"
-											placeholder="Venue" required></textarea>
+											placeholder="Venue" ></textarea>
 									</div>
 									<div class="col-md-1"></div>
 
 									<div class="col-md-2">Available Seats *</div>
 									<div class="col-md-3">
 										<input type="number" id="availSeat" name="availSeat"
-											class="form-control" placeholder="Available Seats" required />
+											class="form-control" placeholder="Available Seats"  />
 									</div>
 								</div>
-								</br></br>
+								</br>
+                              <div class="box-content">
+                              	<div class="col-md-1"></div>
+									<div class="col-md-2">Remark *</div>
+									<div class="col-md-3">
+										<textarea id="remark" name="remark" class="form-control"
+											placeholder="Remark" ></textarea>
+									</div>
+									</div>
+
 								<div class="col-md-1"></div>
 								<div class="box-content">
 									<div class="col-md-12" style="text-align: center">
 										<input type="button" class="btn btn-info" value="Add Detail"
-											id="submit">
+											id="add">
 
 									</div></div></div>
-								<div class="box" id="pending" style="border: 4px solid #b6d1f2;">
+								<div class="box" id="pending">
 
 									<div class="box-content">
 
@@ -152,9 +166,6 @@
 												<thead>
 													<tr>
 														<th style="width: 18px">No</th>
-														<th>Date</th>
-														<th>Event</th>
-														<th>Day</th>
 														<th>Topic</th>
 														<th>Speaker</th>
 														<th>From Time</th>
@@ -165,7 +176,19 @@
 													</tr>
 												</thead>
 												<tbody>
-
+                               <c:forEach items="${scheduleRes.scheduleDetailList}" var="schedule" varStatus="count">
+									<tr class="table-flag-blue">
+										<td>${count.index+1}</td>
+										<td>${schedule.topic}</td>
+										<td>${schedule.speaker}</td>
+										<td>${schedule.fromTime}</td>
+										<td>${schedule.toTime}</td>
+										<td>${schedule.venue}</td>
+										<td>${schedule.seatsAvailable}</td>
+										 
+										 <td><a href='#' class='action_btn' onclick="editScheduleDetail(${count.index})"> <abbr title='edit'> <i class='fa fa-edit  fa-lg' ></i></abbr> </a> <a href='#' class='action_btn' onclick="deleteScheduleDetail(${count.index})"><abbr title='Delete'><i class='fa fa-trash-o  fa-lg'></i></abbr></a></td>  
+									</tr>
+								</c:forEach>
 												</tbody>
 											</table>
 										</div>
@@ -263,22 +286,12 @@
 
 var editFlag=false;
 var key1=0;
-//$('span').text("Add Item Detail");
-
 $(document).ready(function() {
 	$("#add").click(function() {
 		
 	var isValid = validation();
 	if (isValid) {
-		
- 	var date = $("#date").val();
-	//alert(itemId);
-	var eventId=$('#eventId option:selected').val();
-	//alert(selectedValue);
 
-	var day = $("#day").val();
-	//alert("baseQty"+baseQty)
-	
 	var topic = $("#topic").val();
 
 	var speaker = $("#speaker").val();
@@ -287,22 +300,25 @@ $(document).ready(function() {
 	
 	var toTime = $("#toTime").val();
 	
-	var rmName=$('#venue').text();
+	var venue=$('#venue').val();
+	
+	var availSeat=$('#availSeat').val();
+	
+	var remark=$('#remark').val();
 
 	if(editFlag==true)
 	{
 		editFlag=false;
 
-		$.getJSON('${editItem}', {
-			
-			itemId : itemId,
-			itemName:itemName,
-			baseQty:baseQty,
-			rmType:rmType,
-			rmId:rmId,
-			rmName:rmName,
-			rmQty:rmQty,
-			rmWeight:rmWeight,
+		$.getJSON('${editSchedule}', {
+		
+			topic:topic,
+			speaker:speaker,
+			fromTime:fromTime,
+			toTime:toTime,
+			venue:venue,
+			availSeat:availSeat,
+			remark:remark,
 			key:key1,
 			
 			ajax : 'true',
@@ -314,43 +330,32 @@ $(document).ready(function() {
 
 			$('#table1 td').remove();
 
-			$.each(data,function(key, item) {
+			$.each(data,function(key, schedule) {
 
-	      if(item.delStatus==0)
+	      if(schedule.isUsed==1)
 		  {
-			var tr = $('<tr></tr>');
+	  		
+	  		var tr = $('<tr></tr>');
 
-		  	tr.append($('<td></td>').html(key+1));
+	  	  	tr.append($('<td></td>').html(key+1));
 
-		  	tr.append($('<td></td>').html(item.itemName));
+	  	  	
+	  	  	tr.append($('<td></td>').html(schedule.topic));
+	  	  	
+	  	  	tr.append($('<td></td>').html(schedule.speaker));
+	  	  	
+	  	  	tr.append($('<td></td>').html(schedule.fromTime));
 
-		  	if(item.rmType==1)
-		  		{
-			  	
-		  		 tr.append($('<td></td>').html("Raw Material"));
+	  	  	tr.append($('<td></td>').html(schedule.toTime));
+	  	  	
+	  	  	tr.append($('<td></td>').html(schedule.venue));
 
-		  		}
-		  	else
-		  		{
-			  	tr.append($('<td></td>').html("Semi Finished"));
+	  	  	tr.append($('<td></td>').html(schedule.seatsAvailable));
 
-		  		}
 
-		  	tr.append($('<td></td>').html(item.rmName));
-
-/* 		  	tr.append($('<td></td>').html(item.rmUomId));
- */		  	
-		  	tr.append($('<td></td>').html(item.rmWeight));
-		  	
-		  	tr.append($('<td></td>').html(item.rmQty));
-		  	
-		  	tr.append($('<td></td>').html(item.noOfPiecesPerItem));
-		  	
-		 	tr.append($('<td></td>').html("<a href='#' class='action_btn' onclick=editItemDetail("+key+")> <abbr title='edit'> <i class='fa fa-edit  fa-lg' ></i></abbr> </a> <a href='#' class='action_btn'onclick=deleteItemDetail("+key+ ")><abbr title='Delete'><i class='fa fa-trash-o  fa-lg'></i></abbr></a>"));
-		  
-		  //	tr.append($('<td></td>').html());
-		  	
-			$('#table1 tbody').append(tr);
+	  	 	tr.append($('<td></td>').html("<a href='#' class='action_btn' onclick=editScheduleDetail("+key+")> <abbr title='edit'> <i class='fa fa-edit  fa-lg' ></i></abbr> </a> <a href='#' class='action_btn'onclick=deleteScheduleDetail("+key+ ")><abbr title='Delete'><i class='fa fa-trash-o  fa-lg'></i></abbr></a>"));
+	  	  	  	  	
+	  		$('#table1 tbody').append(tr);
 	
 		  }
 		 }); 
@@ -361,103 +366,67 @@ $(document).ready(function() {
 		{
 
 //	alert(rmId);
-	$.getJSON('${insertItemDetail}', {
+	$.getJSON('${insertScheduleDetail}', {
 		
-		itemId : itemId,
-		itemName:itemName,
-		baseQty:baseQty,
-		rmType:rmType,
-		rmId:rmId,
-		rmName:rmName,
-		rmQty:rmQty,
-		rmWeight:rmWeight,
-		
+	
+		topic:topic,
+		speaker:speaker,
+		fromTime:fromTime,
+		toTime:toTime,
+		venue:venue,
+		availSeat:availSeat,
+		remark:remark,
+
 		ajax : 'true',
 	},  function(data) { 
  
 		 //$('#loader').hide();
 		var len = data.length;
 
-		//alert(len);
 
 		$('#table1 td').remove();
 
-		$.each(data,function(key, item) {
+		$.each(data,function(key, schedule) {
 
-	   if(item.delStatus==0)
+	   if(schedule.isUsed==1)
 	   {
-		var tr = $('<tr></tr>');
+			var tr = $('<tr></tr>');
 
-	  	tr.append($('<td></td>').html(key+1));
-
-	  	tr.append($('<td></td>').html(item.itemName));
-
-	  	if(item.rmType==1)
-	  		{
+		  	tr.append($('<td></td>').html(key+1));
+	
+		  	tr.append($('<td></td>').html(schedule.topic));
 		  	
-	  		 tr.append($('<td></td>').html("Raw Material"));
+		  	tr.append($('<td></td>').html(schedule.speaker));
+		  	
+		  	tr.append($('<td></td>').html(schedule.fromTime));
+		  	
+		  	tr.append($('<td></td>').html(schedule.toTime));
+		  	
+		  	tr.append($('<td></td>').html(schedule.venue));
 
-	  		}
-	  	else
-	  		{
-		  	tr.append($('<td></td>').html("Semi Finished"));
+		  	tr.append($('<td></td>').html(schedule.seatsAvailable));
 
-	  		}
-
-	  	tr.append($('<td></td>').html(item.rmName));
-
-/* 	  	tr.append($('<td></td>').html(item.rmUomId));
- */	  	
-	  	tr.append($('<td></td>').html(item.rmWeight));
-	  	
-	  	tr.append($('<td></td>').html(item.rmQty));
-	  	
-	  	tr.append($('<td></td>').html(item.noOfPiecesPerItem));
-
-	  	
-	 	tr.append($('<td></td>').html("<a href='#' class='action_btn' onclick=editItemDetail("+key+")> <abbr title='edit'> <i class='fa fa-edit  fa-lg' ></i></abbr> </a> <a href='#' class='action_btn'onclick=deleteItemDetail("+key+ ")><abbr title='Delete'><i class='fa fa-trash-o  fa-lg'></i></abbr></a>"));
-	  
-	  //	tr.append($('<td></td>').html());
-	  	
-		$('#table1 tbody').append(tr);
+		 	tr.append($('<td></td>').html("<a href='#' class='action_btn' onclick=editScheduleDetail("+key+")> <abbr title='edit'> <i class='fa fa-edit  fa-lg' ></i></abbr> </a> <a href='#' class='action_btn'onclick=deleteScheduleDetail("+key+ ")><abbr title='Delete'><i class='fa fa-trash-o  fa-lg'></i></abbr></a>"));
+			$('#table1 tbody').append(tr);
 	 }
 	 }); 
 	
 	});
  }
-	 document.getElementById("rm_weight").value="";
-	 document.getElementById("rm_type").selectedIndex = "0"; 
-		var html = '<option value="0" selected >Select Raw Material</option>';
-		html += '</option>';
-		$('#rm_id').html(html);
-		$("#rm_id").trigger("chosen:updated");
-	 document.getElementById("rm_id").selectedIndex = "0"; 
+	
 	 
-	 document.getElementById("rm_qty").value="";
-	 document.getElementById("base_qty").value ="";
-	 document.getElementById("rm_group").selectedIndex = "0";  
-	 document.getElementById("rm_cat").selectedIndex = "0";  
+	 document.getElementById("topic").value="";
+	 document.getElementById("speaker").value ="";
+	 document.getElementById("fromTime").value =""; 
+	 document.getElementById("toTime").value =""; 
+	 document.getElementById("venue").value =""; 
+	 document.getElementById("availSeat").value="";
+	 document.getElementById("remark").value="";
 
 	}
 });
 
 });
-$(document).ready(function() {
-	$("#cancel").click(function() {
-		 document.getElementById("rm_weight").value="";
-		 document.getElementById("rm_type").selectedIndex = "0"; 
-			var html = '<option value="0" selected >Select Raw Material</option>';
-			html += '</option>';
-			$('#rm_id').html(html);
-			$("#rm_id").trigger("chosen:updated");
-		 document.getElementById("rm_id").selectedIndex = "0"; 
-		 document.getElementById("rm_qty").value="";
-		 document.getElementById("base_qty").value ="";
-		 document.getElementById("rm_group").selectedIndex = "0";  
-		 document.getElementById("rm_cat").selectedIndex = "0";  
-	});
-});
-
 function editScheduleDetail(token){
  
 	editFlag=true;
@@ -470,17 +439,19 @@ function editScheduleDetail(token){
 	   
 		var len = data.length;
 
-		 document.getElementById("rm_group").disabled = true;
-		 document.getElementById("rm_cat").disabled = true;
-		         document.getElementById("rm_weight").value=data.rmWeight;
-				 document.getElementById("rm_qty").value=data.rmQty;
-				 document.getElementById("rm_type").options.selectedIndex =data.rmType;
-				 document.getElementById("base_qty").value =data.noOfPiecesPerItem;
-				 document.getElementById("rm_id").options.selectedIndex =data.rmId;
+		 document.getElementById("date").readOnly = true;
+		 document.getElementById("day").readOnly = true;
+
+		         document.getElementById("topic").value=data.topic;
+				 document.getElementById("speaker").value=data.speaker;
+				 document.getElementById("fromTime").value =data.fromTime;
+				 document.getElementById("toTime").value =data.toTime;
+				 document.getElementById("venue").value =data.venue;
+				 document.getElementById("remark").value =data.remark;
+		         document.getElementById("availSeat").value=data.seatsAvailable;
+
 				 key1=token;
 				 
-					appendRmItem(data.rmId);
-
 		});
 	
 	
@@ -555,37 +526,27 @@ function deleteScheduleDetail(key){
 
 		$.each(data,function(key, schedule) {
 			
-	if(schedule.delStatus==0)
+	if(schedule.isUsed==1)
 	{
 			
 		var tr = $('<tr></tr>');
 
 	  	tr.append($('<td></td>').html(key+1));
 
-	  	tr.append($('<td></td>').html(schedule.date));
-
-	  	tr.append($('<td></td>').html(schedule.eventName));
-  	
-		tr.append($('<td></td>').html(schedule.day));
-	  	
 	  	tr.append($('<td></td>').html(schedule.topic));
 	  	
 	  	tr.append($('<td></td>').html(schedule.speaker));
 	  	
 	  	tr.append($('<td></td>').html(schedule.fromTime));
-
 	  	
 	  	tr.append($('<td></td>').html(schedule.toTime));
 	  	
 	  	tr.append($('<td></td>').html(schedule.venue));
 
-	  	tr.append($('<td></td>').html(schedule.availableSeats));
-
+	  	tr.append($('<td></td>').html(schedule.seatsAvailable));
 
 	 	tr.append($('<td></td>').html("<a href='#' class='action_btn' onclick=editScheduleDetail("+key+")> <abbr title='edit'> <i class='fa fa-edit  fa-lg' ></i></abbr> </a> <a href='#' class='action_btn'onclick=deleteScheduleDetail("+key+ ")><abbr title='Delete'><i class='fa fa-trash-o  fa-lg'></i></abbr></a>"));
-	  
-	  //	tr.append($('<td></td>').html());
-	  	
+	  	  	
 		$('#table1 tbody').append(tr);
 
 	}

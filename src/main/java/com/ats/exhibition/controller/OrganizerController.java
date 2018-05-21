@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +20,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
- 
+
 import com.ats.exhibition.common.Constants;
 import com.ats.exhibition.common.DateConvertor;
 import com.ats.exhibition.common.VpsImageUpload;
@@ -35,9 +37,12 @@ import com.ats.model.EventWithOrgName;
 import com.ats.model.Events;
 import com.ats.model.Exhibitor;
 import com.ats.model.ExhibitorWithOrgName;
+import com.ats.model.GetSchedule;
 import com.ats.model.GetSponsor;
 import com.ats.model.LoginResponse;
 import com.ats.model.Organiser;
+import com.ats.model.ScheduleDetail;
+import com.ats.model.ScheduleHeader;
 import com.ats.model.Sponsor;
  
  
@@ -793,6 +798,25 @@ public class OrganizerController {
 
 		return "redirect:/addSponsor";
 	}
+	@RequestMapping(value = "/deleteSchedule/{scheduleId}", method = RequestMethod.GET)
+	public String deleteSchedule(@PathVariable int scheduleId, HttpServletRequest request, HttpServletResponse response) {
+
+		try
+		{
+			 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("scheduleId", scheduleId);
+			ErrorMessage errorMessage = rest.postForObject(Constants.url + "/deleteSchedule",map,
+					ErrorMessage.class); 
+			 
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return "redirect:/scheduleList";
+	}
 	@RequestMapping(value = "/editSponsor/{sponsorId}", method = RequestMethod.GET)
 	public ModelAndView editSponsor(@PathVariable int sponsorId, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView("organizer/sponsor");
@@ -912,18 +936,276 @@ public class OrganizerController {
 
 		return "redirect:/addSponsor";
 	}
+	List<ScheduleDetail> scheduleDetailList=null;
+
+	@RequestMapping(value = "/editSchedule/{scheduleId}", method = RequestMethod.GET)
+	public ModelAndView editSchedule(@PathVariable int scheduleId, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/schedule");
+		try
+		{
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("scheduleId", scheduleId);
+			GetSchedule getScheduleRes = rest.postForObject(Constants.url + "/getScheduleHeaderById",map,
+					GetSchedule.class); 
+		
+			model.addObject("scheduleRes", getScheduleRes);
+			if(!getScheduleRes.getScheduleDetailList().isEmpty())
+			{
+			scheduleDetailList=getScheduleRes.getScheduleDetailList();
+			}
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			 map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", login.getOrganiser().getOrgId());
+
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
+					EventWithOrgName[].class); 
+			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			
+			model.addObject("eventList", eventList);
+
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/scheduleList", method = RequestMethod.GET)
+	public ModelAndView scheduleList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/shedules");
+		try
+		{ 	
+			scheduleDetailList=new ArrayList<>();
+
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", login.getOrganiser().getOrgId());
+
+			List<GetSchedule> scheduleList = rest.postForObject(Constants.url + "/getSchedules",map, 
+					List.class); 
+			
+			model.addObject("scheduleList", scheduleList);
+	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+
 	@RequestMapping(value = "/addSchedule", method = RequestMethod.GET)
 	public ModelAndView addSchedule(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("organizer/schedule");
 		try
-		{ 
+		{ 	
+			
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", login.getOrganiser().getOrgId());
+			
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
+					EventWithOrgName[].class); 
+			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			
+			model.addObject("eventList", eventList);
 		
 		}catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return model;
 	}
+	@RequestMapping(value = "/insertScheduleDetail", method = RequestMethod.GET)
+	public @ResponseBody List<ScheduleDetail> insertScheduleDetail(HttpServletRequest request, HttpServletResponse response) {
+		try {
+		
+		String topic=request.getParameter("topic");
+		
+		String speaker=request.getParameter("speaker");
+		
+		String fromTime=request.getParameter("fromTime");
+		
+		String toTime=request.getParameter("toTime");
+		
+		String venue=request.getParameter("venue");
+		
+		int seatsAvailable=Integer.parseInt(request.getParameter("availSeat"));
+		
+		String remark=request.getParameter("remark");
+		
+		ScheduleDetail scheduleDetail=new ScheduleDetail();
+		scheduleDetail.setScheduleDetailId(0);
+		scheduleDetail.setScheduleId(0);
+		scheduleDetail.setSeatsAvailable(seatsAvailable);
+		scheduleDetail.setSpeaker(speaker);
+		scheduleDetail.setFromTime(fromTime);
+		scheduleDetail.setToTime(toTime);
+		scheduleDetail.setTopic(topic);
+		scheduleDetail.setRemark(remark);
+		scheduleDetail.setVenue(venue);
+
+		scheduleDetail.setIsUsed(1);
+		System.out.println("ItemDetail"+scheduleDetail);
+		
+		scheduleDetailList.add(scheduleDetail);
+		
+		System.out.println("ItemDetail List:"+scheduleDetailList.toString());
+		
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return scheduleDetailList;
+	
+	}
+	@RequestMapping(value = "/addScheduleDetail", method = RequestMethod.POST)
+	public  String addScheduleDetail(HttpServletRequest request, HttpServletResponse response) {
+		
+		RestTemplate restTemplate=new RestTemplate();
+	    SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		System.out.println("Schedule  Detail Before Submit "+scheduleDetailList.toString());
+		ErrorMessage  eMessage = null;
+		try
+		{
+			int scheduleHeaderId=0;
+					try {
+			 scheduleHeaderId=Integer.parseInt(request.getParameter("scheduleHeaderId"));
+					}
+			catch (Exception e) {
+				scheduleHeaderId=0;
+			}
+			int eventId=Integer.parseInt(request.getParameter("eventId"));
+			System.out.println("eventId"+eventId);
+			
+			String date=request.getParameter("date");
+			System.out.println("date"+date);
+			Date date1=new SimpleDateFormat("dd-MM-yyyy").parse(date);  
+
+			String eventName=request.getParameter("eventName");
+
+			String day=request.getParameter("day");
+			
+			ScheduleHeader scheduleHeader=new ScheduleHeader();
+			scheduleHeader.setScheduleId(scheduleHeaderId);
+			scheduleHeader.setDate(dmyFormat.format(date1));
+			scheduleHeader.setEventName(eventName);
+			scheduleHeader.setDayName(day);
+			scheduleHeader.setEventId(eventId);
+			scheduleHeader.setIsUsed(1);
+			scheduleHeader.setScheduleDetailList(scheduleDetailList);
+			if(!scheduleDetailList.isEmpty()) {
+			eMessage=restTemplate.postForObject(Constants.url+"/saveSchedule",scheduleHeader,ErrorMessage.class);
+			}
+			scheduleDetailList=new ArrayList<ScheduleDetail>();
+	
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("EXC:"+e.getStackTrace());
+
+		}
+		System.out.println("scheduleDetailList:"+scheduleDetailList.toString());
+
+		return "redirect:/scheduleList";
+		
+	}
+	@RequestMapping(value = "/editSchedule", method = RequestMethod.GET)
+	public @ResponseBody List<ScheduleDetail> editItem(HttpServletRequest request, HttpServletResponse response) {
+		
+		try {
+		
+		String topic=request.getParameter("topic");
+		
+		String speaker=request.getParameter("speaker");
+		
+		String fromTime=request.getParameter("fromTime");
+		
+		String toTime=request.getParameter("toTime");
+		
+		String venue=request.getParameter("venue");
+		
+		int seatsAvailable=Integer.parseInt(request.getParameter("availSeat"));
+		
+		String remark=request.getParameter("remark");
+		
+		int index=Integer.parseInt(request.getParameter("key"));
+		System.out.println("Key:"+index);
+		
+		System.out.println("scheduleDetailList::"+scheduleDetailList.toString());
+		for(int i=0;i<scheduleDetailList.size();i++)
+		{
+			if(i==index)
+			{
+				scheduleDetailList.get(index).setFromTime(fromTime);
+				scheduleDetailList.get(index).setToTime(toTime);
+				scheduleDetailList.get(index).setRemark(remark);
+				scheduleDetailList.get(index).setSeatsAvailable(seatsAvailable);
+				scheduleDetailList.get(index).setSpeaker(speaker);
+				scheduleDetailList.get(index).setVenue(venue);
+				scheduleDetailList.get(index).setTopic(topic);
+				scheduleDetailList.get(index).setIsUsed(1);
+
+		  System.out.println("Schedule Detail"+ scheduleDetailList.get(index));
+		
+		 }
+			
+		}
+		System.out.println("Edit scheduleDetailList Ajax: "+ scheduleDetailList.get(index).toString());
+			System.out.println("Schedule List:"+scheduleDetailList.toString());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return scheduleDetailList;
+		
+	}
+	
+	@RequestMapping(value = "/deleteScheduleDetail", method = RequestMethod.GET)
+	public @ResponseBody List<ScheduleDetail> deleteItemDetail(HttpServletRequest request, HttpServletResponse response) {
+		
+		int index=Integer.parseInt(request.getParameter("key"));
+
+		if(scheduleDetailList.get(index).getScheduleDetailId()==0)
+		{
+			scheduleDetailList.remove(index);
+		}
+		else
+		{
+			scheduleDetailList.get(index).setIsUsed(0);
+		}
+			System.out.println("scheduleDetailList List D:"+scheduleDetailList.toString());
+
+		return scheduleDetailList;
+	}
+	
+
+	@RequestMapping(value = "/editScheduleDetail", method = RequestMethod.GET)
+	public @ResponseBody ScheduleDetail editScheduleDetail(HttpServletRequest request, HttpServletResponse response) {
+		
+		int index=Integer.parseInt(request.getParameter("key"));
+		System.out.println("Key:"+index);
+		ScheduleDetail  getScheduleDetail=new ScheduleDetail(); 
+		
+		for(int i=0;i<scheduleDetailList.size();i++)
+		{
+			if(i==index)
+			{
+				getScheduleDetail=scheduleDetailList.get(index);
+			}
+		
+		}
+		System.out.println("Edit ScheduleDetail Ajax: "+getScheduleDetail.toString());
+		return getScheduleDetail;
+	}
+		
+		
 }
 
 
