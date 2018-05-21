@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class VpsImageUpload {
 
-	public static final String FR_FOLDER = "/opt/tomcat-latest/webapps/uploads/FR/";
+	public static final String FR_FOLDER = "/home/ats-12/";
 	public static final String SPONSOR_FOLDER = "/home/ats-12/";
 
 	public static final String MSG_FOLDER = "/opt/tomcat-latest/webapps/uploads/MSG/";

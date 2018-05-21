@@ -37,6 +37,8 @@ import com.ats.model.EventWithOrgName;
 import com.ats.model.Events;
 import com.ats.model.Exhibitor;
 import com.ats.model.ExhibitorWithOrgName;
+import com.ats.model.FloarMap;
+import com.ats.model.GetFloarMap;
 import com.ats.model.GetSchedule;
 import com.ats.model.GetSponsor;
 import com.ats.model.LoginResponse;
@@ -830,8 +832,6 @@ public class OrganizerController {
 
 		try
 		{
-
-			
 			HttpSession session = request.getSession();
 			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -848,7 +848,7 @@ public class OrganizerController {
 			List<CompanyType> companyList = new ArrayList<CompanyType>(Arrays.asList(companyType));
 
 			
-			 map = new LinkedMultiValueMap<String, Object>();
+			map = new LinkedMultiValueMap<String, Object>();
 			map.add("sponsorId", sponsorId);
 			Sponsor sponsorRes = rest.postForObject(Constants.url + "/getSponsorById",map,
 					Sponsor.class); 
@@ -979,7 +979,219 @@ public class OrganizerController {
 
 		return model;
 	}
+	@RequestMapping(value = "/showFloarMap", method = RequestMethod.GET)
+	public ModelAndView showFloarMap(HttpServletRequest request, HttpServletResponse response) {
 
+		ModelAndView model = new ModelAndView("organizer/floarMap");
+		try
+		{ 	
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", login.getOrganiser().getOrgId());
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
+					EventWithOrgName[].class); 
+			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			
+			model.addObject("eventList", eventList);
+			
+			List<GetFloarMap> floarMapList=rest.postForObject(Constants.url+"getAllFloarMapByOrgId", map, List.class);
+		
+		   model.addObject("floarMapList", floarMapList);
+		   model.addObject("URL",Constants.IMAGE_PATH);
+			model.addObject("isEdit",0);
+
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return model;
+	}
+
+	@RequestMapping(value = "/editFloarMap/{floarMapId}", method = RequestMethod.GET)
+	public ModelAndView editFloarMap(@PathVariable int floarMapId, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/floarMap");
+		try
+		{
+			 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("floarMapId", floarMapId);
+			GetFloarMap floarMapRes = rest.postForObject(Constants.url + "/getFloarMapById",map,
+					GetFloarMap.class); 
+			model.addObject("floarMap", floarMapRes);
+			
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			 map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", login.getOrganiser().getOrgId());
+			
+			List<GetFloarMap> floarMapList=rest.postForObject(Constants.url+"getAllFloarMapByOrgId", map, List.class);
+		
+		   model.addObject("floarMapList", floarMapList);
+		   model.addObject("URL",Constants.IMAGE_PATH);
+		   
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
+					EventWithOrgName[].class); 
+			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			
+			model.addObject("eventList", eventList);
+			model.addObject("isEdit", 1);
+
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	@RequestMapping(value = "/deleteFloarMap/{floarMapId}", method = RequestMethod.GET)
+	public String deleteFloarMap(@PathVariable int floarMapId, HttpServletRequest request, HttpServletResponse response) {
+
+		//ModelAndView model = new ModelAndView("organizer/addOrganizer");
+		try
+		{
+			 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("floarMapId", floarMapId);
+			ErrorMessage delete = rest.postForObject(Constants.url + "/deleteFloarMap",map,
+					ErrorMessage.class); 
+			System.out.println(delete);
+			 
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return "redirect:/showFloarMap";
+	}
+	@RequestMapping(value = "/insertFloarMap", method = RequestMethod.POST)
+	public String insertFloarMap(HttpServletRequest request, HttpServletResponse response,@RequestParam("floarMap1") List<MultipartFile> floarMap1,@RequestParam("floarMap2") List<MultipartFile> floarMap2,@RequestParam("floarMap3") List<MultipartFile> floarMap3,@RequestParam("floarMap4") List<MultipartFile> floarMap4) {
+
+		 
+		try
+		{ 
+			int floarMapId=0;int isEdit=0;
+			String fMap1="";String fMap2="";String fMap3="";String fMap4="";
+			try {
+			 floarMapId = Integer.parseInt(request.getParameter("floarMapId"));
+			 isEdit= Integer.parseInt(request.getParameter("isEdit"));
+			
+				
+			}
+			catch (Exception e) {
+				floarMapId=0;isEdit=0;
+			}
+			int eventId = Integer.parseInt(request.getParameter("eventId"));
+			
+		
+			VpsImageUpload upload = new VpsImageUpload();
+
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			
+			String curTimeStamp = sdf.format(cal.getTime());
+			if(!floarMap1.isEmpty())
+			{
+			try {
+				
+				upload.saveUploadedFiles(floarMap1, Constants.FLOAR_MAP_TYPE, curTimeStamp + "-" + floarMap1.get(0).getOriginalFilename());
+				System.out.println("upload method called " + floarMap1.toString());
+				fMap1=floarMap1.get(0).getOriginalFilename();
+				
+			} catch (IOException e) {
+				
+				System.out.println("Exce in File Upload In Product Insert " + e.getMessage());
+				e.printStackTrace();
+			}
+			}
+			if(!floarMap2.isEmpty())
+			{
+			try {
+				
+				upload.saveUploadedFiles(floarMap2, Constants.FLOAR_MAP_TYPE, curTimeStamp + "-" + floarMap2.get(0).getOriginalFilename());
+				System.out.println("upload method called " + floarMap2.toString());
+				fMap2=floarMap2.get(0).getOriginalFilename();
+				
+			} catch (IOException e) {
+				
+				System.out.println("Exce in File Upload In Product Insert " + e.getMessage());
+				e.printStackTrace();
+			}
+			}
+			if(!floarMap3.isEmpty())
+			{
+			try {
+				
+				upload.saveUploadedFiles(floarMap3, Constants.FLOAR_MAP_TYPE, curTimeStamp + "-" + floarMap3.get(0).getOriginalFilename());
+				System.out.println("upload method called " + floarMap3.toString());
+				fMap3=floarMap3.get(0).getOriginalFilename();
+				
+			} catch (IOException e) {
+				
+				System.out.println("Exce in File Upload In Product Insert " + e.getMessage());
+				e.printStackTrace();
+			}
+			}
+			if(!floarMap4.isEmpty())
+			{
+			try {
+				
+				upload.saveUploadedFiles(floarMap4, Constants.FLOAR_MAP_TYPE, curTimeStamp + "-" + floarMap4.get(0).getOriginalFilename());
+				System.out.println("upload method called " + floarMap4.toString());
+				fMap4=floarMap4.get(0).getOriginalFilename();
+
+				
+			} catch (IOException e) {
+				
+				System.out.println("Exce in File Upload In Product Insert " + e.getMessage());
+				e.printStackTrace();
+			}
+			}
+		
+
+			
+			FloarMap floarMap=new FloarMap();
+			
+			floarMap.setFloarMapId(floarMapId);
+			floarMap.setEventId(eventId);
+			if(fMap1=="")
+			{
+				 fMap1=request.getParameter("editFloarMap1");
+
+			}
+			floarMap.setFloarMap1(fMap1);
+			if(fMap2=="")
+			{
+				 fMap2=request.getParameter("editFloarMap2");
+
+			}
+			floarMap.setFloarMap2(fMap2);
+			if(fMap3=="")
+			{
+				 fMap3=request.getParameter("editFloarMap3");
+
+			}
+			floarMap.setFloarMap3(fMap3);
+			if(fMap4=="")
+			{
+				 fMap4=request.getParameter("editFloarMap4");
+
+			}
+			floarMap.setFloarMap4(fMap4);
+			floarMap.setIsUsed(1);
+			
+			FloarMap floarMapRes=rest.postForObject(Constants.url+"saveFloarMap", floarMap, FloarMap.class);
+			System.err.println(floarMapRes.toString());
+			
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "redirect:/showFloarMap";
+	}
 	@RequestMapping(value = "/scheduleList", method = RequestMethod.GET)
 	public ModelAndView scheduleList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -1013,6 +1225,8 @@ public class OrganizerController {
 		ModelAndView model = new ModelAndView("organizer/shedules");
 		try
 		{ 	
+			scheduleDetailList=new ArrayList<>();
+
 			int eventId=Integer.parseInt(request.getParameter("eventId"));
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("eventId", eventId);
