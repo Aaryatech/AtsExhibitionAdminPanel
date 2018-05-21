@@ -648,7 +648,7 @@ public class OrganizerController {
 			map.add("orgId", login.getOrganiser().getOrgId());
 			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
 					EventWithOrgName[].class); 
-			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
 			 
 			ExhibitorWithOrgName[] ExhibitorWithOrgName = rest.postForObject(Constants.url + "/getAllExhibotorsByorgIdAndIsUsed",map, 
 					ExhibitorWithOrgName[].class); 
