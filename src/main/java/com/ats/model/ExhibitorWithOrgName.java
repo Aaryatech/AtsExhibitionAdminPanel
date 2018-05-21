@@ -23,6 +23,11 @@ public class ExhibitorWithOrgName {
 	private String aboutCompany; 
 	private int companyType; 
 	private int isUsed;
+	private int locationId; 
+	private int companyTypeId; 
+	private String locationName; 
+	private String companyTypeName;
+	
 	public int getExhId() {
 		return exhId;
 	}
@@ -143,6 +148,31 @@ public class ExhibitorWithOrgName {
 	public void setIsUsed(int isUsed) {
 		this.isUsed = isUsed;
 	}
+	
+	public int getLocationId() {
+		return locationId;
+	}
+	public void setLocationId(int locationId) {
+		this.locationId = locationId;
+	}
+	public int getCompanyTypeId() {
+		return companyTypeId;
+	}
+	public void setCompanyTypeId(int companyTypeId) {
+		this.companyTypeId = companyTypeId;
+	}
+	public String getLocationName() {
+		return locationName;
+	}
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
+	public String getCompanyTypeName() {
+		return companyTypeName;
+	}
+	public void setCompanyTypeName(String companyTypeName) {
+		this.companyTypeName = companyTypeName;
+	}
 	@Override
 	public String toString() {
 		return "ExhibitorWithOrgName [exhId=" + exhId + ", orgId=" + orgId + ", orgName=" + orgName + ", exhName="
@@ -151,7 +181,8 @@ public class ExhibitorWithOrgName {
 				+ ", personMob2=" + personMob2 + ", personEmail1=" + personEmail1 + ", personEmail2=" + personEmail2
 				+ ", address=" + address + ", compLat=" + compLat + ", compLong=" + compLong + ", userMob=" + userMob
 				+ ", password=" + password + ", aboutCompany=" + aboutCompany + ", companyType=" + companyType
-				+ ", isUsed=" + isUsed + "]";
+				+ ", isUsed=" + isUsed + ", locationId=" + locationId + ", companyTypeId=" + companyTypeId
+				+ ", locationName=" + locationName + ", companyTypeName=" + companyTypeName + "]";
 	}
 	
 	

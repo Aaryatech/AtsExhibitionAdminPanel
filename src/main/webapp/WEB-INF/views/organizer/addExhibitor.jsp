@@ -84,7 +84,30 @@
 								<br>
  
 								<div class="box-content">
+								
+								<div class="col-md-2">Company Type*</div>
+									<div class="col-md-3">
+										<select  name="companyTypeId" id="companyTypeId" class="form-control" required >
+											<option value="">select</option>
+										 <c:forEach items="${companyTypeList}" var="companyTypeList" >
+										 	<c:choose>
+										 		<c:when test="${companyTypeList.companyTypeId==editExhibitor.companyTypeId}">
+										 		<option value="${companyTypeList.companyTypeId}" selected>${companyTypeList.companyTypeName}</option>
+										 		</c:when>
+										 		<c:otherwise>
+										 		<option value="${companyTypeList.companyTypeId}"> ${companyTypeList.companyTypeName}</option>
+										 		</c:otherwise>
+										 	</c:choose>
+											
+										 
+									 
+									 	
+											</c:forEach>
+										  
+											</select>
 
+									</div>
+											<div class="col-md-1"></div>
 									<div class="col-md-2">About Company*</div>
 									<div class="col-md-3">
 										<textarea  name="aboutCompany" class="form-control"
@@ -191,14 +214,7 @@
 
 								</div>
 								<br>
-								<c:choose>
-									<c:when test="${editExhibitor.companyType==1}">
-									<c:set var="type" value="xyz"></c:set>
-									</c:when>
-									<c:otherwise>
-									<c:set var="type" value="pqr"></c:set>
-									</c:otherwise>
-								</c:choose>
+								 
 								<div class="box-content">
 
 									<div class="col-md-2">Address*</div>
@@ -208,15 +224,26 @@
 											placeholder="Address"  required />
 
 									</div>
- 
+  
 									<div class="col-md-1"></div>
-									<div class="col-md-2">Company Type*</div>
+									<div class="col-md-2">Select Location*</div>
 									<div class="col-md-3">
-										<select  name="companyType" class="form-control" required >
+										<select  name="location" class="form-control" required >
 										<option value="">select</option>
-										<option value="${editExhibitor.companyType}" selected>${type}</option>
-										<option value="0">xyz</option>
-										<option value="1">pqr</option>
+										  
+										 
+										  <c:forEach items="${locationList}" var="locationList" >
+										<c:choose>
+											<c:when test="${locationList.locationId==editExhibitor.locationId}">
+												<option value="${locationList.locationId}" selected>${locationList.locationName}</option>
+											</c:when>
+											<c:otherwise>
+											<option value="${locationList.locationId}">${locationList.locationName}</option>
+											</c:otherwise>
+										</c:choose>
+									 	
+											</c:forEach>  
+											
 											</select>
 
 									</div>

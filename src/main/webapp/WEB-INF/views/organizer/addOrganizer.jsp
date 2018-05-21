@@ -187,6 +187,36 @@
 
 								</div>
 								<br>
+								
+								<div class="box-content">
+
+								 
+									<div class="col-md-2">Select Location*</div>
+									<div class="col-md-3">
+										<select  name="location" class="form-control" required >
+										<option value="">select</option>
+										  
+										 
+										  <c:forEach items="${locationList}" var="locationList" >
+										<c:choose>
+											<c:when test="${locationList.locationId==editOrganiser.locationId}">
+												<option value="${locationList.locationId}" selected>${locationList.locationName}</option>
+											</c:when>
+											<c:otherwise>
+											<option value="${locationList.locationId}">${locationList.locationName}</option>
+											</c:otherwise>
+										</c:choose>
+									 	
+											</c:forEach>  
+											
+											</select>
+
+									</div>
+
+									 
+									 
+								</div>
+								<br>
 
 
 								<div class=" box-content">

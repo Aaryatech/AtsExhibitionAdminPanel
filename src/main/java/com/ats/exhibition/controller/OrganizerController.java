@@ -634,6 +634,7 @@ public class OrganizerController {
 	}
 	
 	List<EventExhMapping> eventExhMappingList = new ArrayList<EventExhMapping>();
+	List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>();
 	
 	@RequestMapping(value = "/eventMapList/{eventId}", method = RequestMethod.GET)
 	public ModelAndView eventMapList(@PathVariable int eventId,HttpServletRequest request, HttpServletResponse response) {
@@ -700,8 +701,14 @@ public class OrganizerController {
 		{ 
 			String[] checkbox=request.getParameterValues("select_to_approve");
 			 eventId = Integer.parseInt(request.getParameter("eventId"));
+			 String eventName = null;
 			 List<EventExhMapping> insert = new ArrayList<EventExhMapping>();
 			 
+			 for(int i = 0 ;i<eventList.size();i++)
+			 {
+				 if(eventList.get(i).getEventId()==eventId)
+					 eventName = eventList.get(i).getEventName();
+			 }
 			 for(int i = 0 ; i<eventExhMappingList.size();i++)
 				{
 					for(int j = 0; j<checkbox.length;j++)
@@ -710,7 +717,7 @@ public class OrganizerController {
 						{
 							EventExhMapping eventExh = new EventExhMapping();
 							eventExh.setEventId(eventId);
-							eventExh.setEventName("");
+							eventExh.setEventName(eventName);
 							eventExh.setExhId(eventExhMappingList.get(i).getExhId());
 							eventExh.setIsUsed(1); 
 							insert.add(eventExh);

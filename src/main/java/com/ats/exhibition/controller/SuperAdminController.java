@@ -15,13 +15,16 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.exhibition.common.Constants;
+import com.ats.model.CompanyType;
 import com.ats.model.EventExhMapping;
 import com.ats.model.EventWithOrgName;
 import com.ats.model.ExhibitorWithOrgName;
+import com.ats.model.Location;
 import com.ats.model.LoginResponse;
 import com.ats.model.Organiser;
 
@@ -96,12 +99,49 @@ RestTemplate rest = new RestTemplate();
 			
 			model.addObject("organiserList", organiserList);
 			
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
+					Location[].class); 
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+			 
+			
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
+					CompanyType[].class); 
+			List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+			
+			model.addObject("companyTypeList", companyTypeList);
+			model.addObject("locationList", locationList);
+			
 		}catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 
 		return model;
+	}
+	
+	@RequestMapping(value = "/eventListByOrganizerId", method = RequestMethod.GET)
+	@ResponseBody
+	public List<EventWithOrgName> eventListByOrganizerId(HttpServletRequest request, HttpServletResponse response) {
+
+		System.out.println("inside eventlist ajax");
+		List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>();
+		try
+		{ 
+			 int orgId = Integer.parseInt(request.getParameter("orgId"));
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", orgId);
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
+					EventWithOrgName[].class); 
+			 eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			 
+			 
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return eventList;
 	}
 	
 	@RequestMapping(value = "/exhibitorListByOrgId/{orgId}", method = RequestMethod.GET)
