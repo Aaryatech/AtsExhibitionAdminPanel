@@ -30,7 +30,7 @@ public class ExhibitorController {
 	@RequestMapping(value = "/showExhibitor", method = RequestMethod.GET)
 	public ModelAndView addLocation(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("organizer/exhibitor");
+		ModelAndView model = new ModelAndView("organizer/exhibitorSubscription");
 		try {
 			
 			Exhibitor[] exhibitor = rest.getForObject(Constants.url + "/getAllExhibitorsByIsUsed",
