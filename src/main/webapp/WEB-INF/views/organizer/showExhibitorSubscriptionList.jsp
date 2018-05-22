@@ -10,9 +10,6 @@
 
 	<c:url var="allRecordwithDate" value="/allRecordwithDate"></c:url>
 
-	<c:url var="getPackage" value="/getPackage"></c:url>
-	<c:url var="getToDate" value="/calculateToDate"></c:url>
-
 
 	<!-- BEGIN Sidebar -->
 	<div id="sidebar" class="navbar-collapse collapse">
@@ -34,7 +31,7 @@
 		<div class="page-title">
 			<div>
 				<h1>
-					<i class="fa fa-file-o"></i>Exhibitor Subscription
+					<i class="fa fa-file-o"></i>OrgSubscription List
 				</h1>
 
 				<!-- <h4>Bill for franchises</h4> -->
@@ -47,97 +44,82 @@
 		<div class="box" id="pending">
 			<div class="box-title">
 				<h3>
-					<i class="fa fa-bars"></i>Exhibitor Subscription
+					<i class="fa fa-bars"></i>OrgSubscription List
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/addExhSubscription">
-					</a> <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
+					<a href="${pageContext.request.contextPath}/showOrgSubscription">Add
+						OrgSubscription</a> <a data-action="collapse" href="#"><i
+						class="fa fa-chevron-up"></i></a>
 				</div>
 
 			</div>
 			<div class=" box-content">
-				<form
-					action="${pageContext.request.contextPath}/insertExhibitorSubscription"
-					method="post">
-					<div class="box-content">
 
-						<div class="col-md-2">Select Exhibitor*</div>
-						<div class="col-md-3">
-							<select id="exhId" name="exhId" class="form-control chosen"
-								required>
-								<option value=" ">Select Exhibitor</option>
-								<c:forEach items="${exhibitorList}" var="exhibitorList">
+				<div class="box-content">
 
-									<option value="${exhibitorList.exhId}">${exhibitorList.exhName}</option>
+					<br /> <br />
+					<div class="clearfix"></div>
+					<div class="table-responsive" style="border: 0">
+						<table class="table table-advance" id="table1">
+							<thead>
+								<tr>
+									<th style="width: 18px">Sr No</th>
+									<th>Exhibitor Name</th> 
+									<th>From Date</th>
+									<th>To Date</th>
+									<th>Cost</th>
+									<th>Paid Amount</th>
+									<th>Remaining Amount</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${exhibitorSubList}"
+									var="exhibitorSubList" varStatus="count">
+									<tr class="table-flag-blue">
+										<td>${count.index+1}</td>
+										<td>${exhibitorSubList.exhName}</td> 
+										<td>${exhibitorSubList.fromDate}</td>
+										<td>${exhibitorSubList.toDate}</td>
+										<td>${exhibitorSubList.totolAmt}</td>
+										<td>${exhibitorSubList.paidAmt}</td>
+										<td>${exhibitorSubList.remAmt}</td>
+								 
+												<td><a 
+												href="${pageContext.request.contextPath}/exhiSubscriptionTranDetail/${exhibitorSubList.subHeaderId}">Details<span
+												class="button"></span></a></td>
+									</tr>
 								</c:forEach>
-							</select>
-						</div>
-						<div class="col-md-2">Select Package*</div>
-						<div class="col-md-3">
-							<select id="pkgId" name="pkgId" onchange="onPackage(this.value)"
-								class="form-control chosen" required>
-								<option value=" ">Select Package</option>
-								<c:forEach items="${packageList}" var="packageList">
-									<option value="${packageList.pkgId}">${packageList.pkgName}</option>
-								</c:forEach>
-							</select>
-						</div>
+
+
+							</tbody>
+						</table>
 					</div>
-					<br>
-					<div class="box-content">
-						<div class="col-md-2">Package Amount*</div>
-						<div class="col-md-3">
-							<input type="text" name="pkgAmt" id="pkgAmt" class="form-control"readonly/ >
-						</div>
+				</div>
 
-					</div>
-					<br>
-
-					<div class="box-content">
-
-						<div class="col-md-2">From Date</div>
-						<div class="col-md-3">
-							<input type="text" name="fromDate"
-								value="${editEmployee.empJoiningDate}" placeholder="From Date"
-								onblur="calculateToDate()" id="fromDate"
-								class="form-control date-picker" required />
-						</div>
-
-
-						<div class="col-md-2">To Date</div>
-						<div class="col-md-3">
-							<input type="text" name="toDate"
-								value="${editEmployee.empJoiningDate}" placeholder="To Date"
-								id="toDate" class="form-control" required / readonly />
-						</div>
-
-
-					</div>
-					<br> <br>
-
-
-					<div class=" box-content">
-						<div class="col-md-12" style="text-align: center">
-							<input type="submit" class="btn btn-info" value="Submit"
-								id="submit">
-						</div>
-					</div>
-				</form>
 			</div>
-		</div>
-	</div>
 
+
+
+		</div>
+
+	</div>
 	<!-- END Main Content -->
+
+	<footer>
+		<p>2018 © SONA ELECTRICALS.</p>
+	</footer>
 
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
 		class="fa fa-chevron-up"></i></a>
+
 	<!--basic scripts-->
 	<script
 		src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script>
 		window.jQuery
 				|| document
-						.write('<script src="${pageContext.request.contextPath}/resources/assets/jquery/jquery-2.0.3.min.js"><\/script>')
+						.write('_$tag_________________________________________________________________________________________$tag_____')
 	</script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/bootstrap/js/bootstrap.min.js"></script>
@@ -188,8 +170,8 @@
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
-	<script>
-		function searchEventList() {
+		<script>
+	function searchEventList() {
 
 			var orgId = $('#orgId').val();
 
@@ -202,8 +184,13 @@
 		}
 	</script>
 
+	<script>
+		document.getElementById('isPay').addEventListener('change', function() {
+			var style = this.value == 1 ? 'block' : 'none';
+			document.getElementById('hidden_div').style.display = style;
 
-
+		});
+	</script>
 
 	<script type="text/javascript">
 		function calculateToDate() {
