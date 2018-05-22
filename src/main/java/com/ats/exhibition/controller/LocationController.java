@@ -29,6 +29,7 @@ import com.ats.model.ErrorMessage;
 import com.ats.model.Location;
 import com.ats.model.OrgSubscription;
 import com.ats.model.OrgSubscriptionDetail;
+import com.ats.model.OrgSubscriptionWithName;
 import com.ats.model.Organiser;
 import com.ats.model.Package1;
 
@@ -247,12 +248,104 @@ public class LocationController {
 					Organiser[].class);
 			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
 
-			Package1[] package1 = rest.getForObject(Constants.url + "/getAllPackagesByIsUsed", Package1[].class);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("pkgType", 2);
+			Package1[] package1 = rest.postForObject(Constants.url + "/getAllPackagesByPkgType", map, Package1[].class);
 			List<Package1> packageList = new ArrayList<Package1>(Arrays.asList(package1));
+			model.addObject("packageList", packageList);
 
 			model.addObject("organiserList", organiserList);
 
-			model.addObject("packageList", packageList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+
+	OrgSubscription res = new OrgSubscription();
+
+	@RequestMapping(value = "/insertOrgSubscription", method = RequestMethod.POST) // navigation from submit
+	public ModelAndView insertOrgSubscription(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/orgSubscriptionDetails");
+		try {
+
+			SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// dd/MM/yyyy
+
+			SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			Date now = new Date();
+			String strDate = sdfDate.format(now);
+
+			String orgId = request.getParameter("orgId");
+			String pkgId = request.getParameter("pkgId");
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+			String pkgAmt = request.getParameter("pkgAmt");
+
+			System.out.println("orgId" + orgId);
+			System.out.println("pkgId" + pkgId);
+			System.out.println("fromDate" + fromDate);
+			System.out.println("toDate" + toDate);
+
+			Date ymdFromDate = null;
+			Date ymdToDate = null;
+			try {
+				ymdFromDate = originalFormat.parse(fromDate);
+				ymdToDate = originalFormat.parse(toDate);
+
+				System.out.println("From date :   " + targetFormat.format(ymdFromDate));
+				System.out.println("TDate ymdToDate = null;\r\n" + "o Date :   " + targetFormat.format(ymdToDate));
+
+			} catch (ParseException ex) {
+				// Handle Exception.
+			}
+
+			OrgSubscription orgSubscription = new OrgSubscription();
+
+			orgSubscription.setSubId(0);
+			orgSubscription.setOrgId(Integer.parseInt(orgId));
+			orgSubscription.setPkgId(Integer.parseInt(pkgId));
+			orgSubscription.setFromDate(targetFormat.format(ymdFromDate));
+			orgSubscription.setToDate(targetFormat.format(ymdToDate));
+			orgSubscription.setIsUsed(1);
+			orgSubscription.setStatus(1);
+			orgSubscription.setPkgAmt(Float.parseFloat(pkgAmt));
+			orgSubscription.setTransDatetime(strDate);
+			orgSubscription.setPaidAmt(0);
+			orgSubscription.setRemAmt(Float.parseFloat(pkgAmt));
+
+			res = rest.postForObject(Constants.url + "/saveOrgSubscription", orgSubscription, OrgSubscription.class);
+			System.out.println("res" + res);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("subId", res.getSubId());
+			OrgSubscriptionWithName orgSubscriptionWithName = rest.postForObject(
+					Constants.url + "/getSubDetailsBySubIdAndIsUSed", map, OrgSubscriptionWithName.class);
+			model.addObject("orgSubscription", orgSubscriptionWithName);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/editOrgSubscriptionDetails/{subId}", method = RequestMethod.GET) // navigation from edit
+	public ModelAndView showOrgSubscriptionDetailsById(@PathVariable int subId, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/orgSubscriptionDetails");
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("subId", subId);
+			OrgSubscriptionWithName orgSubscription = rest.postForObject(
+					Constants.url + "/getSubDetailsBySubIdAndIsUSed", map, OrgSubscriptionWithName.class);
+
+			System.out.println("edit object " + orgSubscription.toString());
+			model.addObject("orgSubscription", orgSubscription);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -323,19 +416,18 @@ public class LocationController {
 		return list;
 	}
 
-	@RequestMapping(value = "/insertOrgSubscription", method = RequestMethod.POST)
-	public String insertOrgSubscription(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/insertOrgSubscriptionDetails", method = RequestMethod.POST)
+	public String insertOrgSubscriptionDetails(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 
 			SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// dd/MM/yyyy
-
 			SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
 			SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			Date now = new Date();
 			String strDate = sdfDate.format(now);
-
+			String paymentDate = "00-00-0000";
 			String orgId = request.getParameter("orgId");
 			String pkgId = request.getParameter("pkgId");
 			String fromDate = request.getParameter("fromDate");
@@ -343,16 +435,25 @@ public class LocationController {
 			int isPay = Integer.parseInt(request.getParameter("isPay"));
 			String pkgAmt = request.getParameter("pkgAmt");
 			String isCheque = request.getParameter("isCheque");
-			String paymentDate = request.getParameter("trDate");
-			String chequeDate = request.getParameter("chequeDate");			
-			
-			
+			try {
+				paymentDate = request.getParameter("trDate");
+
+			} catch (Exception e) {
+				// TODO: handle exception
+				paymentDate = "00-00-0000";
+			}
+			String chequeDate = request.getParameter("chequeDate");
+
 			System.out.println("orgId" + orgId);
 			System.out.println("pkgId" + pkgId);
 			System.out.println("fromDate" + fromDate);
 			System.out.println("toDate" + toDate);
 			System.out.println("IsPay" + isPay);
 			System.out.println("chequeDate" + chequeDate);
+
+			float paidAmt = Float.parseFloat(request.getParameter("paidAmt"));
+
+			String remAmt = request.getParameter("remAmt");
 
 			Date ymdFromDate = null;
 			Date ymdToDate = null;
@@ -362,100 +463,77 @@ public class LocationController {
 			try {
 				ymdFromDate = originalFormat.parse(fromDate);
 				ymdToDate = originalFormat.parse(toDate);
-ymdPayDate=originalFormat.parse(paymentDate);
-
+				ymdPayDate = originalFormat.parse(paymentDate);
 
 				System.out.println("From date :   " + targetFormat.format(ymdFromDate));
-				System.out.println("TDate ymdToDate = null;\r\n" + 
-						"o Date :   " + targetFormat.format(ymdToDate));
+				System.out.println("TDate ymdToDate = null;\r\n" + "o Date :   " + targetFormat.format(ymdToDate));
 
 			} catch (ParseException ex) {
 				// Handle Exception.
+				ex.printStackTrace();
 			}
 
-			OrgSubscription orgSubscription = new OrgSubscription();
 			OrgSubscriptionDetail orgSubscriptionDetail = new OrgSubscriptionDetail();
+			if (isPay != 0) {
 
-			orgSubscription.setSubId(0);
-			orgSubscription.setOrgId(Integer.parseInt(orgId));
-			orgSubscription.setPkgId(Integer.parseInt(pkgId));
-			orgSubscription.setFromDate(targetFormat.format(ymdFromDate));
-			orgSubscription.setToDate(targetFormat.format(ymdToDate));
-			orgSubscription.setIsUsed(1);
-			orgSubscription.setStatus(1);
-			orgSubscription.setPkgAmt(Float.parseFloat(pkgAmt));
-			orgSubscription.setTransDatetime(strDate);
-			
-			
-		
-
-			if (isPay!=0) {
-				String paidAmt = request.getParameter("paidAmt");
-				String remAmt = request.getParameter("remAmt");
-				
-				orgSubscription.setPaidAmt(Float.parseFloat(paidAmt));
-				orgSubscription.setRemAmt(Float.parseFloat(remAmt));
 				orgSubscriptionDetail.setPaymentDate(targetFormat.format(ymdPayDate));
-				orgSubscriptionDetail.setPaymentAmt(Float.parseFloat(paidAmt));
+				orgSubscriptionDetail.setPaymentAmt(paidAmt);
 				orgSubscriptionDetail.setChequeDate("0000-00-00");
-				
+
 				if (isCheque.equalsIgnoreCase("2")) {
 
 					String bankName = request.getParameter("bankName");
-					ymdchequeDate=originalFormat.parse(chequeDate);
+					ymdchequeDate = originalFormat.parse(chequeDate);
 
 					orgSubscriptionDetail.setPaymentMode(2);
-					
-					orgSubscriptionDetail.setPaymentAmt(Float.parseFloat(paidAmt));
+
+					orgSubscriptionDetail.setPaymentAmt(paidAmt);
 					orgSubscriptionDetail.setBankName(bankName);
-					
+
 					orgSubscriptionDetail.setChequeDate(targetFormat.format(ymdchequeDate));
 					orgSubscriptionDetail.setTrNo("");
 
-
 				} else if (isCheque.equalsIgnoreCase("3")) {
 					String trNo = request.getParameter("trNo");
-					
+
 					orgSubscriptionDetail.setPaymentMode(3);
 					orgSubscriptionDetail.setTrNo(trNo);
-					
-				} else if( isCheque.equalsIgnoreCase("1"))
-				{
+
+				} else if (isCheque.equalsIgnoreCase("1")) {
 					orgSubscriptionDetail.setPaymentMode(1);
 					orgSubscriptionDetail.setBankName("");
 					orgSubscriptionDetail.setTrNo("");
-				
+
 				}
-				
+
 			} else {
-				orgSubscription.setPaidAmt(0);
-				orgSubscription.setRemAmt(Float.parseFloat(pkgAmt));
+
 				orgSubscriptionDetail.setBankName("");
 				orgSubscriptionDetail.setChequeDate("0000-00-00");
 				orgSubscriptionDetail.setTrNo("");
 
 			}
 
-			OrgSubscription res = rest.postForObject(Constants.url + "/saveOrgSubscription", orgSubscription,
-					OrgSubscription.class);
+			res.setPaidAmt(paidAmt);
+			res.setRemAmt(Float.parseFloat(remAmt));
 
-			if(isPay==1)
-			{
+			res = rest.postForObject(Constants.url + "/saveOrgSubscription", res, OrgSubscription.class);
+
+			if (isPay == 1) {
 				orgSubscriptionDetail.setSubId(res.getSubId());
-				System.out.println("subId"+res.getSubId());
+				System.out.println("subId" + res.getSubId());
+				orgSubscriptionDetail.setSubId(res.getSubId());
 				OrgSubscriptionDetail res1 = rest.postForObject(Constants.url + "/saveOrgSubscrptionDetails",
 						orgSubscriptionDetail, OrgSubscriptionDetail.class);
-				System.out.println("res1"+res1);
+				System.out.println("res1" + res1);
 
 			}
-			
-			System.out.println("res " + res);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showOrgSubscription";
+		return "redirect:/editOrgSubscriptionDetails/" + res.getSubId();
 	}
 
 	@RequestMapping(value = "/orgSubscriptionList", method = RequestMethod.GET)
@@ -464,8 +542,45 @@ ymdPayDate=originalFormat.parse(paymentDate);
 		ModelAndView model = new ModelAndView("organizer/orgSubscriptionList");
 		try {
 
-			OrgSubscription[] orgSubscription = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsed", OrgSubscription[].class);
-			List<OrgSubscription> orgSubscriptionList = new ArrayList<OrgSubscription>(Arrays.asList(orgSubscription));
+			OrgSubscriptionWithName[] orgSubscriptionWithName = rest
+					.getForObject(Constants.url + "/getAllSubscriptions", OrgSubscriptionWithName[].class);
+			List<OrgSubscriptionWithName> orgSubscriptionList = new ArrayList<OrgSubscriptionWithName>(
+					Arrays.asList(orgSubscriptionWithName));
+
+			model.addObject("orgSubscriptionList", orgSubscriptionList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+
+	// getDetailsBySubIdAndIsUsed
+
+	@RequestMapping(value = "/orgSubscriptionDetailsList/{subId}", method = RequestMethod.GET)
+	public ModelAndView orgSubscriptionDetailsList(@PathVariable int subId, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/orgSubscriptionDetailsList");
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("subId", subId);
+			OrgSubscriptionWithName orgSubscription = rest.postForObject(
+					Constants.url + "/getSubDetailsBySubIdAndIsUSed", map, OrgSubscriptionWithName.class);
+
+			System.out.println("edit object " + orgSubscription.toString());
+			model.addObject("orgSubscription", orgSubscription);
+
+			/*
+			 * MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
+			 * Object>(); map.add("subId", subId);
+			 */
+			OrgSubscriptionDetail[] orgSubscriptionDetail = rest
+					.postForObject(Constants.url + "/getDetailsBySubIdAndIsUsed", map, OrgSubscriptionDetail[].class);
+			List<OrgSubscriptionDetail> orgSubscriptionList = new ArrayList<OrgSubscriptionDetail>(
+					Arrays.asList(orgSubscriptionDetail));
 
 			model.addObject("orgSubscriptionList", orgSubscriptionList);
 
