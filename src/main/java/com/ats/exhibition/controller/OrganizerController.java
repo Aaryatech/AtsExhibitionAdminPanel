@@ -1472,7 +1472,7 @@ public class OrganizerController {
 			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
 	  				EventWithOrgName[].class); 
 			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
-			
+		  	
 			model.addObject("eventList", eventList);
 			model.addObject("url", Constants.IMAGE_PATH);
 			
