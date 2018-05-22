@@ -57,7 +57,7 @@
 			
 			<div class=" box-content">
 				<form
-					action="${pageContext.request.contextPath}/insertOrgSubscriptionDetails"
+					action="${pageContext.request.contextPath}/addSubScriptionDetailTransaction"
 					method="post">
 					<div class="box-content">
 
@@ -119,9 +119,9 @@
 						
 						<div class="col-md-2">You have Paid</div>
 						<div class="col-md-3">
-							<input type="text" name="toDate"
-								value="${orgSubscription.paidAmt}" placeholder="To Date"
-								id="toDate" class="form-control" required / readonly/>
+							<input type="text" name="totalPaidAmt"
+								value="${orgSubscription.paidAmt}"  
+								id="totalPaidAmt" class="form-control"  readonly/>
 						</div>
 
 					</div><br>

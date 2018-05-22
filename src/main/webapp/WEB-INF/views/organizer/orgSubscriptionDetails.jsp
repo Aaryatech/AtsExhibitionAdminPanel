@@ -84,6 +84,8 @@
 						<div class="col-md-3">
 							<input type="text" name="pkgAmt" id="pkgAmt" class="form-control"
 								readonly="readonly" value="${orgSubscription.pkgAmt}" readonly/>
+							<input type="hidden" name="subId" id="subId" class="form-control"
+								  value="${orgSubscription.subId}"  />
 						</div>
 
 					</div>

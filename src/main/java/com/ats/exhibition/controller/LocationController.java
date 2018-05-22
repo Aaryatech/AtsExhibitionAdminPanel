@@ -311,7 +311,7 @@ public class LocationController {
 			orgSubscription.setFromDate(targetFormat.format(ymdFromDate));
 			orgSubscription.setToDate(targetFormat.format(ymdToDate));
 			orgSubscription.setIsUsed(1);
-			orgSubscription.setStatus(1);
+			orgSubscription.setStatus(0);
 			orgSubscription.setPkgAmt(Float.parseFloat(pkgAmt));
 			orgSubscription.setTransDatetime(strDate);
 			orgSubscription.setPaidAmt(0);
@@ -478,7 +478,7 @@ public class LocationController {
 
 				orgSubscriptionDetail.setPaymentDate(targetFormat.format(ymdPayDate));
 				orgSubscriptionDetail.setPaymentAmt(paidAmt);
-				orgSubscriptionDetail.setChequeDate("0000-00-00");
+				//orgSubscriptionDetail.setChequeDate("0000-00-00");
 
 				if (isCheque.equalsIgnoreCase("2")) {
 
@@ -509,7 +509,7 @@ public class LocationController {
 			} else {
 
 				orgSubscriptionDetail.setBankName("");
-				orgSubscriptionDetail.setChequeDate("0000-00-00");
+				//orgSubscriptionDetail.setChequeDate("0000-00-00");
 				orgSubscriptionDetail.setTrNo("");
 
 			}
@@ -570,6 +570,8 @@ public class LocationController {
 			map.add("subId", subId);
 			OrgSubscriptionWithName orgSubscription = rest.postForObject(
 					Constants.url + "/getSubDetailsBySubIdAndIsUSed", map, OrgSubscriptionWithName.class);
+			
+			res = rest.postForObject(Constants.url + "/getSubHeaderById", map, OrgSubscription.class);
 
 			System.out.println("edit object " + orgSubscription.toString());
 			model.addObject("orgSubscription", orgSubscription);
@@ -590,6 +592,125 @@ public class LocationController {
 		}
 
 		return model;
+	}
+	
+	
+	@RequestMapping(value = "/addSubScriptionDetailTransaction", method = RequestMethod.POST)
+	public String addSubScriptionDetailTransaction(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// dd/MM/yyyy
+			SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			Date now = new Date();
+			String strDate = sdfDate.format(now);
+			String paymentDate = "00-00-0000";
+			//String orgId = request.getParameter("orgId");
+			//String pkgId = request.getParameter("pkgId");
+			//String fromDate = request.getParameter("fromDate");
+			//String toDate = request.getParameter("toDate");
+			int isPay = Integer.parseInt(request.getParameter("isPay"));
+			String pkgAmt = request.getParameter("pkgAmt");
+			String isCheque = request.getParameter("isCheque");
+			try {
+				paymentDate = request.getParameter("trDate");
+
+			} catch (Exception e) {
+				// TODO: handle exception
+				paymentDate = "00-00-0000";
+			}
+			String chequeDate = request.getParameter("chequeDate");
+
+		 
+			System.out.println("IsPay" + isPay);
+			System.out.println("chequeDate" + chequeDate);
+			float totalPaidAmt = Float.parseFloat(request.getParameter("totalPaidAmt"));
+			float paidAmt = Float.parseFloat(request.getParameter("paidAmt"));
+
+			String remAmt = request.getParameter("remAmt");
+
+			/*Date ymdFromDate = null;
+			Date ymdToDate = null;*/
+			Date ymdPayDate = null;
+			Date ymdchequeDate = null;
+
+			try {
+				//ymdFromDate = originalFormat.parse(fromDate);
+				//ymdToDate = originalFormat.parse(toDate);
+				ymdPayDate = originalFormat.parse(paymentDate);
+
+//				System.out.println("From date :   " + targetFormat.format(ymdFromDate));
+//				System.out.println("TDate ymdToDate = null;\r\n" + "o Date :   " + targetFormat.format(ymdToDate));
+
+			} catch (ParseException ex) {
+				// Handle Exception.
+				ex.printStackTrace();
+			}
+
+			OrgSubscriptionDetail orgSubscriptionDetail = new OrgSubscriptionDetail();
+			if (isPay != 0) {
+
+				orgSubscriptionDetail.setPaymentDate(targetFormat.format(ymdPayDate));
+				orgSubscriptionDetail.setPaymentAmt(paidAmt);
+				//orgSubscriptionDetail.setChequeDate("0000-00-00");
+
+				if (isCheque.equalsIgnoreCase("2")) {
+
+					String bankName = request.getParameter("bankName");
+					ymdchequeDate = originalFormat.parse(chequeDate);
+
+					orgSubscriptionDetail.setPaymentMode(2);
+
+					orgSubscriptionDetail.setPaymentAmt(paidAmt);
+					orgSubscriptionDetail.setBankName(bankName);
+
+					orgSubscriptionDetail.setChequeDate(targetFormat.format(ymdchequeDate));
+					orgSubscriptionDetail.setTrNo("");
+
+				} else if (isCheque.equalsIgnoreCase("3")) {
+					String trNo = request.getParameter("trNo");
+
+					orgSubscriptionDetail.setPaymentMode(3);
+					orgSubscriptionDetail.setTrNo(trNo);
+
+				} else if (isCheque.equalsIgnoreCase("1")) {
+					orgSubscriptionDetail.setPaymentMode(1);
+					orgSubscriptionDetail.setBankName("");
+					orgSubscriptionDetail.setTrNo("");
+
+				}
+
+			} else {
+
+				orgSubscriptionDetail.setBankName("");
+				//orgSubscriptionDetail.setChequeDate("0000-00-00");
+				orgSubscriptionDetail.setTrNo("");
+
+			}
+
+			res.setPaidAmt(paidAmt+totalPaidAmt);
+			res.setRemAmt(Float.parseFloat(remAmt));
+
+			res = rest.postForObject(Constants.url + "/saveOrgSubscription", res, OrgSubscription.class);
+
+			if (isPay == 1) {
+				orgSubscriptionDetail.setSubId(res.getSubId());
+				orgSubscriptionDetail.setIsUsed(1); 
+				System.out.println("subId" + res.getSubId());
+				orgSubscriptionDetail.setSubId(res.getSubId());
+				OrgSubscriptionDetail res1 = rest.postForObject(Constants.url + "/saveOrgSubscrptionDetails",
+						orgSubscriptionDetail, OrgSubscriptionDetail.class);
+				System.out.println("res1" + res1);
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/orgSubscriptionDetailsList/" + res.getSubId();
 	}
 
 }
