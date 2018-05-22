@@ -1,6 +1,7 @@
 package com.ats.exhibition.controller;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,25 +18,25 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.exhibition.common.Constants;
-import com.ats.model.Exhibitor;
-import com.ats.model.Organiser;
+
+import com.ats.model.ExhibitorWithOrgName;
 import com.ats.model.Package1;
 
 @Controller
 @Scope("session")
 public class ExhibitorController {
 	RestTemplate rest = new RestTemplate();
-	
 
 	@RequestMapping(value = "/showExhibitor", method = RequestMethod.GET)
 	public ModelAndView addLocation(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("organizer/exhibitor");
+		ModelAndView model = new ModelAndView("organizer/exhibitorSubscription");
 		try {
-			
-			Exhibitor[] exhibitor = rest.getForObject(Constants.url + "/getAllExhibitorsByIsUsed",
-					Exhibitor[].class);
-			List<Exhibitor> exhibitorList = new ArrayList<Exhibitor>(Arrays.asList(exhibitor));
+
+			ExhibitorWithOrgName[] exhibitorWithOrgName = rest.getForObject(Constants.url + "/getAllExhibitorsByIsUsed",
+					ExhibitorWithOrgName[].class);
+			List<ExhibitorWithOrgName> exhibitorList = new ArrayList<ExhibitorWithOrgName>(
+					Arrays.asList(exhibitorWithOrgName));
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("pkgType", 2);
@@ -51,6 +52,5 @@ public class ExhibitorController {
 
 		return model;
 	}
-
 
 }

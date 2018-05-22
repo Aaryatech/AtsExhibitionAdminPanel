@@ -9,6 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>Dashboard - Admin</title>
 <meta name="description" content="">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -175,10 +176,9 @@
 				 <li>
 						<a href="${pageContext.request.contextPath}/showExhibitor">Add Exhibitor Subscription</a>
 					</li>
-					</ul>  
-					
+				 
 					 <li>
-						<a href="${pageContext.request.contextPath}/exhSubscriptionList">Exhibitor Subscription List</a>
+						<a href="${pageContext.request.contextPath}/showExhibitorList">Exhibitor Subscription List</a>
 					</li>
 					</ul>  
 				
