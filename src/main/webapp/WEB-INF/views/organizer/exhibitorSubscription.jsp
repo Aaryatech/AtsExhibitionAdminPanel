@@ -66,10 +66,10 @@
 							<select id="exhId" name="exhId" class="form-control chosen"
 								required>
 								<option value=" ">Select Exhibitor</option>
-						 <%-- <c:forEach items="${exhibitorList}" var="exhibitorList">
+								<c:forEach items="${exhibitorList}" var="exhibitorList">
 
 									<option value="${exhibitorList.exhId}">${exhibitorList.exhName}</option>
-								</c:forEach>  --%>
+								</c:forEach>
 							</select>
 						</div>
 						<div class="col-md-2">Select Package*</div>
