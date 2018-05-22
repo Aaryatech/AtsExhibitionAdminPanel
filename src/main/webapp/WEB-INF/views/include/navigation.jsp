@@ -172,7 +172,14 @@
 					 <li>
 						<a href="${pageContext.request.contextPath}/orgSubscriptionList">Organizer Subscription List</a>
 					</li>
-				
+				 <li>
+						<a href="${pageContext.request.contextPath}/showExhibitor">Add Exhibitor Subscription</a>
+					</li>
+					</ul>  
+					
+					 <li>
+						<a href="${pageContext.request.contextPath}/exhSubscriptionList">Exhibitor Subscription List</a>
+					</li>
 					</ul>  
 				
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>

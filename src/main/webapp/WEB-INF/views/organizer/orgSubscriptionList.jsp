@@ -86,10 +86,12 @@
 										<td>${orgSubscriptionList.pkgAmt}</td>
 										<td>${orgSubscriptionList.paidAmt}</td>
 										<td>${orgSubscriptionList.remAmt}</td>
-										<td><a
+								<%--  <td><a
 											href="${pageContext.request.contextPath}/editOrgSubscriptionDetails/${orgSubscriptionList.subId}"><span
-												class="glyphicon glyphicon-edit"></span></a> <a
-											href="${pageContext.request.contextPath}/orgSubscriptionDetailsList/${orgSubscriptionList.subId}">Details<span
+												class="glyphicon glyphicon-edit"></span></a>  </td>
+												 --%>
+												<td><a 
+												href="${pageContext.request.contextPath}/orgSubscriptionDetailsList/${orgSubscriptionList.subId}">Details<span
 												class="button"></span></a></td>
 									</tr>
 								</c:forEach>
