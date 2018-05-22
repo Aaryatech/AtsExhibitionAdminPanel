@@ -175,10 +175,9 @@
 				 <li>
 						<a href="${pageContext.request.contextPath}/showExhibitor">Add Exhibitor Subscription</a>
 					</li>
-					</ul>  
-					
+				 
 					 <li>
-						<a href="${pageContext.request.contextPath}/exhSubscriptionList">Exhibitor Subscription List</a>
+						<a href="${pageContext.request.contextPath}/showExhibitorList">Exhibitor Subscription List</a>
 					</li>
 					</ul>  
 				
