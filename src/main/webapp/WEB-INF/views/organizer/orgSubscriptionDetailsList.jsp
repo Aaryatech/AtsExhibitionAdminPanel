@@ -92,7 +92,7 @@
 							<input type="text" name="fromDate"
 								value="${orgSubscription.fromDate}" placeholder="From Date"
 								onblur="calculateToDate()" id="fromDate"
-								class="form-control date-picker" required / readonly/>
+								class="form-control" readonly/>
 						</div>
 
 
@@ -100,7 +100,7 @@
 						<div class="col-md-3">
 							<input type="text" name="toDate"
 								value="${orgSubscription.toDate}" placeholder="To Date"
-								id="toDate" class="form-control date-picker" required / readonly/>
+								id="toDate" class="form-control" readonly/>
 						</div>
 
 
@@ -149,7 +149,7 @@
 								<input type="text" id="paidAmt" name="paidAmt"
 									 class="form-control"
 									value="${editEmployee.empName}" onchange="onAmount();" placeholder=" Paid Amount" />
-								<input type="hidden" name="empId" value="" />
+								<input type="hidden" name="empId" value="" required="required"/>
 							</div>
 
 							<div class="col-md-2">Remaining Amount.*</div>
