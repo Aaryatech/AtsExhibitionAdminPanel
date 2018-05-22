@@ -1470,7 +1470,7 @@ public class OrganizerController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("orgId", login.getOrganiser().getOrgId());
 			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
-					EventWithOrgName[].class); 
+	  				EventWithOrgName[].class); 
 			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
 			
 			model.addObject("eventList", eventList);
