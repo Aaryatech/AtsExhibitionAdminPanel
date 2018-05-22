@@ -249,7 +249,7 @@ public class LocationController {
 			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("pkgType", 2);
+			map.add("pkgType", 1);
 			Package1[] package1 = rest.postForObject(Constants.url + "/getAllPackagesByPkgType", map, Package1[].class);
 			List<Package1> packageList = new ArrayList<Package1>(Arrays.asList(package1));
 			model.addObject("packageList", packageList);
