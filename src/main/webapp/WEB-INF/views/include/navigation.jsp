@@ -166,7 +166,12 @@
 					 <li>
 				  	<a href="${pageContext.request.contextPath}/organizerPakageList">Organizer Package List</a>
 					</li>
-					
+					 <li>
+						<a href="${pageContext.request.contextPath}/showOrgSubscription">Add Organizer Subscription</a>
+					</li>
+					 <li>
+						<a href="${pageContext.request.contextPath}/orgSubscriptionList">Organizer Subscription List</a>
+					</li>
 				
 					</ul>  
 				
