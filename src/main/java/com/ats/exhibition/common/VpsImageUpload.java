@@ -13,7 +13,7 @@ public class VpsImageUpload {
 	public static final String FR_FOLDER = "/home/ats-12/";
 	public static final String SPONSOR_FOLDER = "/home/ats-12/";
 
-	public static final String MSG_FOLDER = "/opt/tomcat-latest/webapps/uploads/MSG/";
+	public static final String GALLARY_FOLDER = "/home/ats-12/";
 	
 	public static final String M_SP_CAKE_FOLDER = "/opt/tomcat-latest/webapps/uploads/MSPCAKE/";
 	
@@ -55,7 +55,7 @@ public class VpsImageUpload {
 
 			} else if (imageType == 3) {
 
-				path = Paths.get(MSG_FOLDER + imageName);
+				path = Paths.get(GALLARY_FOLDER + imageName);
 
 			}else if (imageType == 4) {
 

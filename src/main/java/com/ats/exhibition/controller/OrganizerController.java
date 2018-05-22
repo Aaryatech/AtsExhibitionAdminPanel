@@ -33,6 +33,8 @@ import com.ats.model.CommitteeMembers;
 import com.ats.model.CompanyType;
 import com.ats.model.ErrorMessage;
 import com.ats.model.EventExhMapping;
+import com.ats.model.EventPhoto;
+import com.ats.model.EventPhotoWithEventName;
 import com.ats.model.EventWithOrgName;
 import com.ats.model.Events;
 import com.ats.model.Exhibitor;
@@ -1457,8 +1459,108 @@ public class OrganizerController {
 		System.out.println("Edit ScheduleDetail Ajax: "+getScheduleDetail.toString());
 		return getScheduleDetail;
 	}
+	@RequestMapping(value = "/showGallary", method = RequestMethod.GET)
+	public ModelAndView showGallary(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/gallary");
+		try
+		{ 	
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", login.getOrganiser().getOrgId());
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
+					EventWithOrgName[].class); 
+			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			
+			model.addObject("eventList", eventList);
+			model.addObject("url", Constants.IMAGE_PATH);
+			
+			List<EventPhotoWithEventName> allGallaryList=rest.postForObject(Constants.url + "/getAllPhotoByOrgId",map, 
+					List.class); 
+			model.addObject("gallaryList", allGallaryList);
+
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		return model;
+	}
+	@RequestMapping(value = "/insertGallary", method = RequestMethod.POST)
+	public  String insertGallary(HttpServletRequest request, HttpServletResponse response,@RequestParam("img1") List<MultipartFile> img1) {
 		
-		
+		RestTemplate restTemplate=new RestTemplate();
+	    SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		ErrorMessage  eMessage = null;
+		try
+		{
+			int photoId=0;
+					try {
+						photoId=Integer.parseInt(request.getParameter("photoId"));
+					}
+			catch (Exception e) {
+				photoId=0;
+			}
+			int eventId=Integer.parseInt(request.getParameter("eventId"));
+			System.out.println("eventId"+eventId);	
+						
+			VpsImageUpload upload = new VpsImageUpload();
+
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			
+			String curTimeStamp = sdf.format(cal.getTime());
+			String photoLink="";
+			if(!img1.isEmpty())
+			{
+			try {
+				
+				upload.saveUploadedFiles(img1, Constants.GALLARY_TYPE, curTimeStamp + "-" + img1.get(0).getOriginalFilename());
+				System.out.println("upload method called " + img1.toString());
+				photoLink=img1.get(0).getOriginalFilename();
+				
+			} catch (IOException e) {
+				
+				System.out.println("Exce in File Upload In Product Insert " + e.getMessage());
+				e.printStackTrace();
+			}
+			}
+			
+			EventPhoto eventPhoto=new EventPhoto();
+			eventPhoto.setPhotoId(photoId);
+			eventPhoto.setEventId(eventId);
+			eventPhoto.setPhotoLink(photoLink);
+			eventPhoto.setIsUsed(1);
+			
+			EventPhoto eventPhotoRes=rest.postForObject(Constants.url+"saveEventPhoto", eventPhoto, EventPhoto.class);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "redirect:/showGallary";
+	}
+	@RequestMapping(value = "/deleteGallary/{photoId}", method = RequestMethod.GET)
+	public String deleteGallary(@PathVariable int photoId, HttpServletRequest request, HttpServletResponse response) {
+
+		//ModelAndView model = new ModelAndView("organizer/addOrganizer");
+		try
+		{
+			 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("photoId", photoId);
+			ErrorMessage delete = rest.postForObject(Constants.url + "/deleteEventPhoto",map,
+					ErrorMessage.class); 
+			System.out.println(delete);
+			 
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return "redirect:/showGallary";
+	}
 }
 
 
