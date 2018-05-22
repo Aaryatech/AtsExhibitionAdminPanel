@@ -178,7 +178,7 @@
 					</li>
 				 
 					 <li>
-						<a href="${pageContext.request.contextPath}/showExhibitorList">Exhibitor Subscription List</a>
+						<a href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor Subscription List</a>
 					</li>
 					</ul>  
 				

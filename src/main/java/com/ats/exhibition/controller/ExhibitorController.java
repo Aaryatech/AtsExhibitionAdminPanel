@@ -28,7 +28,7 @@ public class ExhibitorController {
 	RestTemplate rest = new RestTemplate();
 
 	@RequestMapping(value = "/showExhibitor", method = RequestMethod.GET)
-	public ModelAndView addLocation(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showExhibitor(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("organizer/exhibitorSubscription");
 		try {
@@ -46,6 +46,20 @@ public class ExhibitorController {
 
 			model.addObject("exhibitorList", exhibitorList);
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/showExhibitorSubscriptionList", method = RequestMethod.GET)
+	public ModelAndView showExhibitorSubscriptionList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/exhibitorSubscriptionList");
+		try {
+
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
