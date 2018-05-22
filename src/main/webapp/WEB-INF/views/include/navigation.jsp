@@ -154,6 +154,10 @@
 				    <li>
 				  	<a href="${pageContext.request.contextPath}/showExhibitorList">All Exhibitor List By Organizer</a>
 					</li>
+					
+					<li>
+				  	<a href="${pageContext.request.contextPath}/exhibitorListByLocationAndCompType">All Exhibitor By Location And Company Type</a>
+					</li>
 					 
 					  <li>
 				  	<a href="${pageContext.request.contextPath}/exhibitorPakageList">Exhibitor Package List</a>
@@ -162,7 +166,12 @@
 					 <li>
 				  	<a href="${pageContext.request.contextPath}/organizerPakageList">Organizer Package List</a>
 					</li>
-					
+					 <li>
+						<a href="${pageContext.request.contextPath}/showOrgSubscription">Add Organizer Subscription</a>
+					</li>
+					 <li>
+						<a href="${pageContext.request.contextPath}/orgSubscriptionList">Organizer Subscription List</a>
+					</li>
 				
 					</ul>  
 				

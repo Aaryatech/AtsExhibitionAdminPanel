@@ -47,7 +47,7 @@
 					<i class="fa fa-bars"></i>OrgSubscription List
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/">Add
+					<a href="${pageContext.request.contextPath}/showOrgSubscription">Add
 						OrgSubscription</a> <a data-action="collapse" href="#"><i
 						class="fa fa-chevron-up"></i></a>
 				</div>
@@ -64,10 +64,10 @@
 							<thead>
 								<tr>
 									<th style="width: 18px">Sr No</th>
-									<th>Org Id</th>
+									<th>Org Name</th>
 									<th>Package Name</th>
-									<th>From Date </th>
-									<th>To Date</th> 
+									<th>From Date</th>
+									<th>To Date</th>
 									<th>Cost</th>
 									<th>Paid Amount</th>
 									<th>Remaining Amount</th>
@@ -75,22 +75,22 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${orgSubscriptionList}" var="orgSubscriptionList" varStatus="count">
+								<c:forEach items="${orgSubscriptionList}"
+									var="orgSubscriptionList" varStatus="count">
 									<tr class="table-flag-blue">
 										<td>${count.index+1}</td>
-										<td>${orgSubscriptionList.orgId}</td>
-											<td>${orgSubscriptionList.pkgId}</td>
+										<td>${orgSubscriptionList.orgName}</td>
+										<td>${orgSubscriptionList.pkgName}</td>
 										<td>${orgSubscriptionList.fromDate}</td>
 										<td>${orgSubscriptionList.toDate}</td>
 										<td>${orgSubscriptionList.pkgAmt}</td>
-											<td>${orgSubscriptionList.paidAmt}</td>
-												<td>${orgSubscriptionList.remAmt}</td>
-										 
-										 <td><a href="${pageContext.request.contextPath}/editEvent/${orgSubscriptionList.subId}"><span
-												class="glyphicon glyphicon-edit"></span></a> 
-											<a href="${pageContext.request.contextPath}/deleteEvent/${orgSubscriptionList.subId}"
-											onClick="return confirm('Are you sure want to delete this record');"><span
-												class="glyphicon glyphicon-remove"></span></a></td>  
+										<td>${orgSubscriptionList.paidAmt}</td>
+										<td>${orgSubscriptionList.remAmt}</td>
+										<td><a
+											href="${pageContext.request.contextPath}/editOrgSubscriptionDetails/${orgSubscriptionList.subId}"><span
+												class="glyphicon glyphicon-edit"></span></a> <a
+											href="${pageContext.request.contextPath}/orgSubscriptionDetailsList/${orgSubscriptionList.subId}">Details<span
+												class="button"></span></a></td>
 									</tr>
 								</c:forEach>
 
@@ -116,17 +116,13 @@
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
 		class="fa fa-chevron-up"></i></a>
 
-
-
-
-
 	<!--basic scripts-->
 	<script
 		src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script>
 		window.jQuery
 				|| document
-						.write('<script src="${pageContext.request.contextPath}/resources/assets/jquery/jquery-2.0.3.min.js"><\/script>')
+						.write('_$tag_________________________________________________________________________________________$tag_____')
 	</script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/bootstrap/js/bootstrap.min.js"></script>
@@ -177,7 +173,100 @@
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
+	function searchEventList() {
 
+			var orgId = $('#orgId').val();
+
+			if (orgId != "" && orgId != null) {
+				window.location.href = '${pageContext.request.contextPath}/eventListByOrgId/'
+						+ orgId + '';
+
+			}
+
+		}
+	</script>
+
+	<script>
+		document.getElementById('isPay').addEventListener('change', function() {
+			var style = this.value == 1 ? 'block' : 'none';
+			document.getElementById('hidden_div').style.display = style;
+
+		});
+	</script>
+
+	<script type="text/javascript">
+		function calculateToDate() {
+
+			var pkgId = $('#pkgId').val();
+			var fromDate = $('#fromDate').val();
+
+			$.getJSON('${getToDate}', {
+				pkgId : pkgId,
+				fromDate : fromDate,
+				ajax : 'true'
+			}, function(data) {
+
+				document.getElementById("toDate").value = data;
+			});
+
+		}
+	</script>
+	<script>
+		document
+				.getElementById('isCheque')
+				.addEventListener(
+						'change',
+						function() {
+
+							var style = this.value == 2 ? 'block' : 'none';
+
+							document.getElementById('hidden_div2').style.display = style;
+
+						});
+	</script>
+
+	<script>
+		document
+				.getElementById('isCheque')
+				.addEventListener(
+						'change',
+						function() {
+
+							var style = this.value == 3 ? 'block' : 'none';
+
+							document.getElementById('hidden_div3').style.display = style;
+
+						});
+	</script>
+
+	<script type="text/javascript">
+		function onPackage(pkgId) {
+
+			//pkgId
+
+			$.getJSON('${getPackage}', {
+				pkgId : pkgId,
+				ajax : 'true'
+
+			}, function(data) {
+				alert(data)
+
+				document.getElementById("pkgAmt").value = data.pkgAmt;
+
+			});
+
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		function onAmount(paidAmt) {
+			var pkgAmt = parseFloat($('#pkgAmt').val());
+			var remAmt = pkgAmt - paidAmt;
+			document.getElementById("remAmt").value = remAmt;
+
+		}
+	</script>
 
 
 </body>
