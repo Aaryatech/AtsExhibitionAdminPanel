@@ -44,11 +44,11 @@
 		<div class="box" id="pending">
 			<div class="box-title">
 				<h3>
-					<i class="fa fa-bars"></i>OrgSubscription List
+					<i class="fa fa-bars"></i>Exhibitor Subscription List
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/showOrgSubscription">Add
-						OrgSubscription</a> <a data-action="collapse" href="#"><i
+					<a href="${pageContext.request.contextPath}/">Add
+						Exh Subscription</a> <a data-action="collapse" href="#"><i
 						class="fa fa-chevron-up"></i></a>
 				</div>
 
@@ -64,11 +64,10 @@
 							<thead>
 								<tr>
 									<th style="width: 18px">Sr No</th>
-									<th>Org Name</th>
-									<th>Package Name</th>
+									<th>Exhibitor Name</th>
 									<th>From Date</th>
 									<th>To Date</th>
-									<th>Cost</th>
+									<th>Total Amount</th>
 									<th>Paid Amount</th>
 									<th>Remaining Amount</th>
 									<th>Action</th>
