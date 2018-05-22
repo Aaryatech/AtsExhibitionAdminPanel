@@ -597,6 +597,31 @@ RestTemplate rest = new RestTemplate();
 	}
 	
 	
+	@RequestMapping(value = "/addExhibitorSub", method = RequestMethod.GET)
+	public ModelAndView showOrgSubscription(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("SuperAdmin/addExhibitorSub");
+		try {
+
+			Organiser[] organiser = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsedAndIsActive",
+					Organiser[].class);
+			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("pkgType", 2);
+			Package1[] package1 = rest.postForObject(Constants.url + "/getAllPackagesByPkgType", map, Package1[].class);
+			List<Package1> packageList = new ArrayList<Package1>(Arrays.asList(package1));
+			model.addObject("packageList", packageList);
+
+			model.addObject("organiserList", organiserList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
 
 
 }

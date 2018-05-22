@@ -10,6 +10,9 @@
 
 	<c:url var="allRecordwithDate" value="/allRecordwithDate"></c:url>
 
+	<c:url var="getPackage" value="/getPackage"></c:url>
+	<c:url var="getToDate" value="/calculateToDate"></c:url>
+
 
 	<!-- BEGIN Sidebar -->
 	<div id="sidebar" class="navbar-collapse collapse">
@@ -31,7 +34,7 @@
 		<div class="page-title">
 			<div>
 				<h1>
-					<i class="fa fa-file-o"></i>OrgSubscriptionDetail List
+					<i class="fa fa-file-o"></i>Org Subscription
 				</h1>
 
 				<!-- <h4>Bill for franchises</h4> -->
@@ -44,42 +47,47 @@
 		<div class="box" id="pending">
 			<div class="box-title">
 				<h3>
-					<i class="fa fa-bars"></i>OrgSubscriptionDetail List
+					<i class="fa fa-bars"></i>Org Subscription
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/orgSubscriptionList">
-						OrgSubscription List</a> <a data-action="collapse" href="#"><i
-						class="fa fa-chevron-up"></i></a>
+					<a href="${pageContext.request.contextPath}/addOrganizer"> </a> <a
+						data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
 				</div>
 
 			</div>
-			
-			
 			<div class=" box-content">
 				<form
-					action="${pageContext.request.contextPath}/insertOrgSubscriptionDetails"
+					action="${pageContext.request.contextPath}/insertOrgSubscription"
 					method="post">
 					<div class="box-content">
 
 						<div class="col-md-2">Select Organizer*</div>
 						<div class="col-md-3">
-						<input type="text" name="pkgAmt" id="pkgAmt" class="form-control"
-								readonly="readonly" value="${orgSubscription.orgName}" readonly/>
-							 
+							<select id="orgId" name="orgId" class="form-control chosen"
+								required>
+								<option value=" ">Select Organizer</option>
+								<c:forEach items="${organiserList}" var="organiserList">
+
+									<option value="${organiserList.orgId}">${organiserList.orgName}</option>
+								</c:forEach>
+							</select>
 						</div>
 						<div class="col-md-2">Select Package*</div>
 						<div class="col-md-3">
-						<input type="text" name="pkgAmt" id="pkgAmt" class="form-control"
-								readonly="readonly" value="${orgSubscription.pkgName}" readonly/>
-						 
+							<select id="pkgId" name="pkgId" onchange="onPackage(this.value)"
+								class="form-control chosen" required>
+								<option value=" ">Select Package</option>
+								<c:forEach items="${packageList}" var="packageList">
+									<option value="${packageList.pkgId}">${packageList.pkgName}</option>
+								</c:forEach>
+							</select>
 						</div>
 					</div>
 					<br>
 					<div class="box-content">
 						<div class="col-md-2">Package Amount*</div>
 						<div class="col-md-3">
-							<input type="text" name="pkgAmt" id="pkgAmt" class="form-control"
-								readonly="readonly" value="${orgSubscription.pkgAmt}" readonly/>
+							<input type="text" name="pkgAmt" id="pkgAmt" class="form-control" readonly/ >
 						</div>
 
 					</div>
@@ -90,137 +98,23 @@
 						<div class="col-md-2">From Date</div>
 						<div class="col-md-3">
 							<input type="text" name="fromDate"
-								value="${orgSubscription.fromDate}" placeholder="From Date"
+								value="${editEmployee.empJoiningDate}" placeholder="From Date"
 								onblur="calculateToDate()" id="fromDate"
-								class="form-control date-picker" required / readonly/>
+								class="form-control date-picker" required />
 						</div>
 
 
 						<div class="col-md-2">To Date</div>
 						<div class="col-md-3">
 							<input type="text" name="toDate"
-								value="${orgSubscription.toDate}" placeholder="To Date"
+								value="${editEmployee.empJoiningDate}" placeholder="To Date"
 								id="toDate" class="form-control date-picker" required / readonly/>
 						</div>
 
 
 					</div>
 					<br> <br>
-					<div class=" box-content">
-						<div class="col-md-2">Do you Want to pay Amount??</div>
-						<div class="col-md-3">
-							<select id="isPay" name="isPay" class="form-control">
 
-								<option value="0">No</option>
-								<option value="1">Yes</option>
-							</select>
-
-						</div>
-						
-						<div class="col-md-2">You have Paid</div>
-						<div class="col-md-3">
-							<input type="text" name="toDate"
-								value="${orgSubscription.paidAmt}" placeholder="To Date"
-								id="toDate" class="form-control" required / readonly/>
-						</div>
-
-					</div><br>
-					
-					<div class=" box-content">
-						 
-						
-						<div class="col-md-2">Remain Amt</div>
-						<div class="col-md-3">
-							<input type="text" name="remainingAmt"  
-								value="${orgSubscription.remAmt}" placeholder="Remaining Amount"
-								id="remainingAmt" class="form-control" required / readonly/>
-						</div>
-
-					</div>
-<br>
-				
-
-
-					<div id="hidden_div" style="display: none;">
-						<div class="box-content">
-
-							<div class="col-md-2">Paid Amount*</div>
-							<div class="col-md-3">
-								<input type="text" id="paidAmt" name="paidAmt"
-									 class="form-control"
-									value="${editEmployee.empName}" onchange="onAmount();" placeholder=" Paid Amount" />
-								<input type="hidden" name="empId" value="" />
-							</div>
-
-							<div class="col-md-2">Remaining Amount.*</div>
-							<div class="col-md-3">
-								<input type="text" id="remAmt" name="remAmt"
-									value="${editEmployee.empMobile}" class="form-control"
-									placeholder=" Remaining Amount " /> <input type="hidden"
-									name="empId" value="" />
-
-							</div>
-						</div>
-						<br>
-						<div class="box-content">
-
-							<div class="col-md-2">Select Mode Of Payment*</div>
-							<div class="col-md-3">
-
-								<select id="isCheque" name="isCheque" class="form-control">
-
-									<option value="1">Cash</option>
-									<option value="2">Cheque</option>
-									<option value="3">Online</option>
-
-								</select>
-							</div>
-
-
-							<div class="col-md-2">Transaction Date</div>
-							<div class="col-md-3">
-								<input type="text" name="trDate" placeholder="Transaction Date"
-									id="trDate" class="form-control date-picker" />
-							</div>
-
-						</div>
-
-					</div>
-					<br> <br>
-					<div id="hidden_div2" style="display: none;">
-						<div class="box-content">
-
-							<div class="col-md-2">Bank Name*</div>
-							<div class="col-md-3">
-								<input type="text" id="bankName" name="bankName"
-									value="${editEmployee.empDesignation}" class="form-control"
-									placeholder="Bank Name" />
-							</div>
-
-							<div class="col-md-1"></div>
-							<div class="col-md-2">Cheque Date*</div>
-							<div class="col-md-3">
-								<input type="text" id=chequeDate name="chequeDate"
-									value="${editEmployee.empPerHrRate}"
-									class="form-control date-picker" placeholder="Cheque Date" />
-							</div>
-						</div>
-					</div>
-					<br>
-
-					<div id="hidden_div3" style="display: none;">
-						<div class="box-content">
-
-							<div class="col-md-2">Transaction No*</div>
-							<div class="col-md-3">
-								<input type="text" id="trNo" name="trNo"
-									value="${editEmployee.empDesignation}" class="form-control"
-									placeholder="Transaction No" />
-							</div>
-
-						</div>
-					</div>
-					<br>
 
 					<div class=" box-content">
 						<div class="col-md-12" style="text-align: center">
@@ -230,84 +124,13 @@
 					</div>
 				</form>
 			</div>
-			
-			
-			
-			
-			<div class=" box-content">
-
-				<div class="box-content">
-
-					<br /> <br />
-					<div class="clearfix"></div>
-					<div class="table-responsive" style="border: 0">
-						<table class="table table-advance" id="table1">
-							<thead>
-								<tr>
-
-									<th style="width: 18px">Sr No</th>
-									<th>Sub Id</th>
-									<th>Payment Date</th>
-									<th>Payment Amount</th>
-									<th>Mode OF Payment</th>
-									<th>Transaction No</th>
-									<th>Bank Name</th>
-								
-									<th>Cheque Date</th>
-
-
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${orgSubscriptionList}"
-									var="orgSubscriptionList" varStatus="count">
-
-									<c:choose>
-										<c:when test="${orgSubscriptionList.paymentMode==1}">
-											<c:set var="modType" value="Cash"></c:set>
-										</c:when>
-										<c:when test="${orgSubscriptionList.paymentMode==2}">
-											<c:set var="modType" value="Check"></c:set>
-										</c:when>
-										<c:otherwise>
-											<c:set var="modType" value="Online"></c:set>
-										</c:otherwise>
-									</c:choose>
-
-									<tr class="table-flag-blue">
-										<td>${count.index+1}</td>
-										<td>${orgSubscriptionList.subId}</td>
-										<td>${orgSubscriptionList.paymentDate}</td>
-										<td>${orgSubscriptionList.paymentAmt}</td>
-										<td>${modType}</td>
-										<td>${orgSubscriptionList.trNo}</td>
-										<td>${orgSubscriptionList.bankName}</td>
-
-										<td>${orgSubscriptionList.chequeDate}</td>
-								</c:forEach>
-
-
-							</tbody>
-						</table>
-					</div>
-				</div>
-
-			</div>
-
-
-
 		</div>
-
 	</div>
-	<!-- END Main Content -->
 
-	<footer>
-		<p>2018 © SONA ELECTRICALS.</p>
-	</footer>
+	<!-- END Main Content -->
 
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
 		class="fa fa-chevron-up"></i></a>
-
 	<!--basic scripts-->
 	<script
 		src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -365,8 +188,8 @@
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
-	<script type="text/javascript">	
-			function searchEventList() {
+	<script>
+		function searchEventList() {
 
 			var orgId = $('#orgId').val();
 
@@ -379,13 +202,8 @@
 		}
 	</script>
 
-	<script>
-		document.getElementById('isPay').addEventListener('change', function() {
-			var style = this.value == 1 ? 'block' : 'none';
-			document.getElementById('hidden_div').style.display = style;
+	
 
-		});
-	</script>
 
 	<script type="text/javascript">
 		function calculateToDate() {
@@ -453,15 +271,14 @@
 
 
 	<script type="text/javascript">
-		function onAmount() {
-			var paidAmt = parseFloat($('#paidAmt').val());
-			var remAmt = parseFloat($('#remainingAmt').val());
-			 
-			document.getElementById("remAmt").value = remAmt - paidAmt;
+		function onAmount(paidAmt) {
+			var pkgAmt = parseFloat($('#pkgAmt').val());
+			var remAmt = pkgAmt - paidAmt;
+			document.getElementById("remAmt").value = remAmt;
 
 		}
 	</script>
-		
+
 
 </body>
 </html>

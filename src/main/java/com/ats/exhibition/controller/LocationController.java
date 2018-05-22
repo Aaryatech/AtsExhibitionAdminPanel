@@ -521,6 +521,7 @@ public class LocationController {
 
 			if (isPay == 1) {
 				orgSubscriptionDetail.setSubId(res.getSubId());
+				orgSubscriptionDetail.setIsUsed(1); 
 				System.out.println("subId" + res.getSubId());
 				orgSubscriptionDetail.setSubId(res.getSubId());
 				OrgSubscriptionDetail res1 = rest.postForObject(Constants.url + "/saveOrgSubscrptionDetails",
@@ -533,7 +534,7 @@ public class LocationController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/editOrgSubscriptionDetails/" + res.getSubId();
+		return "redirect:/orgSubscriptionDetailsList/" + res.getSubId();
 	}
 
 	@RequestMapping(value = "/orgSubscriptionList", method = RequestMethod.GET)
