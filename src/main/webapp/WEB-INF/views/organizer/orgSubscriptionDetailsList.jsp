@@ -120,6 +120,25 @@
 							</select>
 
 						</div>
+						
+						<div class="col-md-2">You have Paid</div>
+						<div class="col-md-3">
+							<input type="text" name="toDate"
+								value="${orgSubscription.paidAmt}" placeholder="To Date"
+								id="toDate" class="form-control" required / readonly/>
+						</div>
+
+					</div><br>
+					
+					<div class=" box-content">
+						 
+						
+						<div class="col-md-2">Remain Amt</div>
+						<div class="col-md-3">
+							<input type="text" name="remAmt" onchange="onAmount(this.value)"
+								value="${orgSubscription.remAmt}" placeholder="Remaining Amount"
+								id="remAmt" class="form-control" required / readonly/>
+						</div>
 
 					</div>
 <br>
@@ -132,7 +151,7 @@
 							<div class="col-md-2">Paid Amount*</div>
 							<div class="col-md-3">
 								<input type="text" id="paidAmt" name="paidAmt"
-									onchange="onAmount(this.value)" class="form-control"
+									 class="form-control"
 									value="${editEmployee.empName}" placeholder=" Paid Amount" />
 								<input type="hidden" name="empId" value="" />
 							</div>
@@ -438,9 +457,9 @@
 
 
 	<script type="text/javascript">
-		function onAmount(paidAmt) {
-			var pkgAmt = parseFloat($('#pkgAmt').val());
-			var remAmt = pkgAmt - paidAmt;
+		function onAmount(remAmt) {
+			var pkgAmt = parseFloat($('#remAmt').val());
+			var remAmt = pkgAmt - remAmt;
 			document.getElementById("remAmt").value = remAmt;
 
 		}
