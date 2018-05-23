@@ -93,7 +93,7 @@
 					</c:otherwise>
 				</c:choose>
 
-
+               <c:set var="orgId" value="${sessionScope.organiser.orgId}"></c:set>
 
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span><c:out value="${allModuleList.moduleName}" /></span> <b class="arrow fa fa-angle-right"></b>
@@ -187,7 +187,9 @@
 				</a>
 				<!-- BEGIN Submenu -->
 				<ul class="submenu">
-					 
+					 <li> 
+					<a href="${pageContext.request.contextPath}/editOrg/${sessionScope.organiser.orgId}">Edit Organizer</a>
+					</li>
 					<li> 
 					<a href="${pageContext.request.contextPath}/addEvent">Add Event</a>
 					</li>
