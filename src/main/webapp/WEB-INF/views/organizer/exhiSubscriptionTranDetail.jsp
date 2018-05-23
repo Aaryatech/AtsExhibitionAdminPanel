@@ -31,7 +31,7 @@
 		<div class="page-title">
 			<div>
 				<h1>
-					<i class="fa fa-file-o"></i>OrgSubscriptionDetail List
+					<i class="fa fa-file-o"></i>Exhibitor Subscription Transaction
 				</h1>
 
 				<!-- <h4>Bill for franchises</h4> -->
@@ -44,11 +44,10 @@
 		<div class="box" id="pending">
 			<div class="box-title">
 				<h3>
-					<i class="fa fa-bars"></i>OrgSubscriptionDetail List
+					<i class="fa fa-bars"></i>Exhibitor Subscription Transaction
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/orgSubscriptionList">
-						OrgSubscription List</a> <a data-action="collapse" href="#"><i
+					<a href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor Subscription List</a> <a data-action="collapse" href="#"><i
 						class="fa fa-chevron-up"></i></a>
 				</div>
 
@@ -98,6 +97,8 @@
 					</div>
 					<br> <br>
 					<div class=" box-content">
+					<c:choose>
+						<c:when test="${exhSubHeader.remAmt>0}">
 						<div class="col-md-2">Do you Want to pay Amount??</div>
 						<div class="col-md-3">
 							<select id="isPay" name="isPay" class="form-control">
@@ -107,6 +108,17 @@
 							</select>
 
 						</div>
+						</c:when>
+						<c:otherwise>
+						<div class="col-md-2">Status</div>
+						<div class="col-md-3">
+							 You Have paid Total Amt
+
+						</div>
+						</c:otherwise>
+					
+					</c:choose>
+						
 						
 						<div class="col-md-2">You have Paid</div>
 						<div class="col-md-3">
@@ -212,13 +224,18 @@
 						</div>
 					</div>
 					<br>
-
-					<div class=" box-content">
+					<c:choose>
+						<c:when test="${exhSubHeader.remAmt>0}">
+						 <div class=" box-content">
 						<div class="col-md-12" style="text-align: center">
 							<input type="submit" class="btn btn-info" value="Submit"
 								id="submit">
 						</div>
 					</div>
+						</c:when>
+						 
+					</c:choose>
+					
 				</form>
 			</div>
 			
@@ -255,12 +272,21 @@
 									<c:choose>
 										<c:when test="${exhSubDetailList.paymentMode==1}">
 											<c:set var="modType" value="Cash"></c:set>
+											<c:set var="tNo" value="-"></c:set>
+											<c:set var="bName" value="-"></c:set>
+											<c:set var="cDate" value="-"></c:set>
 										</c:when>
 										<c:when test="${exhSubDetailList.paymentMode==2}">
 											<c:set var="modType" value="Check"></c:set>
+											<c:set var="tNo" value="-"></c:set>
+											<c:set var="bName" value="${exhSubDetailList.bankName}"></c:set>
+											<c:set var="cDate" value="${exhSubDetailList.chequeDate}"></c:set>
 										</c:when>
 										<c:otherwise>
 											<c:set var="modType" value="Online"></c:set>
+											<c:set var="tNo" value="${exhSubDetailList.trNo}"></c:set>
+											<c:set var="bName" value="-"></c:set>
+											<c:set var="cDate" value="-"></c:set>
 										</c:otherwise>
 									</c:choose>
 
@@ -270,10 +296,10 @@
 										<td>${exhSubDetailList.paymentDate}</td>
 										<td>${exhSubDetailList.paymentAmt}</td>
 										<td>${modType}</td>
-										<td>${exhSubDetailList.trNo}</td>
-										<td>${exhSubDetailList.bankName}</td>
+										<td>${tNo}</td>
+										<td>${bName}</td>
 
-										<td>${exhSubDetailList.chequeDate}</td>
+										<td>${cDate}</td>
 								</c:forEach>
 
 

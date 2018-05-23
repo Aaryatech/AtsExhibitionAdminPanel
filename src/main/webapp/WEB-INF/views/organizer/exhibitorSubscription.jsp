@@ -50,8 +50,8 @@
 					<i class="fa fa-bars"></i>Exhibitor Subscription
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/addExhSubscription">
-					</a> <a data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
+					<a href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor Subscription List</a> <a data-action="collapse" href="#"><i
+						class="fa fa-chevron-up"></i></a>
 				</div>
 
 			</div>

@@ -31,7 +31,7 @@
 		<div class="page-title">
 			<div>
 				<h1>
-					<i class="fa fa-file-o"></i>OrgSubscription List
+					<i class="fa fa-file-o"></i>Exhibitor Subscription List
 				</h1>
 
 				<!-- <h4>Bill for franchises</h4> -->
@@ -44,11 +44,11 @@
 		<div class="box" id="pending">
 			<div class="box-title">
 				<h3>
-					<i class="fa fa-bars"></i>OrgSubscription List
+					<i class="fa fa-bars"></i>Exhibitor Subscription List
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/showOrgSubscription">Add
-						OrgSubscription</a> <a data-action="collapse" href="#"><i
+					<a href="${pageContext.request.contextPath}/showExhibitor">Add
+						Exhibitor Subscription</a> <a data-action="collapse" href="#"><i
 						class="fa fa-chevron-up"></i></a>
 				</div>
 
