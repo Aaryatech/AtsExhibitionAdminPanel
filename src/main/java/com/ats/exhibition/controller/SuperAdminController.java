@@ -24,12 +24,14 @@ import com.ats.model.CompanyType;
 import com.ats.model.ErrorMessage;
 import com.ats.model.EventExhMapping;
 import com.ats.model.EventWithOrgName;
+import com.ats.model.Exhibitor;
 import com.ats.model.ExhibitorWithOrgName;
 import com.ats.model.Location;
 import com.ats.model.LoginResponse;
 import com.ats.model.Organiser;
 import com.ats.model.Package1;
 import com.ats.model.SortedExhibitor;
+import com.ats.model.SortedVisitor;
 
 @Controller
 @Scope("session")
@@ -59,7 +61,7 @@ RestTemplate rest = new RestTemplate();
 		return model;
 	}
 	
-	@RequestMapping(value = "/eventListByOrgId/{orgId}", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/eventListByOrgId/{orgId}", method = RequestMethod.GET)
 	public ModelAndView eventListByOrgId(@PathVariable int orgId,HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("SuperAdmin/showEventList");
@@ -87,6 +89,50 @@ RestTemplate rest = new RestTemplate();
 		}
 
 		return model;
+	}*/
+	
+	@RequestMapping(value = "/eventListByOrgId", method = RequestMethod.GET)
+	@ResponseBody
+	public List<EventWithOrgName> eventListByOrgId(HttpServletRequest request, HttpServletResponse response) {
+
+		List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>();
+		try
+		{ 
+			 String[] orgIds = request.getParameterValues("orgId[]");
+			 String orgList = new String();
+			 if(orgIds[0].equals("0"))
+			 {
+				 orgList="0";
+			 }
+			 else
+			 {
+				 for(int i=0 ; i<orgIds.length ; i++)
+				 {
+					 orgList = orgList + "," + orgIds[i];
+				 }
+				 orgList = orgList.substring(1,orgList.length());
+				 
+				 
+			 }
+			 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgList", orgList);
+			System.out.println(map);
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/eventListByMultipleOrgId",map, 
+					EventWithOrgName[].class); 
+			 eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			 
+			 
+			 
+			 
+			 
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return eventList;
 	}
 	
 	@RequestMapping(value = "/showExhibitorList", method = RequestMethod.GET)
@@ -621,7 +667,213 @@ RestTemplate rest = new RestTemplate();
 
 		return model;
 	}
+	 
 	
+	@RequestMapping(value = "/addExhibitorBySuperAdmin", method = RequestMethod.GET)
+	public ModelAndView addExhibitorBySuperAdmin(HttpServletRequest request, HttpServletResponse response) {
 
+		ModelAndView model = new ModelAndView("SuperAdmin/addExhibitorBySuperAdmin");
+		try
+		{ 
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
+					Location[].class); 
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+			
+			System.out.println("locationList " + locationList);
+			
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
+					CompanyType[].class); 
+			List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+			
+			Organiser[] organiser = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsed", 
+					Organiser[].class); 
+			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
+			
+			model.addObject("organiserList", organiserList); 
+			model.addObject("companyTypeList", companyTypeList);
+			model.addObject("locationList", locationList);
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
+	@RequestMapping(value = "/insertExhibitorBySuperAdmin", method = RequestMethod.POST)
+	public String insertExhibitor(HttpServletRequest request, HttpServletResponse response) {
+
+		 
+		try
+		{ 
+			String exhId = request.getParameter("exhId");
+			String exhibitorName = request.getParameter("exhibitorName");
+			String compnyName = request.getParameter("compnyName");
+			String aboutCompany = request.getParameter("aboutCompany");
+			String pers1 = request.getParameter("pers1");
+			String pers2 = request.getParameter("pers2");
+			String mob1 = request.getParameter("mob1"); 
+			String mob2 = request.getParameter("mob2"); 
+			String email1 = request.getParameter("email1"); 
+			String email2 = request.getParameter("email2"); 
+			String latitude = request.getParameter("latitude"); 
+			String longitude = request.getParameter("longitude");
+			String address = request.getParameter("address");
+			int companyType = Integer.parseInt(request.getParameter("companyTypeId"));
+			int location = Integer.parseInt(request.getParameter("location"));
+			String usesrMob = request.getParameter("usesrMob");
+			String password = request.getParameter("password");
+			int orgId = Integer.parseInt(request.getParameter("orgId"));
+			System.out.println(companyType);
+			
+			 
+			
+			Exhibitor exhibitor = new Exhibitor();
+			
+			if(exhId=="" || exhId == null)
+				exhibitor.setExhId(0);
+			else
+				exhibitor.setExhId(Integer.parseInt(exhId));  
+			exhibitor.setExhName(exhibitorName);
+			exhibitor.setExhCompany(compnyName);
+			exhibitor.setAboutCompany(aboutCompany);
+			exhibitor.setContactPersonName1(pers1);
+			exhibitor.setContactPersonName2(pers2);
+			exhibitor.setPersonEmail1(email1);
+			exhibitor.setPersonEmail2(email2);
+			exhibitor.setPersonMob1(mob1);
+			exhibitor.setPersonMob2(mob2);
+			exhibitor.setCompLat(latitude);
+			exhibitor.setCompLong(longitude);
+			exhibitor.setAddress(address);
+			//exhibitor.setCompanyType(companyType);
+			exhibitor.setCompanyTypeId(companyType);
+			exhibitor.setUserMob(usesrMob);
+			exhibitor.setPassword(password);
+			exhibitor.setOrgId(orgId);
+			exhibitor.setIsUsed(1); 
+			exhibitor.setLocationId(location);
+			
+			System.out.println("exhibitor " + exhibitor);
+			
+			Exhibitor res = rest.postForObject(Constants.url + "/saveExhibitor",exhibitor,
+					Exhibitor.class); 
+			
+			System.out.println("res " + res);
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return "redirect:/exhibitorListByLocationAndCompType";
+	}
+	
+	
+	@RequestMapping(value = "/showVisitorSortedList", method = RequestMethod.GET)
+	public ModelAndView showVisitorSortedList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("SuperAdmin/showVisitorSortedList");
+		try
+		{ 
+		 
+			String orgList = "0";
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgList", orgList);
+			System.out.println(map);
+			EventWithOrgName[] eventWithOrgName = rest.getForObject(Constants.url + "/getAllEventsByIsUsed",
+					EventWithOrgName[].class); 
+			
+			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName)); 
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
+					Location[].class); 
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+			 
+			
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
+					CompanyType[].class); 
+			List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+			
+			model.addObject("companyTypeList", companyTypeList);
+			model.addObject("locationList", locationList);
+			model.addObject("eventList", eventList);
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
+	@RequestMapping(value = "/sortedVisitorListByLocationAndCompType", method = RequestMethod.GET)
+	@ResponseBody
+	public List<SortedVisitor> sortedVisitorListByLocationAndCompType(HttpServletRequest request, HttpServletResponse response) {
+
+		System.out.println("inside eventlist ajax");
+		List<SortedVisitor> sortedVisitorList = new ArrayList<SortedVisitor>();
+		try
+		{ 
+			 int eventId = Integer.parseInt(request.getParameter("eventId"));
+			 String[] compType = request.getParameterValues("compType[]");
+			 String[] locationId = request.getParameterValues("locationId[]");
+			 
+			 String compTypeList = new String();
+			 String LocationList = new String();
+			 
+			 
+			 if(compType[0].equals("0"))
+			 {
+				 compTypeList="0";
+			 }
+			 else
+			 {
+				 for(int i = 0 ; i<compType.length;i++)
+				 {
+					 compTypeList = compTypeList + "," + compType[i];
+				 }
+				 compTypeList = compTypeList.substring(1, compTypeList.length());
+			 }
+			 
+			 if(locationId[0].equals("0"))
+			 {
+				 LocationList="0";
+			 }
+			 else
+			 {
+				 for(int i = 0 ; i<locationId.length;i++)
+				 {
+					 LocationList = LocationList + "," + locationId[i];
+				 }
+				 LocationList = LocationList.substring(1, LocationList.length());
+			 }
+			 
+			 
+			 
+			 System.out.println("LocationList" + LocationList);
+			 System.out.println("compTypeList" + compTypeList); 
+			 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		 
+			map.add("eventId", eventId);
+			map.add("locationId", LocationList);
+			map.add("companyType", compTypeList);
+			
+			System.out.println(map);
+			
+			SortedVisitor[] sortedVisitor = rest.postForObject(Constants.url + "/visitorListFilterByLocationAndCompType",map, 
+					SortedVisitor[].class); 
+			sortedVisitorList = new ArrayList<SortedVisitor>(Arrays.asList(sortedVisitor));
+			 
+			 
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return sortedVisitorList;
+	}
 
 }

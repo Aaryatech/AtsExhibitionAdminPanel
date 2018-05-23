@@ -2,14 +2,14 @@
 	pageEncoding="UTF-8"%><%@ taglib
 	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+	 
 
-
-<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-<body>
-
-
-	<c:url var="eventListByOrgId" value="/eventListByOrgId"></c:url>
-
+	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+	<body>
+	
+	 
+<c:url var="eventListByOrganizerId" value="/eventListByOrganizerId"></c:url> 
+<c:url var="sortedVisitorListByLocationAndCompType" value="/sortedVisitorListByLocationAndCompType"></c:url> 
 
 	<!-- BEGIN Sidebar -->
 	<div id="sidebar" class="navbar-collapse collapse">
@@ -31,42 +31,76 @@
 		<div class="page-title">
 			<div>
 				<h1>
-					<i class="fa fa-file-o"></i>Event List
+					<i class="fa fa-file-o"></i>Visitor List
 				</h1>
-
+				
 				<!-- <h4>Bill for franchises</h4> -->
 			</div>
 		</div>
 		<!-- END Page Title -->
 
-
+		
 		<!-- BEGIN Main Content -->
 		<div class="box" id="pending">
 			<div class="box-title">
 				<h3>
-					<i class="fa fa-bars"></i>Event List
+					<i class="fa fa-bars"></i>Visitor List
 				</h3>
-				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/addOrganizer">Add
-						Organizer</a> <a data-action="collapse" href="#"><i
-						class="fa fa-chevron-up"></i></a>
-				</div>
+				<%-- <div class="box-tool">
+				<a href="${pageContext.request.contextPath}/addEmployee">Add Employee</a> <a data-action="collapse" href="#"><i
+									class="fa fa-chevron-up"></i></a>
+				</div> --%>
 
-			</div>
-			<div class=" box-content">
-			<form id="addSupplier"
-								action="${pageContext.request.contextPath}/sumbitMapping"
-								method="post">
-					<div class="box-content">
+			</div> 
+			
+			
+				<div class=" box-content">
+				
+				<div class="box-content">
  
-									<div class="col-md-2">Select Organizer*</div>
+									 
+									 
+									
+									<div class="col-md-2">Select Event*</div>
 									<div class="col-md-3">
-										<select id="orgId" name="orgId" multiple="multiple" class="form-control chosen" required >  
+									
+										<select id="eventId" name="eventId"  class="form-control chosen" required > 
+										<option value="">Select Event</option> 
+										 <c:forEach items="${eventList}" var="eventList" > 
+											<option value="${eventList.eventId}">${eventList.eventName}</option> 
+											</c:forEach>
+										 
+											</select>
+
+									</div>
+
+
+								</div><br>
+								
+								<div class="box-content">
+ 
+									<div class="col-md-2">Select Location*</div>
+									<div class="col-md-3">
+										<select id="locationId" name="locationId" class="form-control chosen" multiple="multiple" required >  
 										<option value="0" selected>All</option>
-										<c:forEach items="${organiserList}" var="organiserList" >
+										<c:forEach items="${locationList}" var="locationList" >
 										 
-											<option value="${organiserList.orgId}">${organiserList.orgName}</option>
+											<option value="${locationList.locationId}">${locationList.locationName}</option>
+											 
+											</c:forEach>
+											</select>
+
+									</div>
+									<div class="col-md-1"></div>
+									
+									<div class="col-md-2">Select Company Type*</div>
+									<div class="col-md-3">
+										<select id="compType" name="compType" multiple="multiple" class="form-control chosen" required >  
+										<option value="0" selected>All</option>
+										<c:forEach items="${companyTypeList}" var="companyTypeList" >
 										 
+											<option value="${companyTypeList.companyTypeId}">${companyTypeList.companyTypeName}</option>
+											 
 											</c:forEach>
 											</select>
 
@@ -78,15 +112,14 @@
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
 										<input type="button" class="btn btn-info" value="Search"
-										onclick="searchEventList()"	id="search"  >
+										onclick="searchExhibitorList()"	id="search"  >
 
  
 
 									</div>
-								</div> 
-								 
-
-				<div class="box-content"> 
+								</div>
+				 
+					 <div class="box-content"> 
 					<br /> <br />
 					<div class="clearfix"></div>
 					<div class="table-responsive" style="border: 0">
@@ -96,23 +129,23 @@
 											 
 								
 									<th style="width: 18px">Sr No</th>
-									<th>Event Name</th>
-								 <th>Organizer Name</th>
-								 
+									<th>Visitor Name</th> 
+									 <th>Location</th>
+									 <th>Company Type</th>
+									 
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${eventList}" var="eventList" varStatus="count">
+								<c:forEach items="${exhibitorList}" var="exhibitorList" varStatus="count">
 									<tr class="table-flag-blue">
 									 
 									
-										<td>${count.index+1}</td>
-											 
-											 
-											<td>${eventList.eventName}</td>
-										<td>${eventList.orgName}</td>	 
-										 
-										 
+										<td>${count.index+1}</td> 
+										<td>${exhibitorList.exhName}</td>
+										<td>${exhibitorList.orgName}</td>	 
+										 <td>${exhibitorList.locationName}</td>	
+										 <td>${exhibitorList.companyTypeName}</td>	
+										  
 									</tr>
 								</c:forEach>
 
@@ -121,36 +154,26 @@
 						</table>
 					</div>
 				</div><br>
-				
-				<!-- <div class=" box-content">
-									<div class="col-md-12" style="text-align: center">
-										<input type="submit" class="btn btn-info" value="Submit"
-											id="submit"  >
-
-
-
-									</div>
-								</div> -->
-</form>
-			</div>
-
-
 
 		</div>
-
+		
+				 
+	 
+	</div>
+	 
 	</div>
 	<!-- END Main Content -->
 
 	<footer>
-		<p>2018 © SONA ELECTRICALS.</p>
+	<p>2018 © SONA ELECTRICALS.</p>
 	</footer>
 
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
 		class="fa fa-chevron-up"></i></a>
 
+ 
 
-
-
+	
 
 	<!--basic scripts-->
 	<script
@@ -205,76 +228,82 @@
 
 	<!--flaty scripts-->
 	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
-		<script>
-/* function searchEventList() {
-	 
-		var orgId = $('#orgId').val();
+	 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
+		
+		<script type="text/javascript">
+		
 		 
-		if(orgId!="" && orgId!=null)
-			{
-			window.location.href='${pageContext.request.contextPath}/eventListByOrgId/'+orgId+'';
-			
-			}
-		 
-	 
-} */
-
-
-function searchEventList() {
-	 
-	 
-	var orgId = $('#orgId').val(); 
-	var valid=0;
- 
-		if(orgId==null || orgId=="")
-		{
-		alert("Select Minimum One Organiser");
-		valid=1;
-		}
-		 
-		 
-	if(valid==0)
-		{
-	$.getJSON('${eventListByOrgId}',
-
-			{
-				 
-				orgId : orgId, 
-				ajax : 'true'
-
-			},
-			function(data) {
-
-				$('#table1 td').remove();
-				  
-				if (data == "") {
-					alert("No records found !!");
-					 
-				}
+		
+		function searchExhibitorList() {
 			 
-
-			  $.each( data, function(key, itemList) {
+			 
+			var eventId = $('#eventId').val();
+			var locationId = $('#locationId').val();
+			var compType = $('#compType').val();
+			var valid=0;
+			/* if(orgId!="" && orgId!=null)
+				{
+				window.location.href='${pageContext.request.contextPath}/exhibitorListByOrgId/'+orgId+'';
+				
+				} */
 				 
-								 
-								var tr = $('<tr></tr>');
-							  	tr.append($('<td></td>').html(key+1)); 
-							  	tr.append($('<td></td>').html(itemList.eventName)); 
-							  	tr.append($('<td></td>').html(itemList.orgName)); 
-							  	 
-							  	 
-								$('#table1 tbody').append(tr);
-								 
+				if(eventId==null || eventId=="")
+				{
+				alert("Select Event");
+				valid=1;
+				}
+				else if(locationId==null)
+				{
+				alert("Select Minimum One Loacation");
+				valid=1;
+				}
+				else if(compType==null)
+				{
+					alert("Select Minimum One Company Type");
+					valid=1;
+				}
+			if(valid==0)
+				{
+			$.getJSON('${sortedVisitorListByLocationAndCompType}',
 
-							})  
-			});
-	 
-		}
-}
- </script>
+					{
+						 
+						eventId : eventId,
+						compType : compType,
+						locationId : locationId,
+						ajax : 'true'
 
+					},
+					function(data) {
+ 
+						$('#table1 td').remove();
+						  
+						if (data == "") {
+							alert("No records found !!");
+							 
+						}
+					 
+
+					  $.each( data, function(key, itemList) {
+						 
+										 
+										var tr = $('<tr></tr>');
+									  	tr.append($('<td></td>').html(key+1)); 
+									  	tr.append($('<td></td>').html(itemList.visitorName));  
+									  	tr.append($('<td></td>').html(itemList.locationName)); 
+									  	tr.append($('<td></td>').html(itemList.companyTypeName));  
+									  	 
+										$('#table1 tbody').append(tr);
+										 
+
+									})  
+					});
+			 
+				}
+	}
+		
+		</script>
+		
 </body>
 </html>
