@@ -45,6 +45,7 @@ import com.ats.model.GetSchedule;
 import com.ats.model.GetSponsor;
 import com.ats.model.LoginResponse;
 import com.ats.model.Organiser;
+import com.ats.model.QrCode;
 import com.ats.model.ScheduleDetail;
 import com.ats.model.ScheduleHeader;
 import com.ats.model.Sponsor;
