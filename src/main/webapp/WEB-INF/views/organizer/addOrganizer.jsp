@@ -48,7 +48,7 @@
 								<i class="fa fa-table"></i>Add Organizer
 							</h3>
 							<div class="box-tool">
-								<a href="${pageContext.request.contextPath}/orgnizerList"> Organizer List</a> <a data-action="collapse" href="#"><i
+								<a href="${pageContext.request.contextPath}/orgnizerList"></a> <a data-action="collapse" href="#"><i
 									class="fa fa-chevron-up"></i></a>
 							</div>
 

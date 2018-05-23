@@ -272,7 +272,6 @@ public class LocationController {
 		try {
 
 			SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// dd/MM/yyyy
-
 			SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
 			SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
 

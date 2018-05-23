@@ -43,7 +43,6 @@
 <body>
 
 
-	<c:url var="allRecordwithDate" value="/allRecordwithDate"></c:url>
 
 
 	<!-- BEGIN Sidebar -->
@@ -57,6 +56,7 @@
 		<!-- END Sidebar Collapse Button -->
 	</div>
 	<!-- END Sidebar -->
+	<c:url var="getPhotoCount" value="/getPhotoCount"></c:url>
 
 
 
@@ -91,22 +91,12 @@
 			<form action="${pageContext.request.contextPath}/insertGallary"
 				method="post" enctype="multipart/form-data">
 				<input type="hidden" name="photoId" id="photoId"
-					value="${gallary.photoId}" /> <input type="hidden"
-					name="editFloarMap1" id="editFloarMap1"
-					value="${floarMap.floarMap1}" /> <input type="hidden" name="isEdit"
-					id="isEdit" value="${isEdit}" /> <input type="hidden"
-					name="editFloarMap2" id="editFloarMap2"
-					value="${floarMap.floarMap2}" /> <input type="hidden"
-					name="editFloarMap3" id="editFloarMap3"
-					value="${floarMap.floarMap3}" /> <input type="hidden"
-					name="editFloarMap4" id="editFloarMap4"
-					value="${floarMap.floarMap4}" />
+					value="${gallary.photoId}" /> <input type="hidden" name="count" id="count" value="${count}" />
 
-			
 					<div class="box-content">
 						<div class="col-md-2">Event*</div>
 						<div class="col-md-3">
-							<select id="eventId" name="eventId" class="form-control" required>
+							<select id="eventId" name="eventId" class="form-control" required onchange="onEventChange(this.value)">
 								<option value="">Select Event</option>
 								<c:forEach items="${eventList}" var="eventList">
 									<c:choose>
@@ -149,7 +139,7 @@
 					<br>
 					<div class="box-content">
 						<div class="col-md-12" style="text-align: center">
-							<input type="submit" class="btn btn-info" value="Save">
+							<input type="submit" class="btn btn-info" value="Save" id="savePhoto">
 
 						</div>
 					</div>
@@ -324,7 +314,33 @@ $(function() {
     });  
 });
 </script>
+<script type="text/javascript">
+function onEventChange(eventId)
+{
+   $.getJSON('${getPhotoCount}', {
+		
+	   eventId:eventId,
+	
+		ajax : 'true',
 
+	}, function(data) {
+		
+		if(data>8)
+			{
+			 alert("Your Event Photo  Limit Is Over!!");
+			 document.getElementById("savePhoto").disabled=true;
+			}
+		else
+			{
+			 document.getElementById("savePhoto").disabled=false;
+
+			}
+       // document.getElementById("count").value=data;
+	});
+	
+	
+}
+</script>
 
 </body>
 </html>

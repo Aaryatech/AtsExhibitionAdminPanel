@@ -1561,6 +1561,29 @@ public class OrganizerController {
 
 		return "redirect:/showGallary";
 	}
+	@RequestMapping(value = "/getPhotoCount", method = RequestMethod.GET)
+	public @ResponseBody int getPhotoCount(HttpServletRequest request, HttpServletResponse response) {
+
+		Integer count=0;
+		try
+		{
+			int eventId=Integer.parseInt(request.getParameter("eventId"));
+			 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("eventId", eventId);
+			 count = rest.postForObject(Constants.url + "/getGallaryCount",map,
+					Integer.class); 
+			System.out.println(count);
+			 
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return count;
+	}
+
 }
 
 
