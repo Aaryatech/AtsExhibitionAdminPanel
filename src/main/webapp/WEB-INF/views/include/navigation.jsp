@@ -180,6 +180,9 @@
 					 <li>
 						<a href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor Subscription List</a>
 					</li>
+					 <li>
+						<a href="${pageContext.request.contextPath}/showGallary">Gallary</a>
+					</li>
 					</ul>   
 				
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
