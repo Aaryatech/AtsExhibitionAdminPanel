@@ -1583,7 +1583,60 @@ public class OrganizerController {
 
 		return count;
 	}
+	@RequestMapping(value = "/searchExhibitor", method = RequestMethod.GET)
+	public ModelAndView searchExhibitor(HttpServletRequest request, HttpServletResponse response) {
 
+		ModelAndView model = new ModelAndView("organizer/exhibitorMap");
+		try
+		{ 
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", login.getOrganiser().getOrgId());
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
+					EventWithOrgName[].class); 
+			eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			model.addObject("eventList", eventList);
+
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	@RequestMapping(value = "/searchExhibitorAvail", method = RequestMethod.POST)
+	public ModelAndView searchExhibitorAvail(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/exhibitorMap");
+		try
+		{ 
+			int check=Integer.parseInt(request.getParameter("check"));
+			String exh=request.getParameter("exh");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("status", check);
+			map.add("parameter", exh);
+		List<ExhibitorWithOrgName>	 exhList = rest.postForObject(Constants.url + "/getExhibitorsByParam",map,
+					List.class); 
+			model.addObject("exhList", exhList);
+			model.addObject("check", check);
+			model.addObject("exh", exh);
+
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", login.getOrganiser().getOrgId());
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
+					EventWithOrgName[].class); 
+			eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			
+			model.addObject("eventList", eventList);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		return model;
+	}
 }
 
 

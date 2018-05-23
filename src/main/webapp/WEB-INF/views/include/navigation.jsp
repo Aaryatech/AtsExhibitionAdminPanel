@@ -180,7 +180,7 @@
 					 <li>
 						<a href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor Subscription List</a>
 					</li>
-					</ul>  
+					</ul>   
 				
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Organizer</span> <b class="arrow fa fa-angle-right"></b>
@@ -220,6 +220,9 @@
 					</li>
 					<li> 
 					<a href="${pageContext.request.contextPath}/showFloarMap">Floar Map</a>
+					</li>
+					<li> 
+					<a href="${pageContext.request.contextPath}/searchExhibitor">Search And Map Exhibitor</a>
 					</li>
 					<%-- <li> 
 					<a href="${pageContext.request.contextPath}/showAddNewForm">Add Form</a>
