@@ -297,8 +297,7 @@
 										<td>${exhSubDetailList.paymentAmt}</td>
 										<td>${modType}</td>
 										<td>${tNo}</td>
-										<td>${bName}</td>
-
+										<td>${bName}</td> 
 										<td>${cDate}</td>
 								</c:forEach>
 
