@@ -97,8 +97,11 @@
 								
 									<th style="width: 18px">Sr No</th>
 									<th>Event Name</th>
-								 <th>Organizer Name</th>
-								 
+									<th>Location</th>
+									<th>From Date</th>
+									<th>To Date</th> 
+									<th>Organizer Name</th> 
+								 <th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -111,6 +114,8 @@
 											 
 											<td>${eventList.eventName}</td>
 										<td>${eventList.orgName}</td>	 
+										 <td>${eventList.orgName}</td>
+										 <td>${eventList.orgName}</td>
 										 
 										 
 									</tr>
@@ -205,10 +210,7 @@
 
 	<!--flaty scripts-->
 	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
+	 
 		<script>
 /* function searchEventList() {
 	 
@@ -263,9 +265,14 @@ function searchEventList() {
 								var tr = $('<tr></tr>');
 							  	tr.append($('<td></td>').html(key+1)); 
 							  	tr.append($('<td></td>').html(itemList.eventName)); 
+							  	tr.append($('<td></td>').html(itemList.eventLocation)); 
+							  	tr.append($('<td></td>').html(itemList.eventFromDate)); 
+							  	tr.append($('<td></td>').html(itemList.eventToDate)); 
 							  	tr.append($('<td></td>').html(itemList.orgName)); 
-							  	 
-							  	 
+							  	tr.append($('<td ></td>').html("<a href='${pageContext.request.contextPath}/editEventBySuperAdmin/"+itemList.eventId+"' class='action_btn'>Edit</a> " +
+							  			"<a href='${pageContext.request.contextPath}/eventDetailAndAssignExhList/"+itemList.eventId+"' class='action_btn'>Detail</a> " + 
+							  			"<a href='${pageContext.request.contextPath}/eventSchedule/"+itemList.eventId+"' class='action_btn'>Schedule</a> "));
+								  
 								$('#table1 tbody').append(tr);
 								 
 

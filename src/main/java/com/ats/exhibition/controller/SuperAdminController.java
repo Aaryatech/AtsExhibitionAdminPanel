@@ -20,12 +20,16 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.exhibition.common.Constants;
+import com.ats.exhibition.common.DateConvertor;
 import com.ats.model.CompanyType;
 import com.ats.model.ErrorMessage;
 import com.ats.model.EventExhMapping;
 import com.ats.model.EventWithOrgName;
+import com.ats.model.Events;
 import com.ats.model.Exhibitor;
 import com.ats.model.ExhibitorWithOrgName;
+import com.ats.model.GetEventSheduleHeader;
+import com.ats.model.GetSchedule;
 import com.ats.model.Location;
 import com.ats.model.LoginResponse;
 import com.ats.model.Organiser;
@@ -770,6 +774,7 @@ RestTemplate rest = new RestTemplate();
 		return "redirect:/exhibitorListByLocationAndCompType";
 	}
 	
+	List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>();
 	
 	@RequestMapping(value = "/showVisitorSortedList", method = RequestMethod.GET)
 	public ModelAndView showVisitorSortedList(HttpServletRequest request, HttpServletResponse response) {
@@ -785,7 +790,7 @@ RestTemplate rest = new RestTemplate();
 			EventWithOrgName[] eventWithOrgName = rest.getForObject(Constants.url + "/getAllEventsByIsUsed",
 					EventWithOrgName[].class); 
 			
-			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName)); 
+			 eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName)); 
 			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
 					Location[].class); 
 			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
@@ -798,6 +803,8 @@ RestTemplate rest = new RestTemplate();
 			model.addObject("companyTypeList", companyTypeList);
 			model.addObject("locationList", locationList);
 			model.addObject("eventList", eventList);
+			model.addObject("starting", 0);
+			model.addObject("ending", 0);
 			
 		}catch(Exception e)
 		{
@@ -815,13 +822,31 @@ RestTemplate rest = new RestTemplate();
 		List<SortedVisitor> sortedVisitorList = new ArrayList<SortedVisitor>();
 		try
 		{ 
-			 int eventId = Integer.parseInt(request.getParameter("eventId"));
+			  int starting = Integer.parseInt(request.getParameter("starting"));
+			 String[] eventId = request.getParameterValues("eventId[]");
 			 String[] compType = request.getParameterValues("compType[]");
 			 String[] locationId = request.getParameterValues("locationId[]");
 			 
+			 String eventIdList = new String();
 			 String compTypeList = new String();
 			 String LocationList = new String();
 			 
+			 if(eventId[0].equals("0"))
+			 {
+				 for(int i=0; i< eventList.size() ; i++)
+				 {
+					 eventIdList = eventIdList + "," + eventList.get(i).getEventId();
+				 }
+				 eventIdList = eventIdList.substring(1, eventIdList.length());
+			 }
+			 else
+			 {
+				 for(int i = 0 ; i<eventId.length;i++)
+				 {
+					 eventIdList = eventIdList + "," + eventId[i];
+				 }
+				 eventIdList = eventIdList.substring(1, eventIdList.length());
+			 }
 			 
 			 if(compType[0].equals("0"))
 			 {
@@ -856,9 +881,10 @@ RestTemplate rest = new RestTemplate();
 			 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		 
-			map.add("eventId", eventId);
+			map.add("eventId", eventIdList);
 			map.add("locationId", LocationList);
 			map.add("companyType", compTypeList);
+			map.add("next", starting);
 			
 			System.out.println(map);
 			
@@ -874,6 +900,153 @@ RestTemplate rest = new RestTemplate();
 		}
 
 		return sortedVisitorList;
+	}
+	
+	
+	@RequestMapping(value = "/editEventBySuperAdmin/{eventId}", method = RequestMethod.GET)
+	public ModelAndView editEvent(@PathVariable int eventId, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("SuperAdmin/editEventByAdmin");
+		try
+		{
+			 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("eventId", eventId);
+			EventWithOrgName editEvent = rest.postForObject(Constants.url + "/getAllEventsByEventId",map,
+					EventWithOrgName.class); 
+			model.addObject("editEvent", editEvent);
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
+	@RequestMapping(value = "/insertEventByAdmin", method = RequestMethod.POST)
+	public String insertEvent(HttpServletRequest request, HttpServletResponse response) {
+
+		 
+		try
+		{ 
+			String eventId = request.getParameter("eventId");
+			String eventName = request.getParameter("eventName");
+			String eventLocation = request.getParameter("eventLocation");
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+			String fromTime = request.getParameter("fromTime");
+			String toTime = request.getParameter("toTime");
+			String aboutEvent = request.getParameter("aboutEvent"); 
+			String pers1 = request.getParameter("pers1"); 
+			String pers2 = request.getParameter("pers2"); 
+			String mob1 = request.getParameter("mob1"); 
+			String mob2 = request.getParameter("mob2"); 
+			String email1 = request.getParameter("email1"); 
+			String email2 = request.getParameter("email2"); 
+			String latitude = request.getParameter("latitude");
+			String longitude = request.getParameter("longitude");
+			int orgId = Integer.parseInt(request.getParameter("orgId"));
+			
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			 
+			Events event = new Events();
+			
+			if(eventId=="" || eventId == null)
+				event.setEventId(0);
+			else
+				event.setEventId(Integer.parseInt(eventId));
+			event.setEventName(eventName);
+			event.setEventLocation(eventLocation);
+			event.setEventFromDate(DateConvertor.convertToYMD(fromDate));
+			event.setEventToDate(DateConvertor.convertToYMD(toDate));
+			event.setFromTime(fromTime); 
+			event.setFromTime(fromTime);
+			event.setToTime(toTime);
+			event.setAboutEvent(aboutEvent);
+			event.setContactPersonName1(pers1);
+			event.setContactPersonName2(pers2);
+			event.setPerson1Mob(mob1);
+			event.setPerson2Mob(mob2);
+			event.setPerson1EmailId(email1);
+			event.setPerson2EmailId(email2);
+			event.setEventLocLat(latitude);
+			event.setEventLocLong(longitude);
+			event.setIsUsed(1);
+			event.setOrgId(orgId);
+			
+			Events res = rest.postForObject(Constants.url + "/saveEvents",event,
+					Events.class); 
+			
+			System.out.println("res " + res);
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return "redirect:/showEventList";
+	}
+	
+	@RequestMapping(value = "/eventDetailAndAssignExhList/{eventId}", method = RequestMethod.GET)
+	public ModelAndView eventMapList(@PathVariable int eventId,HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("SuperAdmin/eventDetailAndAssignExhi");
+		try
+		{ 
+			 
+			 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("eventId", eventId);
+			EventExhMapping[] eventExhMapping = rest.postForObject(Constants.url + "/eventMappingListByEventId",map, 
+					EventExhMapping[].class); 
+			 List<EventExhMapping> eventExhMappingList = new ArrayList<EventExhMapping>(Arrays.asList(eventExhMapping));
+			 
+			 EventWithOrgName eventDetail = rest.postForObject(Constants.url + "/getAllEventsByEventId",map, 
+					 EventWithOrgName.class); 
+			 
+			 map = new LinkedMultiValueMap<String, Object>();
+				map.add("orgId", eventDetail.getOrgId());
+			 ExhibitorWithOrgName[] ExhibitorWithOrgName = rest.postForObject(Constants.url + "/getAllExhibotorsByorgIdAndIsUsed",map, 
+						ExhibitorWithOrgName[].class); 
+				List<ExhibitorWithOrgName> exhibitorList = new ArrayList<ExhibitorWithOrgName>(Arrays.asList(ExhibitorWithOrgName));
+				System.out.println(exhibitorList);
+				model.addObject("exhibitorList", exhibitorList);
+			model.addObject("eventExhMappingList", eventExhMappingList);
+			model.addObject("eventDetail", eventDetail);
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
+	@RequestMapping(value = "/eventSchedule/{eventId}", method = RequestMethod.GET)
+	public ModelAndView eventSchedule(@PathVariable int eventId,HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("SuperAdmin/eventSchedule");
+		try
+		{ 
+			 
+			 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("eventId", eventId);
+			GetEventSheduleHeader[] getSchedule = rest.postForObject(Constants.url + "/getEventSheduleByEventId",map, 
+					GetEventSheduleHeader[].class); 
+			 List<GetEventSheduleHeader> getScheduleList = new ArrayList<GetEventSheduleHeader>(Arrays.asList(getSchedule));
+			 
+			 
+			model.addObject("getScheduleList", getScheduleList);
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return model;
 	}
 
 }

@@ -2,16 +2,20 @@ package com.ats.model;
  
 
 public class SortedVisitor {
-	 
+	  
 	private int visitorEventId; 
 	private int visitorId; 
 	private int eventId; 
+	private String eventName; 
 	private int subscribeStatus; 
 	private String visitorName; 
+	private String visitoremail; 
+	private String visitorMobile; 
 	private int locationId; 
 	private String locationName; 
 	private int companyTypeId; 
 	private String companyTypeName;
+	
 	public int getVisitorEventId() {
 		return visitorEventId;
 	}
@@ -66,10 +70,30 @@ public class SortedVisitor {
 	public void setCompanyTypeName(String companyTypeName) {
 		this.companyTypeName = companyTypeName;
 	}
+	
+	public String getEventName() {
+		return eventName;
+	}
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
+	public String getVisitoremail() {
+		return visitoremail;
+	}
+	public void setVisitoremail(String visitoremail) {
+		this.visitoremail = visitoremail;
+	}
+	public String getVisitorMobile() {
+		return visitorMobile;
+	}
+	public void setVisitorMobile(String visitorMobile) {
+		this.visitorMobile = visitorMobile;
+	}
 	@Override
 	public String toString() {
 		return "SortedVisitor [visitorEventId=" + visitorEventId + ", visitorId=" + visitorId + ", eventId=" + eventId
-				+ ", subscribeStatus=" + subscribeStatus + ", visitorName=" + visitorName + ", locationId=" + locationId
+				+ ", eventName=" + eventName + ", subscribeStatus=" + subscribeStatus + ", visitorName=" + visitorName
+				+ ", visitoremail=" + visitoremail + ", visitorMobile=" + visitorMobile + ", locationId=" + locationId
 				+ ", locationName=" + locationName + ", companyTypeId=" + companyTypeId + ", companyTypeName="
 				+ companyTypeName + "]";
 	}
