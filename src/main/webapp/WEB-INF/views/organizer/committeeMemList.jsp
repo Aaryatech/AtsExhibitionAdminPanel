@@ -54,7 +54,7 @@
 
 			</div>
 
-			<%-- <div class=" box-content">
+			<div class=" box-content">
 
 				<div class="box-content">
 
@@ -111,7 +111,7 @@
 
 
 
- --%>
+
 				<div class=" box-content">
 
 					<div class="box-content">
@@ -128,6 +128,7 @@
 										<th>Contact No</th>
 										<th>Email</th>
 										<th>Company Name</th>
+										<th>Image</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -141,6 +142,7 @@
 											<td>${committeeMemberList.contactNo}</td>
 											<td>${committeeMemberList.emailId}</td>
 											<td>${committeeMemberList.companyName}</td>
+											<td><img src="${url}${committeeMemberList.image}" alt="Smiley face"></td>
 											<td><a
 												href="${pageContext.request.contextPath}/editMember/${committeeMemberList.memId}"><span
 													class="glyphicon glyphicon-edit"></span></a> <a

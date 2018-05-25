@@ -5,13 +5,13 @@
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/assets/bootstrap-datepicker/css/datepicker.css" />
- 
+
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
 
 
 	<c:url var="getMixingListWithDate" value="/getMixingListWithDate"></c:url>
-	<c:url var="getMixingAllListWithDate" value="/getMixingAllListWithDate"></c:url> 
+	<c:url var="getMixingAllListWithDate" value="/getMixingAllListWithDate"></c:url>
 
 
 	<div class="container" id="main-container">
@@ -51,7 +51,8 @@
 								<i class="fa fa-table"></i>Add Committee Member
 							</h3>
 							<div class="box-tool">
-								<a href="${pageContext.request.contextPath}/committeeMemberList"> Committee Member List</a> <a data-action="collapse" href="#"><i
+								<a href="${pageContext.request.contextPath}/committeeMemberList">
+									Committee Member List</a> <a data-action="collapse" href="#"><i
 									class="fa fa-chevron-up"></i></a>
 							</div>
 
@@ -60,16 +61,16 @@
 						<div class=" box-content">
 							<form id="addSupplier"
 								action="${pageContext.request.contextPath}/insertMember"
-								method="post">
+								method="post" enctype="multipart/form-data">
 
-								<div class="box-content"> 
-								
+								<div class="box-content">
+
 									<div class="col-md-2">Member Name*</div>
 									<div class="col-md-3">
 										<input type="text" id="memName" name="memName"
 											class="form-control" value="${editComMember.memberName}"
-											placeholder=" Member Name " required /> 
-											<input type="hidden" name="memId" value="${editComMember.memId}" />
+											placeholder=" Member Name " required /> <input type="hidden"
+											name="memId" value="${editComMember.memId}" />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Designation*</div>
@@ -78,42 +79,41 @@
 											value="${editComMember.designation}" class="form-control"
 											placeholder="Designation" required />
 									</div>
-									
-									 
+
+
 								</div>
 								<br>
-  
+
 								<div class="box-content">
 
 									<div class="col-md-2">Contact No.*</div>
 									<div class="col-md-3">
 										<input type="text" name="mob"
 											value="${editComMember.contactNo}" class="form-control"
-											placeholder="Contact No"   pattern="^\d{10}$"
-											required />
+											placeholder="Contact No" pattern="^\d{10}$" required />
 
 									</div>
 
 									<div class="col-md-1"></div>
-									<div class="col-md-2"> Email*</div>
+									<div class="col-md-2">Email*</div>
 									<div class="col-md-3">
 										<input type="email" name="emailId"
 											value="${editComMember.emailId}" class="form-control"
-											placeholder="Email"  required />
+											placeholder="Email" required />
 
 									</div>
 
 
 								</div>
 								<br>
-								
+
 								<div class="box-content">
 
 									<div class="col-md-2">Company Name*</div>
 									<div class="col-md-3">
 										<input type="text" name="compName"
 											value="${editComMember.companyName}" class="form-control"
-											placeholder="Company Name"  required />
+											placeholder="Company Name" required />
 
 									</div>
 
@@ -129,16 +129,23 @@
 
 								</div>
 								<br>
-								  
-								  
-								
+
+								<div class="box-content">
+
+									<div class="col-md-2">Add Image</div>
+									<div class="col-md-3">
+										<input type="file" id="image" name="image"
+											class="form-control" value="${editComMember.image}"
+											placeholder=" Image " required /> <input type="hidden"
+											name="memImage" value="${editComMember.memImage}" />
+									</div>
+								</div>
+
+								<br>
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
 										<input type="submit" class="btn btn-info" value="Submit"
-											id="submit"  >
-
-
-
+											id="submit">
 									</div>
 								</div>
 							</form>
@@ -152,7 +159,7 @@
 			</div>
 			<!-- END Main Content -->
 			<footer>
-			<p>2018 © SONA ELECTRICALS</p>
+				<p>2018 © SONA ELECTRICALS</p>
 			</footer>
 
 			<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i

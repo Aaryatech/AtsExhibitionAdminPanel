@@ -70,23 +70,37 @@
 									<th>Email</th>
 									<th>Web Site Link</th>
 									<th>Action</th>
+									<th>Action</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${organiserList}" var="organiserList" varStatus="count">
+								<c:forEach items="${organiserList}" var="organiserList"
+									varStatus="count">
 									<tr class="table-flag-blue">
 										<td>${count.index+1}</td>
 										<td>${organiserList.orgName}</td>
 										<td>${organiserList.orgAddress}</td>
 										<td>${organiserList.orgContactNo}</td>
 										<td>${organiserList.orgEmailId}</td>
-										<td><a href="http://${organiserList.websiteLink}" target="_blank">${organiserList.websiteLink}</a></td>
-										
-										 <td><a href="${pageContext.request.contextPath}/editOrg/${organiserList.orgId}"><span
-												class="glyphicon glyphicon-edit"></span></a> 
-											<a href="${pageContext.request.contextPath}/deleteOrg/${organiserList.orgId}"
+										<td><a href="http://${organiserList.websiteLink}"
+											target="_blank">${organiserList.websiteLink}</a></td>
+
+										<td><a
+											href="${pageContext.request.contextPath}/editOrg/${organiserList.orgId}"><span
+												class="glyphicon glyphicon-edit"></span></a> <a
+											href="${pageContext.request.contextPath}/deleteOrg/${organiserList.orgId}"
 											onClick="return confirm('Are you sure want to delete this record');"><span
 												class="glyphicon glyphicon-remove"></span></a></td>
+
+										<td><a
+											href="${pageContext.request.contextPath}/eventListByOrganizerId/${organiserList.orgId}">Events<span
+												class="button"></span></a></td>
+
+										<td><a
+											href="${pageContext.request.contextPath}/committeeMemberListByOrgId/${organiserList.orgId}">Committee<span
+												class="button"></span></a></td>
+
 									</tr>
 								</c:forEach>
 

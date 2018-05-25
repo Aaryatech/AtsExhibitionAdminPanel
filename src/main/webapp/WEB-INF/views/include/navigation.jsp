@@ -44,15 +44,14 @@
 		</button>
 
 		<!-- BEGIN Navbar Buttons -->
-		<ul class="nav flaty-nav pull-right">
 
-			<!-- BEGIN Button User -->
-			<li class="user-profile"><a data-toggle="dropdown" href="#"
-				class="user-menu dropdown-toggle"> <i class="fa fa-caret-down"></i>
-			</a> <!-- BEGIN User Dropdown -->
-				<ul class="dropdown-menu dropdown-navbar" id="user_menu">
+		<!-- BEGIN Button User -->
+		<li class="user-profile"><a data-toggle="dropdown" href="#"
+			class="user-menu dropdown-toggle"> <i class="fa fa-caret-down"></i>
+		</a> <!-- BEGIN User Dropdown -->
+			<ul class="dropdown-menu dropdown-navbar" id="user_menu">
 
-					</a></li>
+				</a></li>
 
 		</ul>
 		<!-- BEGIN User Dropdown -->
@@ -76,57 +75,62 @@
 			</a>
 			<div style="clear: both;"></div>
 			<ul class="nav nav-list">
-				<li class="active"><a href="${pageContext.request.contextPath}/homePage"> <i
+				<li class="active"><a
+					href="${pageContext.request.contextPath}/homePage"> <i
 						class="fa fa-dashboard"></i> <span>Dashboard</span>
 				</a></li>
 
 				<c:forEach items="${sessionScope.newModuleList}" var="allModuleList"
-									varStatus="count">
-
-				<c:choose>
-					<c:when test="${allModuleList.moduleId==Constants.mainAct}">
-						<li class="active">
-					</c:when>
-
-					<c:otherwise>
-						<li>
-					</c:otherwise>
-				</c:choose>
-
-               <c:set var="orgId" value="${sessionScope.organiser.orgId}"></c:set>
-
-				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
-					<span><c:out value="${allModuleList.moduleName}" /></span> <b class="arrow fa fa-angle-right"></b>
-				</a>
-				<!-- BEGIN Submenu -->
-				<ul class="submenu">
-				
-				<c:forEach items="${allModuleList.subModuleJsonList}" var="allSubModuleList">
-				
+					varStatus="count">
 
 					<c:choose>
-						<c:when test="${allSubModuleList.subModuleId==Constants.subAct}">
+						<c:when test="${allModuleList.moduleId==Constants.mainAct}">
 							<li class="active">
 						</c:when>
+
 						<c:otherwise>
 							<li>
 						</c:otherwise>
 					</c:choose>
-					<a href="${pageContext.request.contextPath}/<c:out value="${allSubModuleList.subModuleMapping}" />"><c:out value="${allSubModuleList.subModulName}" /></a>
+
+					<c:set var="orgId" value="${sessionScope.organiser.orgId}"></c:set>
+
+					<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
+						<span><c:out value="${allModuleList.moduleName}" /></span> <b
+						class="arrow fa fa-angle-right"></b>
+					</a>
+					<!-- BEGIN Submenu -->
+					<ul class="submenu">
+
+						<c:forEach items="${allModuleList.subModuleJsonList}"
+							var="allSubModuleList">
+
+
+							<c:choose>
+								<c:when test="${allSubModuleList.subModuleId==Constants.subAct}">
+									<li class="active">
+								</c:when>
+								<c:otherwise>
+									<li>
+								</c:otherwise>
+							</c:choose>
+							<a
+								href="${pageContext.request.contextPath}/<c:out value="${allSubModuleList.subModuleMapping}" />"><c:out
+									value="${allSubModuleList.subModulName}" /></a>
+							</li>
+
+
+						</c:forEach>
+
+
+					</ul>
+					<!-- END Submenu -->
 					</li>
-
-
-					</c:forEach>
-
-
-			</ul>
-				<!-- END Submenu -->
-				</li>
 				</c:forEach>
 
- 
 
-				 
+
+
 
 				<c:choose>
 					<c:when test="${Constants.mainAct==11}">
@@ -137,101 +141,95 @@
 						<li>
 					</c:otherwise>
 				</c:choose>
-		<%--   <c:choose>
+				<%--   <c:choose>
 						<c:when test="${sessionScope.employee.empType==2}">  --%>
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
-					<span>Super Admin</span>  <b class="arrow fa fa-angle-right"></b>
+					<span>Super Admin</span> <b class="arrow fa fa-angle-right"></b>
 				</a>
 				<!-- BEGIN Submenu -->
-				  <ul class="submenu">
-				
-					<li> 
-					<a href="${pageContext.request.contextPath}/addOrganizer">Add Organizer</a>
-					</li>
-					<li> 
-					<a href="${pageContext.request.contextPath}/showEventList">All Event List By Organizer</a>
-					</li>
-					
-				    <li>
-				  	<a href="${pageContext.request.contextPath}/showExhibitorList">All Exhibitor List By Organizer</a>
-					</li>
-					
-					<li>
-				  	<a href="${pageContext.request.contextPath}/exhibitorListByLocationAndCompType">All Exhibitor By Location And Company Type</a>
-					</li>
-					 
-					  <li>
-				  	<a href="${pageContext.request.contextPath}/exhibitorPakageList">Exhibitor Package List</a>
-					</li>
-					
-					 <li>
-				  	<a href="${pageContext.request.contextPath}/organizerPakageList">Organizer Package List</a>
-					</li>
-					 <li>
-						<a href="${pageContext.request.contextPath}/showOrgSubscription">Add Organizer Subscription</a>
-					</li>
-					 <li>
-						<a href="${pageContext.request.contextPath}/orgSubscriptionList">Organizer Subscription List</a>
-					</li>
-				     <li>
-						<a href="${pageContext.request.contextPath}/showExhibitor">Add Exhibitor Subscription</a>
-					</li>
-				 
-					 <li>
-						<a href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor Subscription List</a>
-					</li>
-				
-					</ul>   
-				
+				<ul class="submenu">
+
+					<li><a href="${pageContext.request.contextPath}/addOrganizer">Add
+							Organizer</a></li>
+					<li><a href="${pageContext.request.contextPath}/showEventList">All
+							Event List By Organizer</a></li>
+
+					<li><a
+						href="${pageContext.request.contextPath}/showExhibitorList">All
+							Exhibitor List By Organizer</a></li>
+
+					<li><a
+						href="${pageContext.request.contextPath}/exhibitorListByLocationAndCompType">All
+							Exhibitor By Location And Company Type</a></li>
+
+					<li><a
+						href="${pageContext.request.contextPath}/exhibitorPakageList">Exhibitor
+							Package List</a></li>
+
+					<li><a
+						href="${pageContext.request.contextPath}/organizerPakageList">Organizer
+							Package List</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/showOrgSubscription">Add
+							Organizer Subscription</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/orgSubscriptionList">Organizer
+							Subscription List</a></li>
+					<li><a href="${pageContext.request.contextPath}/showExhibitor">Add
+							Exhibitor Subscription</a></li>
+
+					<li><a
+						href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor
+							Subscription List</a></li>
+
+
+					<li><a href="${pageContext.request.contextPath}/orgnizerList">Organizer
+							List</a></li>
+
+				</ul>
+
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Organizer</span> <b class="arrow fa fa-angle-right"></b>
 				</a>
 				<!-- BEGIN Submenu -->
 				<ul class="submenu">
-					 <li> 
-					<a href="${pageContext.request.contextPath}/editOrg/${sessionScope.organiser.orgId}">Edit Organizer</a>
-					</li>
-					<li> 
-					<a href="${pageContext.request.contextPath}/addEvent">Add Event</a>
-					</li>
-					<li> 
-					<a href="${pageContext.request.contextPath}/scheduleList">Event Schedule</a>
-					</li>
-					<li> 
-					<a href="${pageContext.request.contextPath}/eventList">All Event List</a>
-					</li>
-					<li> 
-					<a href="${pageContext.request.contextPath}/addCommitteeMember">Add Committee Member</a>
-					</li>
-					
-					<li> 
-					<a href="${pageContext.request.contextPath}/committeeMemberList">Committee Member List</a>
-					</li>
-					
-					<li> 
-					<a href="${pageContext.request.contextPath}/addExhibitor">Add Exhibitor</a>
-					</li>
-					
-					<li> 
-					<a href="${pageContext.request.contextPath}/exhibitorList">Exhibitor List</a>
-					</li>
-					
-					<li> 
-					<a href="${pageContext.request.contextPath}/eventMapToExhibitor">Event Map</a>
-					</li>
-					<li> 
-					<a href="${pageContext.request.contextPath}/showFloarMap">Floar Map</a>
-					</li>
-					<li> 
-					<a href="${pageContext.request.contextPath}/searchExhibitor">Search And Map Exhibitor</a>
-					</li>
-						 <li>
-						<a href="${pageContext.request.contextPath}/showGallary">Gallary</a>
+					<li><a
+						href="${pageContext.request.contextPath}/editOrg/${sessionScope.organiser.orgId}">Edit
+							Organizer</a></li>
+					<li><a href="${pageContext.request.contextPath}/addEvent">Add
+							Event</a></li>
+					<li><a href="${pageContext.request.contextPath}/scheduleList">Event
+							Schedule</a></li>
+					<li><a href="${pageContext.request.contextPath}/eventList">All
+							Event List</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/addCommitteeMember">Add
+							Committee Member</a></li>
+
+					<li><a
+						href="${pageContext.request.contextPath}/committeeMemberList">Committee
+							Member List</a></li>
+
+					<li><a href="${pageContext.request.contextPath}/addExhibitor">Add
+							Exhibitor</a></li>
+
+					<li><a href="${pageContext.request.contextPath}/exhibitorList">Exhibitor
+							List</a></li>
+
+					<li><a
+						href="${pageContext.request.contextPath}/eventMapToExhibitor">Event
+							Map</a></li>
+					<li><a href="${pageContext.request.contextPath}/showFloarMap">Floar
+							Map</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/searchExhibitor">Search
+							And Map Exhibitor</a></li>
+					<li><a href="${pageContext.request.contextPath}/showGallary">Gallary</a>
 					</li>
 					<%-- <li> 
 					<a href="${pageContext.request.contextPath}/showAddNewForm">Add Form</a>
 					</li> --%>
-					
+
 					<%-- <li> 
 					<a href="${pageContext.request.contextPath}/addGroup">Add Group</a>
 					</li>
@@ -247,11 +245,11 @@
 					<li> 
 					<a href="${pageContext.request.contextPath}/addUser">Add User</a>
 					</li> --%>
- 
+
 				</ul>
-				
-					  
-				 	<%-- <a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
+
+
+				<%-- <a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Reports</span> <b class="arrow fa fa-angle-right"></b>
 				</a>
 				<!-- BEGIN Submenu -->
@@ -283,10 +281,10 @@
 					</li>
 					 
 				</ul> --%>
-			<%-- 	 </c:when>
+				<%-- 	 </c:when>
 				</c:choose> --%>
-					
-					<%-- <a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
+
+				<%-- <a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Stock</span> <b class="arrow fa fa-angle-right"></b>
 				</a>
 				<!-- BEGIN Submenu -->
@@ -367,28 +365,27 @@
 					</li>
 					
 					
-					</ul>  --%> 
-					
-					 
+					</ul>  --%>
+
+
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Logout</span> <b class="arrow fa fa-angle-right"></b>
 				</a>
 				<!-- BEGIN Submenu -->
 				<ul class="submenu">
-				
-					 
-					 <li>
-					<a href="${pageContext.request.contextPath}/logout">Logout</a>
+
+
+					<li><a href="${pageContext.request.contextPath}/logout">Logout</a>
 					</li>
-						
+
 
 
 				</ul>
-				 
+
 				<!-- END Submenu -->
 				</li>
-				
-				
+
+
 
 			</ul>
 			<!-- END Navlist -->
