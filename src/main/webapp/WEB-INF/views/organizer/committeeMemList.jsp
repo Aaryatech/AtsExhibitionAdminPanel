@@ -92,30 +92,18 @@
 					</div>
 				</div>
 				<br>
-
-
-
-
 				<div class=" box-content">
-
-
 					<div class="col-md-2">Website Link</div>
 					<div class="col-md-3">
 						<input type="text" name="websiteLink"
 							value="${organiser.websiteLink}" placeholder="Website Link"
 							id="websiteLink" class="form-control" required / readonly />
 					</div>
-
 				</div>
 				<br>
-
-
-
-
 				<div class=" box-content">
 
 					<div class="box-content">
-
 						<br /> <br />
 						<div class="clearfix"></div>
 						<div class="table-responsive" style="border: 0">
@@ -123,12 +111,13 @@
 								<thead>
 									<tr>
 										<th style="width: 18px">Sr No</th>
+										<th>Image</th>
 										<th>Member Name</th>
 										<th>Designation</th>
 										<th>Contact No</th>
 										<th>Email</th>
 										<th>Company Name</th>
-										<th>Image</th>
+
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -137,12 +126,14 @@
 										var="committeeMemberList" varStatus="count">
 										<tr class="table-flag-blue">
 											<td>${count.index+1}</td>
+											<td><img src="${url}${committeeMemberList.image}"
+												alt="Smiley face"></td>
 											<td>${committeeMemberList.memberName}</td>
 											<td>${committeeMemberList.designation}</td>
 											<td>${committeeMemberList.contactNo}</td>
 											<td>${committeeMemberList.emailId}</td>
 											<td>${committeeMemberList.companyName}</td>
-											<td><img src="${url}${committeeMemberList.image}" alt="Smiley face"></td>
+
 											<td><a
 												href="${pageContext.request.contextPath}/editMember/${committeeMemberList.memId}"><span
 													class="glyphicon glyphicon-edit"></span></a> <a
@@ -173,11 +164,6 @@
 
 		<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
 			class="fa fa-chevron-up"></i></a>
-
-
-
-
-
 		<!--basic scripts-->
 		<script
 			src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
