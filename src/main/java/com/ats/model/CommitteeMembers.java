@@ -13,6 +13,8 @@ public class CommitteeMembers {
 	private String companyName; 
 	private String remark; 
 	private int isUsed;
+	private String image;
+	
 	public int getMemId() {
 		return memId;
 	}
@@ -67,11 +69,17 @@ public class CommitteeMembers {
 	public void setIsUsed(int isUsed) {
 		this.isUsed = isUsed;
 	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
 	@Override
 	public String toString() {
 		return "CommitteeMembers [memId=" + memId + ", orgId=" + orgId + ", memberName=" + memberName + ", designation="
 				+ designation + ", contactNo=" + contactNo + ", emailId=" + emailId + ", companyName=" + companyName
-				+ ", remark=" + remark + ", isUsed=" + isUsed + "]";
+				+ ", remark=" + remark + ", isUsed=" + isUsed + ", image=" + image + "]";
 	}
 	
 	
