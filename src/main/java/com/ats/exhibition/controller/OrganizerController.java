@@ -1,6 +1,7 @@
 package com.ats.exhibition.controller;
 
 import java.io.IOException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +46,7 @@ import com.ats.model.GetSchedule;
 import com.ats.model.GetSponsor;
 import com.ats.model.LoginResponse;
 import com.ats.model.Organiser;
-import com.ats.model.QrCode;
+
 import com.ats.model.ScheduleDetail;
 import com.ats.model.ScheduleHeader;
 import com.ats.model.Sponsor;
