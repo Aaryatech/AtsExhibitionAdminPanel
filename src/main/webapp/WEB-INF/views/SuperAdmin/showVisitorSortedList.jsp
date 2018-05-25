@@ -64,8 +64,8 @@
 									<div class="col-md-2">Select Event*</div>
 									<div class="col-md-3">
 									
-										<select id="eventId" name="eventId"  class="form-control chosen" required > 
-										<option value="">Select Event</option> 
+										<select id="eventId" name="eventId" multiple="multiple" class="form-control chosen" required > 
+										<option value="0" selected>All</option> 
 										 <c:forEach items="${eventList}" var="eventList" > 
 											<option value="${eventList.eventId}">${eventList.eventName}</option> 
 											</c:forEach>
@@ -114,8 +114,8 @@
 										<input type="button" class="btn btn-info" value="Search"
 										onclick="searchExhibitorList()"	id="search"  >
 
- 
-
+ 					<input type="hidden"  name="starting" value="${starting}"	id="starting"  >
+					<input type="hidden"  name="ending" value="${ending}"	id="ending"  >
 									</div>
 								</div>
 				 
@@ -130,7 +130,10 @@
 								
 									<th style="width: 18px">Sr No</th>
 									<th>Visitor Name</th> 
-									 <th>Location</th>
+									<th>Event Name</th>
+									<th>Mobile No</th> 
+									 <th>Email</th> 
+									 <th>Location</th> 
 									 <th>Company Type</th>
 									 
 								</tr>
@@ -154,6 +157,16 @@
 						</table>
 					</div>
 				</div><br>
+				
+				<div class=" box-content">
+									<div class="col-md-12" style="text-align: center">
+										<input type="button" class="btn btn-info" value="<-Prev"
+										onclick="prevList()"	id="prev"  disabled> 
+										<input type="button" class="btn btn-info" value="Next->"
+										onclick="nextList()"	id="next"  disabled>
+
+									</div>
+								</div>
 
 		</div>
 		
@@ -228,9 +241,7 @@
 
 	<!--flaty scripts-->
 	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
-	 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
-		
+	  
 		<script type="text/javascript">
 		
 		 
@@ -241,6 +252,7 @@
 			var eventId = $('#eventId').val();
 			var locationId = $('#locationId').val();
 			var compType = $('#compType').val();
+			var starting = 0;
 			var valid=0;
 			/* if(orgId!="" && orgId!=null)
 				{
@@ -272,6 +284,174 @@
 						eventId : eventId,
 						compType : compType,
 						locationId : locationId,
+						starting : starting,
+						ajax : 'true'
+
+					},
+					function(data) {
+ 
+						$('#table1 td').remove();
+						  
+						if (data == "") {
+							alert("No records found !!");
+							
+							 
+						}
+						else
+							{
+							document.getElementById("next").disabled = false ;
+							}
+					 
+						var end;
+						
+						document.getElementById("starting").value = 0;
+						document.getElementById("prev").disabled = true ;
+					  $.each( data, function(key, itemList) {
+						 
+										 
+										var tr = $('<tr></tr>');
+									  	tr.append($('<td></td>').html(key+1)); 
+									  	tr.append($('<td></td>').html(itemList.visitorName));
+									  	tr.append($('<td></td>').html(itemList.eventName)); 
+									  	tr.append($('<td></td>').html(itemList.visitorMobile)); 
+									  	tr.append($('<td></td>').html(itemList.visitoremail));
+									  	tr.append($('<td></td>').html(itemList.locationName)); 
+									  	tr.append($('<td></td>').html(itemList.companyTypeName));  
+									  	
+									  	end= key+1;
+										$('#table1 tbody').append(tr);
+										 
+
+									})
+									document.getElementById("ending").value = end ;
+					});
+			 
+				}
+	}
+		
+		function nextList() {
+			 
+			 
+			var eventId = $('#eventId').val();
+			var locationId = $('#locationId').val();
+			var compType = $('#compType').val();
+			var starting = $('#ending').val();
+			var valid=0;
+			/* if(orgId!="" && orgId!=null)
+				{
+				window.location.href='${pageContext.request.contextPath}/exhibitorListByOrgId/'+orgId+'';
+				
+				} */
+				 
+				if(eventId==null || eventId=="")
+				{
+				alert("Select Event");
+				valid=1;
+				}
+				else if(locationId==null)
+				{
+				alert("Select Minimum One Loacation");
+				valid=1;
+				}
+				else if(compType==null)
+				{
+					alert("Select Minimum One Company Type");
+					valid=1;
+				}
+			if(valid==0)
+				{
+			$.getJSON('${sortedVisitorListByLocationAndCompType}',
+
+					{
+						 
+						eventId : eventId,
+						compType : compType,
+						locationId : locationId,
+						starting : starting,
+						ajax : 'true'
+
+					},
+					function(data) {
+ 
+						
+						  
+						if (data == "") {
+							alert("No records found !!");
+							document.getElementById("next").disabled = true ;
+						}
+						else
+							{
+							$('#table1 td').remove();
+							document.getElementById("prev").disabled = false ;
+							var end=0;
+
+							  $.each( data, function(key, itemList) {
+								 
+												 
+												var tr = $('<tr></tr>');
+											  	tr.append($('<td></td>').html(key+1)); 
+											  	tr.append($('<td></td>').html(itemList.visitorName));
+											  	tr.append($('<td></td>').html(itemList.eventName)); 
+											  	tr.append($('<td></td>').html(itemList.visitorMobile)); 
+											  	tr.append($('<td></td>').html(itemList.visitoremail));
+											  	tr.append($('<td></td>').html(itemList.locationName)); 
+											  	tr.append($('<td></td>').html(itemList.companyTypeName));  
+											  	end= key+1;
+												$('#table1 tbody').append(tr);
+												 
+
+											})  
+											//alert(parseInt(document.getElementById("ending").value));
+							  			document.getElementById("starting").value = parseInt(document.getElementById("ending").value) - 2;
+											document.getElementById("ending").value = 2 + parseInt(document.getElementById("ending").value);
+							}
+						 
+						
+									 
+					});
+			 
+				}
+	}
+		
+		function prevList() {
+			 
+			 
+			var eventId = $('#eventId').val();
+			var locationId = $('#locationId').val();
+			var compType = $('#compType').val();
+			var starting = $('#starting').val();
+			var valid=0;
+			/* if(orgId!="" && orgId!=null)
+				{
+				window.location.href='${pageContext.request.contextPath}/exhibitorListByOrgId/'+orgId+'';
+				
+				} */
+				 
+				if(eventId==null || eventId=="")
+				{
+				alert("Select Event");
+				valid=1;
+				}
+				else if(locationId==null)
+				{
+				alert("Select Minimum One Loacation");
+				valid=1;
+				}
+				else if(compType==null)
+				{
+					alert("Select Minimum One Company Type");
+					valid=1;
+				}
+			if(valid==0)
+				{
+			$.getJSON('${sortedVisitorListByLocationAndCompType}',
+
+					{
+						 
+						eventId : eventId,
+						compType : compType,
+						locationId : locationId,
+						starting : starting,
 						ajax : 'true'
 
 					},
@@ -283,21 +463,34 @@
 							alert("No records found !!");
 							 
 						}
-					 
+						var end=0;
 
 					  $.each( data, function(key, itemList) {
 						 
 										 
 										var tr = $('<tr></tr>');
 									  	tr.append($('<td></td>').html(key+1)); 
-									  	tr.append($('<td></td>').html(itemList.visitorName));  
+									  	tr.append($('<td></td>').html(itemList.visitorName));
+									  	tr.append($('<td></td>').html(itemList.eventName)); 
+									  	tr.append($('<td></td>').html(itemList.visitorMobile)); 
+									  	tr.append($('<td></td>').html(itemList.visitoremail));
 									  	tr.append($('<td></td>').html(itemList.locationName)); 
 									  	tr.append($('<td></td>').html(itemList.companyTypeName));  
-									  	 
+									  	end= key+1;
 										$('#table1 tbody').append(tr);
 										 
 
 									})  
+									//alert(parseInt(document.getElementById("ending").value));
+					  				document.getElementById("starting").value = parseInt(document.getElementById("starting").value) - 2;
+									document.getElementById("ending").value =   parseInt(document.getElementById("ending").value) - 2;
+									document.getElementById("next").disabled = false ;
+									
+									if(parseInt(document.getElementById("starting").value)<0)
+										{
+										document.getElementById("prev").disabled = true ;
+										}
+									
 					});
 			 
 				}
