@@ -1,15 +1,33 @@
 package com.ats.exhibition.controller;
 
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.Scope; 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +35,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.servlet.ModelAndView; 
 import com.ats.exhibition.common.Constants;
 import com.ats.exhibition.common.DateConvertor;
 import com.ats.model.CompanyType;
@@ -28,14 +45,26 @@ import com.ats.model.EventWithOrgName;
 import com.ats.model.Events;
 import com.ats.model.Exhibitor;
 import com.ats.model.ExhibitorWithOrgName;
-import com.ats.model.GetEventSheduleHeader;
-import com.ats.model.GetSchedule;
+import com.ats.model.ExportToExcel;
+import com.ats.model.GetEventSheduleHeader; 
 import com.ats.model.Location;
 import com.ats.model.LoginResponse;
 import com.ats.model.Organiser;
 import com.ats.model.Package1;
 import com.ats.model.SortedExhibitor;
-import com.ats.model.SortedVisitor;
+import com.ats.model.SortedVisitor; 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 @Controller
 @Scope("session")
@@ -65,36 +94,7 @@ RestTemplate rest = new RestTemplate();
 		return model;
 	}
 	
-	/*@RequestMapping(value = "/eventListByOrgId/{orgId}", method = RequestMethod.GET)
-	public ModelAndView eventListByOrgId(@PathVariable int orgId,HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("SuperAdmin/showEventList");
-		try
-		{ 
-			 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("orgId", orgId);
-			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map, 
-					EventWithOrgName[].class); 
-			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
-			 
-			Organiser[] organiser = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsed", 
-					Organiser[].class); 
-			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
-			
-			model.addObject("organiserList", organiserList);
-			 
-			model.addObject("eventList", eventList); 
-			model.addObject("orgId", orgId); 
-			
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-
-		return model;
-	}*/
-	
+	  
 	@RequestMapping(value = "/eventListByOrgId", method = RequestMethod.GET)
 	@ResponseBody
 	public List<EventWithOrgName> eventListByOrgId(HttpServletRequest request, HttpServletResponse response) {
@@ -274,6 +274,39 @@ RestTemplate rest = new RestTemplate();
 					SortedExhibitor[].class); 
 			sortedExhibitorList = new ArrayList<SortedExhibitor>(Arrays.asList(sortedExhibitor));
 			 
+			
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No");
+			rowData.add("Exhibitor Name");
+			rowData.add("Event Name");
+			rowData.add("Location Name");
+			rowData.add("Company Name"); 
+
+			
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel); 
+			for (int i = 0; i < sortedExhibitorList.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				    
+				rowData.add("" + (i+1));
+				rowData.add(sortedExhibitorList.get(i).getExhName());
+				rowData.add(sortedExhibitorList.get(i).getEventName()); 
+				rowData.add(sortedExhibitorList.get(i).getLocationName());
+				rowData.add(sortedExhibitorList.get(i).getCompanyTypeName());
+			 
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "ExhibitorList");
 			 
 			
 		}catch(Exception e)
@@ -284,35 +317,275 @@ RestTemplate rest = new RestTemplate();
 		return sortedExhibitorList;
 	}
 	
-	@RequestMapping(value = "/exhibitorListByLocationAndCompType", method = RequestMethod.GET) 
-	public ModelAndView exhibitorListByLocationAndCompType(HttpServletRequest request, HttpServletResponse response) {
+	 
+	
+	 @RequestMapping(value = "sortedExhibitorListPdf/{eventId}/{locationId}/{compType}", method = RequestMethod.GET)
+	public void sortedExhibitorListPdf(@PathVariable String eventId[],@PathVariable String locationId[],@PathVariable String compType[],HttpServletRequest request, HttpServletResponse response)  throws FileNotFoundException 
+	 {
+		 
+		 List<SortedExhibitor> sortedExhibitorList = new ArrayList<SortedExhibitor>();
+		BufferedOutputStream outStream = null;
+		System.out.println("Inside Pdf showBillwisePurchasePdf");
 
-		  
-		ModelAndView model = new ModelAndView("SuperAdmin/showExhibitorListByLocation");
-		try
-		{ 
-			
-			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
-					Location[].class); 
-			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
-			 
-			
-			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
-					CompanyType[].class); 
-			List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
-			
-			model.addObject("companyTypeList", companyTypeList);
-			model.addObject("locationList", locationList);
-			 
-			 
-			
-		}catch(Exception e)
-		{
+		String compTypeList = new String();
+		 String LocationList = new String();
+		 String eventIdList = new String();
+		 
+		 if(compType[0].equals("0"))
+		 {
+			 compTypeList="0";
+		 }
+		 else
+		 {
+			 for(int i = 0 ; i<compType.length;i++)
+			 {
+				 compTypeList = compTypeList + "," + compType[i];
+			 }
+			 compTypeList = compTypeList.substring(1, compTypeList.length());
+		 }
+		 
+		 if(locationId[0].equals("0"))
+		 {
+			 LocationList="0";
+		 }
+		 else
+		 {
+			 for(int i = 0 ; i<locationId.length;i++)
+			 {
+				 LocationList = LocationList + "," + locationId[i];
+			 }
+			 LocationList = LocationList.substring(1, LocationList.length());
+		 }
+		 
+		 if(eventId[0].equals("0"))
+		 {
+			 for(int i = 0 ; i<eventListByOrgId.size();i++)
+			 {
+				 eventIdList = eventIdList + "," + eventListByOrgId.get(i).getEventId();
+			 }
+			 eventIdList = eventIdList.substring(1, eventIdList.length());
+		 }
+		 else
+		 {
+			 for(int i = 0 ; i<eventId.length;i++)
+			 {
+				 eventIdList = eventIdList + "," + eventId[i];
+			 }
+			 eventIdList = eventIdList.substring(1, eventIdList.length());
+		 }
+		 
+		 System.out.println("LocationList" + LocationList);
+		 System.out.println("compTypeList" + compTypeList);
+		 System.out.println("eventIdList" + eventIdList);
+		 
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("eventId", eventIdList);
+		map.add("locationId", LocationList);
+		map.add("companyType", compTypeList);
+		
+		System.out.println(map);
+		
+		SortedExhibitor[] sortedExhibitor = rest.postForObject(Constants.url + "/sortedExhibitorByLocationAndCompanyType",map, 
+				SortedExhibitor[].class); 
+		sortedExhibitorList = new ArrayList<SortedExhibitor>(Arrays.asList(sortedExhibitor));
+
+		// moneyOutList = prodPlanDetailList;
+		Document document = new Document(PageSize.A4);
+		// ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+
+		System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+		String FILE_PATH = Constants.REPORT_SAVE;
+		File file = new File(FILE_PATH);
+
+		PdfWriter writer = null;
+
+		FileOutputStream out = new FileOutputStream(FILE_PATH);
+		try {
+			writer = PdfWriter.getInstance(document, out);
+		} catch (DocumentException e) {
+
 			e.printStackTrace();
 		}
 
-		return model;
+		PdfPTable table = new PdfPTable(5);
+		try {
+			System.out.println("Inside PDF Table try");
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 1.4f, 3.7f, 2.8f, 2.8f, 3.2f});
+			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			headFont1.setColor(BaseColor.WHITE);
+			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+
+			PdfPCell hcell = new PdfPCell();
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			hcell.setPadding(3);
+			hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Exhibitor Name", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Event Name", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Location", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Company Type", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			 
+
+			int index = 0;
+			for (SortedExhibitor exhi : sortedExhibitorList) {
+				index++;
+				PdfPCell cell;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(exhi.getExhName(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(exhi.getEventName(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(exhi.getLocationName(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(exhi.getCompanyTypeName(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+ 
+
+			}
+			document.open();
+			Paragraph name = new Paragraph("Exhibitor List\n", f);
+			name.setAlignment(Element.ALIGN_CENTER);
+			document.add(name);
+			document.add(new Paragraph(" "));
+			/*Paragraph company = new Paragraph("Bill wise Purchase Report\n", f);
+			company.setAlignment(Element.ALIGN_CENTER);
+			document.add(company);
+			document.add(new Paragraph(" "));*/
+
+			/*DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new Date());
+			Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+			p1.setAlignment(Element.ALIGN_CENTER);
+			document.add(p1);*/
+			document.add(new Paragraph("\n"));
+			document.add(table);
+
+			int totalPages = writer.getPageNumber();
+
+			System.out.println("Page no " + totalPages);
+
+			document.close();
+			// Atul Sir code to open a Pdf File
+			if (file != null) {
+
+				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+				if (mimeType == null) {
+
+					mimeType = "application/pdf";
+
+				}
+
+				response.setContentType(mimeType);
+
+				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+				response.setContentLength((int) file.length());
+
+				InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+				try {
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				} catch (IOException e) {
+					System.out.println("Excep in Opening a Pdf File");
+					e.printStackTrace();
+				}
+			}
+
+		} catch (DocumentException ex) {
+
+			System.out.println("Pdf Generation Error: BOm Prod  View Prod" + ex.getMessage());
+
+			ex.printStackTrace();
+
+		}
+		 
 	}
+	 
+	 @RequestMapping(value = "/exhibitorListByLocationAndCompType", method = RequestMethod.GET) 
+		public ModelAndView exhibitorListByLocationAndCompType(HttpServletRequest request, HttpServletResponse response) {
+
+			  
+			ModelAndView model = new ModelAndView("SuperAdmin/showExhibitorListByLocation");
+			try
+			{ 
+				
+				Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
+						Location[].class); 
+				List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+				 
+				
+				CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
+						CompanyType[].class); 
+				List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+				
+				model.addObject("companyTypeList", companyTypeList);
+				model.addObject("locationList", locationList);
+				 
+				 
+				
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+
+			return model;
+		}
 	
 	@RequestMapping(value = "/sortedExhibitorListByLocationAndCompType", method = RequestMethod.GET)
 	@ResponseBody
@@ -814,12 +1087,14 @@ RestTemplate rest = new RestTemplate();
 		return model;
 	}
 	
+	List<SortedVisitor> sortedVisitorList = new ArrayList<SortedVisitor>();
+	
 	@RequestMapping(value = "/sortedVisitorListByLocationAndCompType", method = RequestMethod.GET)
 	@ResponseBody
 	public List<SortedVisitor> sortedVisitorListByLocationAndCompType(HttpServletRequest request, HttpServletResponse response) {
 
 		System.out.println("inside eventlist ajax");
-		List<SortedVisitor> sortedVisitorList = new ArrayList<SortedVisitor>();
+		 sortedVisitorList = new ArrayList<SortedVisitor>();
 		try
 		{ 
 			  int starting = Integer.parseInt(request.getParameter("starting"));
@@ -892,7 +1167,42 @@ RestTemplate rest = new RestTemplate();
 					SortedVisitor[].class); 
 			sortedVisitorList = new ArrayList<SortedVisitor>(Arrays.asList(sortedVisitor));
 			 
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No");
+			rowData.add("Visitor Name");
+			rowData.add("Event Name");
+			rowData.add("Mobile No");
+			rowData.add("Email");
+			rowData.add("Location Name");
+			rowData.add("Company Name"); 
+
+			
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel); 
+			for (int i = 0; i < sortedVisitorList.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				    
+				rowData.add("" + (i+1));
+				rowData.add(sortedVisitorList.get(i).getVisitorName());
+				rowData.add(sortedVisitorList.get(i).getEventName()); 
+				rowData.add(sortedVisitorList.get(i).getVisitorMobile());
+				rowData.add(sortedVisitorList.get(i).getVisitoremail());
+				rowData.add(sortedVisitorList.get(i).getLocationName());
+				rowData.add(sortedVisitorList.get(i).getCompanyTypeName());
 			 
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "VisitorList");
 			
 		}catch(Exception e)
 		{
@@ -901,6 +1211,206 @@ RestTemplate rest = new RestTemplate();
 
 		return sortedVisitorList;
 	}
+	
+	 @RequestMapping(value = "/sortedVisitorListPdf", method = RequestMethod.GET)
+		public void sortedVisitorListPdf(HttpServletRequest request, HttpServletResponse response)  throws FileNotFoundException 
+		 {
+			 
+			  
+
+			// moneyOutList = prodPlanDetailList;
+			Document document = new Document(PageSize.A4);
+			// ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+			Calendar cal = Calendar.getInstance();
+
+			System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+			String FILE_PATH = Constants.REPORT_SAVE;
+			File file = new File(FILE_PATH);
+
+			PdfWriter writer = null;
+
+			FileOutputStream out = new FileOutputStream(FILE_PATH);
+			try {
+				writer = PdfWriter.getInstance(document, out);
+			} catch (DocumentException e) {
+
+				e.printStackTrace();
+			}
+
+			PdfPTable table = new PdfPTable(7);
+			try {
+				System.out.println("Inside PDF Table try");
+				table.setWidthPercentage(100);
+				table.setWidths(new float[] { 1.4f, 4.7f, 2.8f, 3.2f, 5.2f, 2.8f, 2.8f});
+				Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+				Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+				headFont1.setColor(BaseColor.WHITE);
+				Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+
+				PdfPCell hcell = new PdfPCell();
+				hcell.setBackgroundColor(BaseColor.PINK);
+
+				hcell.setPadding(3);
+				hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(BaseColor.PINK);
+
+				table.addCell(hcell);
+
+				hcell = new PdfPCell(new Phrase("Visitor Name", headFont1));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(BaseColor.PINK);
+
+				table.addCell(hcell);
+
+				hcell = new PdfPCell(new Phrase("Event Name", headFont1));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(BaseColor.PINK);
+
+				table.addCell(hcell);
+				
+				hcell = new PdfPCell(new Phrase("Mobile", headFont1));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(BaseColor.PINK);
+
+				table.addCell(hcell);
+				
+				hcell = new PdfPCell(new Phrase("Email", headFont1));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(BaseColor.PINK);
+
+				table.addCell(hcell);
+
+				hcell = new PdfPCell(new Phrase("Location", headFont1));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(BaseColor.PINK);
+
+				table.addCell(hcell);
+
+				hcell = new PdfPCell(new Phrase("Company Type", headFont1));
+				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell.setBackgroundColor(BaseColor.PINK);
+
+				table.addCell(hcell);
+
+				 
+
+				int index = 0;
+				for (SortedVisitor visi : sortedVisitorList) {
+					index++;
+					PdfPCell cell;
+
+					cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setPadding(3);
+					table.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(visi.getVisitorName(), headFont));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table.addCell(cell);
+					
+					cell = new PdfPCell(new Phrase(visi.getEventName(), headFont));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table.addCell(cell);
+					
+					cell = new PdfPCell(new Phrase(visi.getVisitorMobile(), headFont));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table.addCell(cell);
+					
+					cell = new PdfPCell(new Phrase(visi.getVisitoremail(), headFont));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(visi.getLocationName(), headFont));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(visi.getCompanyTypeName(), headFont));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table.addCell(cell);
+	 
+
+				}
+				document.open();
+				Paragraph name = new Paragraph("Visitor List\n", f);
+				name.setAlignment(Element.ALIGN_CENTER);
+				document.add(name);
+				document.add(new Paragraph(" "));
+				/*Paragraph company = new Paragraph("Bill wise Purchase Report\n", f);
+				company.setAlignment(Element.ALIGN_CENTER);
+				document.add(company);
+				document.add(new Paragraph(" "));*/
+
+				/*DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+				String reportDate = DF.format(new Date());
+				Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+				p1.setAlignment(Element.ALIGN_CENTER);
+				document.add(p1);*/
+				document.add(new Paragraph("\n"));
+				document.add(table);
+
+				int totalPages = writer.getPageNumber();
+
+				System.out.println("Page no " + totalPages);
+
+				document.close();
+				// Atul Sir code to open a Pdf File
+				if (file != null) {
+
+					String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+					if (mimeType == null) {
+
+						mimeType = "application/pdf";
+
+					}
+
+					response.setContentType(mimeType);
+
+					response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+					response.setContentLength((int) file.length());
+
+					InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+					try {
+						FileCopyUtils.copy(inputStream, response.getOutputStream());
+					} catch (IOException e) {
+						System.out.println("Excep in Opening a Pdf File");
+						e.printStackTrace();
+					}
+				}
+
+			} catch (DocumentException ex) {
+
+				System.out.println("Pdf Generation Error: BOm Prod  View Prod" + ex.getMessage());
+
+				ex.printStackTrace();
+
+			}
+			 
+		}
 	
 	
 	@RequestMapping(value = "/editEventBySuperAdmin/{eventId}", method = RequestMethod.GET)
@@ -1048,5 +1558,129 @@ RestTemplate rest = new RestTemplate();
 
 		return model;
 	}
+	
+	
+	/*private Dimension format = PD4Constants.A2;
+	private boolean landscapeValue = false;
+	private int topValue = 8;
+	private int leftValue = 0;
+	private int rightValue = 0;
+	private int bottomValue =8;
+	private String unitsValue = "m";
+	private String proxyHost = "";
+	private int proxyPort = 0;
+
+	private int userSpaceWidth = 750;
+	private static int BUFFER_SIZE = 1024;
+
+	@RequestMapping(value = "/report", method = RequestMethod.GET)
+	public void showPDF(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("Inside PDf For Report URL ");
+		String url = request.getParameter("url");
+		System.out.println("URL " + url);
+		
+		//File f = new File("/opt/tomcat-latest/webapps/uploads/Inward.pdf");
+		File f = new File("C:/pdf/ordermemo221.pdf");
+
+		try {
+			runConverter(Constants.ReportURL + url, f,request,response);
+			//runConverter("www.google.com", f,request,response);
+
+		} catch (IOException e) {
+
+			System.out.println("Pdf conversion exception " + e.getMessage());
+		}
+
+		// get absolute path of the application
+		ServletContext context = request.getSession().getServletContext();
+		String appPath = context.getRealPath("");
+		 String filePath = "C:/pdf/ordermemo221.pdf";
+
+		//String filePath = "/opt/tomcat-latest/webapps/uploads/Inward.pdf";
+
+		// construct the complete absolute path of the file
+		String fullPath = appPath + filePath;
+		File downloadFile = new File(filePath);
+		FileInputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(downloadFile);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			// get MIME type of the file
+			String mimeType = context.getMimeType(fullPath);
+			if (mimeType == null) {
+				// set to binary type if MIME mapping not found
+				mimeType = "application/pdf";
+			}
+			System.out.println("MIME type: " + mimeType);
+
+			String headerKey = "Content-Disposition";
+
+			// response.addHeader("Content-Disposition", "attachment;filename=report.pdf");
+			response.setContentType("application/pdf");
+
+			OutputStream outStream;
+
+			outStream = response.getOutputStream();
+
+			byte[] buffer = new byte[BUFFER_SIZE];
+			int bytesRead = -1;
+
+
+			while ((bytesRead = inputStream.read(buffer)) != -1) {
+				outStream.write(buffer, 0, bytesRead);
+			}
+
+			inputStream.close();
+			outStream.close();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void runConverter(String urlstring, File output, HttpServletRequest request, HttpServletResponse response ) throws IOException {
+
+		if (urlstring.length() > 0) {
+			if (!urlstring.startsWith("http://") && !urlstring.startsWith("file:")) {
+				urlstring = "http://" + urlstring;
+			}
+			System.out.println("PDF URL " + urlstring);
+			java.io.FileOutputStream fos = new java.io.FileOutputStream(output);
+
+			PD4ML pd4ml = new PD4ML();
+		
+			try {
+
+				Dimension landscapeA4 = pd4ml.changePageOrientation(PD4Constants.A4);
+				pd4ml.setPageSize(landscapeA4);
+			
+				PD4PageMark footer = new PD4PageMark();  
+				
+	            footer.setPageNumberTemplate("Page $[page] of $[total]");  
+	            footer.setPageNumberAlignment(PD4PageMark.RIGHT_ALIGN);  
+	            footer.setFontSize(10);  
+	            footer.setAreaHeight(20);     
+	            
+	            pd4ml.setPageFooter(footer); 
+				
+			} catch (Exception e) {
+				System.out.println("Pdf conversion method excep " + e.getMessage());
+			}
+
+			if (unitsValue.equals("mm")) {
+				pd4ml.setPageInsetsMM(new Insets(topValue, leftValue, bottomValue, rightValue));
+			} else {
+				pd4ml.setPageInsets(new Insets(topValue, leftValue, bottomValue, rightValue));
+			}
+
+			pd4ml.setHtmlWidth(userSpaceWidth);
+
+			pd4ml.render(urlstring, fos);
+		}
+	}*/
 
 }

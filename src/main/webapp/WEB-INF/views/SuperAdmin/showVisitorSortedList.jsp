@@ -111,9 +111,11 @@
 								<br>
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
-										<input type="button" class="btn btn-info" value="Search"
+										<input type="button" class="btn btn-primary" value="Search"
 										onclick="searchExhibitorList()"	id="search"  >
-
+<input type="button" class="btn btn-primary" value="Pdf" onclick="getPdf()" >
+ <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" >
+ 
  					<input type="hidden"  name="starting" value="${starting}"	id="starting"  >
 					<input type="hidden"  name="ending" value="${ending}"	id="ending"  >
 									</div>
@@ -495,6 +497,20 @@
 			 
 				}
 	}
+		
+		function getPdf()
+		{
+			 
+			    	window.open('${pageContext.request.contextPath}/sortedVisitorListPdf/');
+			 
+		    }
+		
+		function exportToExcel()
+		{
+			 
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+					document.getElementById("expExcel").disabled=true;
+		}
 		
 		</script>
 		

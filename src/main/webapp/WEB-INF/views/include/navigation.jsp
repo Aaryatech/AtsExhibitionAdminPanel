@@ -157,6 +157,10 @@
 					<li><a
 						href="${pageContext.request.contextPath}/showExhibitorList">All
 							Exhibitor List By Organizer</a></li>
+							
+							<li>
+  						<a href="${pageContext.request.contextPath}/showVisitorSortedList">All Visitor </a>
+						</li>
 
 					<li><a
 						href="${pageContext.request.contextPath}/exhibitorListByLocationAndCompType">All

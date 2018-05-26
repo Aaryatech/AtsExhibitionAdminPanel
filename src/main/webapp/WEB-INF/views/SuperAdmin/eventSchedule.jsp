@@ -173,7 +173,11 @@
 											 	<td>${getScheduleList.date}</td>
 											 	<td>${getScheduleList.dayName}</td>
 											 	<td>
-											 	
+											 	<%-- <div id="detailButton${count.index+1}">
+											 	<input type="button" class="btn btn-info" value="detail"
+										onclick="openDiv(${count.index+1})"	id="search"  >
+											 	</div> --%>
+											 	<%-- <div id="detailtable${count.index+1}" style="display: none"> --%>
 											 	<table class="table table-advance" id="table1">
 												<thead>
 													<tr>
@@ -204,10 +208,8 @@
 					
 					
 												</tbody>
-											</table>
-											 	
-											 
-											 
+											</table> 
+											<!--  </div> --> 
 											 </td>
 								</c:forEach>
 
@@ -385,6 +387,14 @@
 			document.getElementById("remAmt").value = remAmt - paidAmt;
 
 		}
+		
+		function openDiv(key) {
+			 
+				$('#detailButton'+key).hide();
+				$("#detailtable"+key).show();
+			 
+		 
+	}
 	</script>
 		
 

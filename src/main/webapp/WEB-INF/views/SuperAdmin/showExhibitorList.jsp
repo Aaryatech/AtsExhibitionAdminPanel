@@ -124,10 +124,11 @@
 								<br>
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
-										<input type="button" class="btn btn-info" value="Search"
+										<input type="button" class="btn btn-primary" value="Search"
 										onclick="searchExhibitorList()"	id="search"  >
-
- 
+								<input type="button" class="btn btn-primary" value="Pdf" onclick="getPdf()" >
+ <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" >
+											
 
 									</div>
 								</div>
@@ -347,7 +348,47 @@
 			 
 				}
 	}
+		function getPdf()
+		{
+			var eventId = $('#eventId').val();
+			var locationId = $('#locationId').val();
+			var compType = $('#compType').val();
+			var valid=0;
+			/* if(orgId!="" && orgId!=null)
+				{
+				window.location.href='${pageContext.request.contextPath}/exhibitorListByOrgId/'+orgId+'';
+				
+				} */
+				 
+				if(eventId==null || eventId=="")
+				{
+				alert("Select Event");
+				valid=1;
+				}
+				else if(locationId==null)
+				{
+				alert("Select Minimum One Loacation");
+				valid=1;
+				}
+				else if(compType==null)
+				{
+					alert("Select Minimum One Company Type");
+					valid=1;
+				}
+			
+				 
+				if(valid==0)
+				{
+			    	window.open('${pageContext.request.contextPath}/sortedExhibitorListPdf/'+eventId+'/'+locationId+'/'+compType+'/');
+				}
+		    }
 		
+		function exportToExcel()
+		{
+			 
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+					document.getElementById("expExcel").disabled=true;
+		}
 		</script>
 		
 </body>

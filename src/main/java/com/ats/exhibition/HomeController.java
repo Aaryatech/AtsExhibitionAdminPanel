@@ -2,7 +2,10 @@ package com.ats.exhibition;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +21,12 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.servlet.ModelAndView; 
 import com.ats.exhibition.common.Constants;
+import com.ats.model.EventWithOrgName;
+import com.ats.model.ExhibitorWithOrgName;
 import com.ats.model.LoginResponse;
+import com.ats.model.Organiser;
  
 
 /**
@@ -81,7 +86,42 @@ public class HomeController {
 					mav = new ModelAndView("home");
 					HttpSession session = request.getSession();
 					session.setAttribute("organiser", loginResponse.getOrganiser());
-					session.setAttribute("UserDetail", loginResponse); 
+					session.setAttribute("UserDetail", loginResponse);
+					
+					if(loginResponse.getOrganiser().getOrgType()==0)
+					{
+						 EventWithOrgName[]  eventWithOrgName = rest.getForObject(Constants.url + "/getAllEventsByIsUsed",
+								 EventWithOrgName[].class);
+						 List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+						 
+						 
+						 ExhibitorWithOrgName[]  exhibitorWithOrgName = rest.getForObject(Constants.url + "/getAllExhibitorsByIsUsed",
+								 ExhibitorWithOrgName[].class);
+						 List<ExhibitorWithOrgName> exhibitorList = new ArrayList<ExhibitorWithOrgName>(Arrays.asList(exhibitorWithOrgName));
+						 
+						 Organiser[]  organiser = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsed",
+								 Organiser[].class);
+						 List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
+						 
+						 mav.addObject("eventList", eventList);
+						 mav.addObject("exhibitorList", exhibitorList);
+						 mav.addObject("organiserList", organiserList);
+					}
+					else
+					{
+						map = new LinkedMultiValueMap<String, Object>();
+						map.add("orgId", loginResponse.getOrganiser().getOrgId());
+						 EventWithOrgName[]  eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map,
+								 EventWithOrgName[].class);
+						 List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+						 
+						 ExhibitorWithOrgName[]  exhibitorWithOrgName = rest.postForObject(Constants.url + "/getAllExhibotorsByorgIdAndIsUsed",map,
+								 ExhibitorWithOrgName[].class);
+						 List<ExhibitorWithOrgName> exhibitorList = new ArrayList<ExhibitorWithOrgName>(Arrays.asList(exhibitorWithOrgName));
+						 
+						 mav.addObject("eventList", eventList);
+						 mav.addObject("exhibitorList", exhibitorList); 
+					}
 
 				} else {
 
@@ -108,6 +148,67 @@ public class HomeController {
 
 		return mav;
 
+	}
+	
+	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
+	public ModelAndView showLogin(HttpServletRequest request, HttpServletResponse response) {
+		logger.info(" /home request mapping.");
+
+		ModelAndView mav = new ModelAndView("home");
+		try {
+			
+		
+		RestTemplate restTemplate = new RestTemplate();
+
+		
+		mav = new ModelAndView("home");
+		HttpSession session = request.getSession();
+		LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+		 
+		if(login.getOrganiser().getOrgType()==0)
+		{
+			 EventWithOrgName[]  eventWithOrgName = restTemplate.getForObject(Constants.url + "/getAllEventsByIsUsed",
+					 EventWithOrgName[].class);
+			 List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			 
+			 
+			 ExhibitorWithOrgName[]  exhibitorWithOrgName = restTemplate.getForObject(Constants.url + "/getAllExhibitorsByIsUsed",
+					 ExhibitorWithOrgName[].class);
+			 List<ExhibitorWithOrgName> exhibitorList = new ArrayList<ExhibitorWithOrgName>(Arrays.asList(exhibitorWithOrgName));
+			 
+			 Organiser[]  organiser = restTemplate.getForObject(Constants.url + "/getAllOrganisersByIsUsed",
+					 Organiser[].class);
+			 List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
+			 
+			 mav.addObject("eventList", eventList);
+			 mav.addObject("exhibitorList", exhibitorList);
+			 mav.addObject("organiserList", organiserList);
+		}
+		else
+		{ 
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", login.getOrganiser().getOrgId());
+			 EventWithOrgName[]  eventWithOrgName = restTemplate.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",map,
+					 EventWithOrgName[].class);
+			 List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+			 
+			 ExhibitorWithOrgName[]  exhibitorWithOrgName = restTemplate.postForObject(Constants.url + "/getAllExhibotorsByorgIdAndIsUsed",map,
+					 ExhibitorWithOrgName[].class);
+			 List<ExhibitorWithOrgName> exhibitorList = new ArrayList<ExhibitorWithOrgName>(Arrays.asList(exhibitorWithOrgName));
+			 
+			 mav.addObject("eventList", eventList);
+			 mav.addObject("exhibitorList", exhibitorList); 
+		}
+		}
+		catch(Exception e)
+		{
+			System.out.println("HomeController Home Request Page Exception:  " + e.getMessage());
+		}
+		
+		
+		
+		return mav;
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

@@ -47,7 +47,7 @@
 					<i class="fa fa-bars"></i>Event Detail
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor Subscription List</a> <a data-action="collapse" href="#"><i
+					<a href="${pageContext.request.contextPath}/showEventList">Event List</a> <a data-action="collapse" href="#"><i
 						class="fa fa-chevron-up"></i></a>
 				</div>
 
@@ -62,14 +62,16 @@
 
 						<div class="col-md-2">Event Name</div>
 						<div class="col-md-3">
-						<input type="text" name="eventName" id="eventName" class="form-control"
-								  value="${eventDetail.eventName}" readonly/>
+						${eventDetail.eventName}
+						<%-- <input type="text" name="eventName" id="eventName" class="form-control"
+								  value="${eventDetail.eventName}" readonly/> --%>
 							 
 						</div>
 						<div class="col-md-2">Organiser Name</div>
 						<div class="col-md-3">
-							<input type="text" name="orgName" id="orgName" class="form-control"
-								  value="${eventDetail.orgName}" readonly/>
+						${eventDetail.orgName}
+							<%-- <input type="text" name="orgName" id="orgName" class="form-control"
+								  value="${eventDetail.orgName}" readonly/> --%>
 						</div>
 					</div>
 					<br>
@@ -79,18 +81,20 @@
 
 						<div class="col-md-2">From Date</div>
 						<div class="col-md-3">
-							<input type="text" name="fromDate"
+						${eventDetail.eventFromDate}
+							<%-- <input type="text" name="fromDate"
 								value="${eventDetail.eventFromDate}" placeholder="From Date"
 								onblur="calculateToDate()" id="fromDate"
-								class="form-control" readonly/>
+								class="form-control" readonly/> --%>
 						</div>
 
 
 						<div class="col-md-2">To Date</div>
 						<div class="col-md-3">
-							<input type="text" name="toDate"
+						${eventDetail.eventFromDate}
+							<%-- <input type="text" name="toDate"
 								value="${eventDetail.eventFromDate}" placeholder="To Date"
-								id="toDate" class="form-control" readonly/>
+								id="toDate" class="form-control" readonly/> --%>
 						</div>
 
 
@@ -100,18 +104,20 @@
 
 						<div class="col-md-2">From Time</div>
 						<div class="col-md-3">
-							<input type="text" name="fromDate"
+						${eventDetail.fromTime}
+							<%-- <input type="text" name="fromDate"
 								value="${eventDetail.fromTime}" placeholder="From Date"
 								onblur="calculateToDate()" id="fromDate"
-								class="form-control" readonly/>
+								class="form-control" readonly/> --%>
 						</div>
 
 
 						<div class="col-md-2">To Time</div>
 						<div class="col-md-3">
-							<input type="text" name="toDate"
+						${eventDetail.toTime}
+							<%-- <input type="text" name="toDate"
 								value="${eventDetail.toTime}" placeholder="To Date"
-								id="toDate" class="form-control" readonly/>
+								id="toDate" class="form-control" readonly/> --%>
 						</div>
 
 
@@ -122,18 +128,20 @@
 
 						<div class="col-md-2">Location</div>
 						<div class="col-md-3">
-							<input type="text" name="fromDate"
+						${eventDetail.eventLocation}
+							<%-- <input type="text" name="fromDate"
 								value="${eventDetail.eventLocation}" placeholder="From Date"
 								onblur="calculateToDate()" id="fromDate"
-								class="form-control" readonly/>
+								class="form-control" readonly/> --%>
 						</div>
 
 
 						<div class="col-md-2">About Event</div>
 						<div class="col-md-3">
-							<input type="text" name="toDate"
+						${eventDetail.aboutEvent}
+							<%-- <input type="text" name="toDate"
 								value="${eventDetail.aboutEvent}" placeholder="To Date"
-								id="toDate" class="form-control" readonly/>
+								id="toDate" class="form-control" readonly/> --%>
 						</div>
 
 
@@ -159,6 +167,11 @@
 
 									<th style="width: 18px">Sr No</th> 
 									<th>Exhibitor Name</th> 
+									<th>Company Name</th> 
+									<th>User Mobile</th> 
+									<th>Address</th> 
+									<th>Location Name</th> 
+									<th>Company Type</th> 
 								</tr>
 							</thead>
 							<tbody>
@@ -172,6 +185,12 @@
 											 <c:choose>
 											 	<c:when test="${exhibitorList.exhId==eventExhMappingList.exhId}">
 											 	<td>${exhibitorList.exhName}</td>
+											 	<td>${exhibitorList.exhCompany}</td>
+											 	<td>${exhibitorList.userMob}</td> 
+											 	<td>${exhibitorList.address}</td>
+											 	<td>${exhibitorList.locationName}</td>
+											 	<td>${exhibitorList.companyTypeName}</td>
+											 	
 											 	</c:when> 
 											 </c:choose>
 										</c:forEach>

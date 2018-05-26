@@ -75,44 +75,78 @@
 							
 						</c:forEach>
 					
-						<!-- 
-						<a href="resoucres/index.php/orders/list_all">
+					<c:choose>
+						<c:when test="${sessionScope.organiser.orgType==0}"> 	
+						<a href="orgnizerList">
 							<div class="col-md-3">
 								<div class="tile tile-orange">
 									<div class="img">
 										<i class="fa fa-comments"></i>
 									</div>
 									<div class="content">
-										<p class="big">17</p>
-										<p class="title">Cakes & Pastries</p>
+										<p class="big">${organiserList.size()}</p>
+										<p class="title">Total Organiser</p>
+									</div>
+								</div>
+							</div> 
+						</a> 
+						
+						 <a href="exhibitorListByLocationAndCompType">
+							<div class="col-md-3">
+								<div class="tile tile-orange">
+									<div class="img">
+										<i class="fa fa-comments"></i>
+									</div>
+									<div class="content">
+										<p class="big">${exhibitorList.size()}</p>
+										<p class="title">Total Exhibitor</p>
 									</div>
 								</div>
 							</div>
-						</a> <a href="resoucres/index.php/orders/special">
+						</a> <a href="showEventList">
 							<div class="col-md-3">
 								<div class="tile tile-orange">
 									<div class="img">
 										<i class="fa fa-comments"></i>
 									</div>
 									<div class="content">
-										<p class="big">26</p>
-										<p class="title">Special Cake</p>
-									</div>
-								</div>
-							</div>
-						</a> <a href="resoucres/index.php/orders/list_all">
-							<div class="col-md-3">
-								<div class="tile tile-orange">
-									<div class="img">
-										<i class="fa fa-comments"></i>
-									</div>
-									<div class="content">
-										<p class="big">119</p>
-										<p class="title">Trading & Packing</p>
+										<p class="big">${eventList.size()}</p>
+										<p class="title">Total Event</p>
 									</div>
 								</div>
 							</div>
 						</a>
+						 </c:when>
+						 <c:otherwise>
+						  <a href="exhibitorList">
+							<div class="col-md-3">
+								<div class="tile tile-orange">
+									<div class="img">
+										<i class="fa fa-comments"></i>
+									</div>
+									<div class="content">
+										<p class="big">${exhibitorList.size()}</p>
+										<p class="title">Total Exhibitor</p>
+									</div>
+								</div>
+							</div>
+						</a> <a href="eventList">
+							<div class="col-md-3">
+								<div class="tile tile-orange">
+									<div class="img">
+										<i class="fa fa-comments"></i>
+									</div>
+									<div class="content">
+										<p class="big">${eventList.size()}</p>
+										<p class="title">Total Event</p>
+									</div>
+								</div>
+							</div>
+						</a>
+						 </c:otherwise>
+						 </c:choose>
+						 
+						
 					</div>
 
 
@@ -128,11 +162,11 @@
 									</div>
 									<div class="content">
 										<p class="big">0</p>
-										<p class="title">Pack Product Booking</p>
+										<p class="title">Total Visitor</p>
 									</div>
 								</div>
 							</div>
-						</a> <a href="resoucres/index.php/orders/list_all">
+						</a> <!-- <a href="resoucres/index.php/orders/list_all">
 							<div class="col-md-3">
 								<div class="tile tile-orange">
 									<div class="img">
@@ -144,8 +178,8 @@
 									</div>
 								</div>
 							</div>
-						</a>
- -->
+						</a> -->
+
 
 
 
