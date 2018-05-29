@@ -22,9 +22,10 @@ public class QrCode {
  
 	// Tutorial: http://zxing.github.io/zxing/apidocs/index.html
  
-	public static void qrCodeGeneration() {
-		String myCodeText = "https://crunchify.com/";
-		String filePath = "/home/ats-12/CrunchifyQR.png";
+	public static void qrCodeGeneration(String myCodeText,String filePath) {
+		//String myCodeText = "https://crunchify.com/";
+		System.err.println("hiiii");
+		//String filePath = "/home/ats-12/CrunchifyQR.png";
 		int size = 250;
 		String fileType = "png";
 		File myFile = new File(filePath);
@@ -48,7 +49,7 @@ public class QrCode {
 			Graphics2D graphics = (Graphics2D) image.getGraphics();
 			graphics.setColor(Color.WHITE);
 			graphics.fillRect(0, 0, CrunchifyWidth, CrunchifyWidth);
-			graphics.setColor(Color.BLACK);
+			graphics.setColor(Color.ORANGE);
  
 			for (int i = 0; i < CrunchifyWidth; i++) {
 				for (int j = 0; j < CrunchifyWidth; j++) {

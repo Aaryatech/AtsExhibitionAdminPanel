@@ -27,7 +27,15 @@ public class ExhibitorWithOrgName {
 	private int companyTypeId; 
 	private String locationName; 
 	private String companyTypeName;
+	private String qrCodePath;
 	
+	
+	public String getQrCodePath() {
+		return qrCodePath;
+	}
+	public void setQrCodePath(String qrCodePath) {
+		this.qrCodePath = qrCodePath;
+	}
 	public int getExhId() {
 		return exhId;
 	}

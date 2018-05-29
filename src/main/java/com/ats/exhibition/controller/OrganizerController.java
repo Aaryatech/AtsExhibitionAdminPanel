@@ -1,7 +1,12 @@
 package com.ats.exhibition.controller;
 
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,6 +31,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.zefer.pd4ml.PD4Constants;
+import org.zefer.pd4ml.PD4ML;
+import org.zefer.pd4ml.PD4PageMark;
 
 import com.ats.exhibition.common.Constants;
 import com.ats.exhibition.common.DateConvertor;
@@ -46,7 +55,7 @@ import com.ats.model.GetSchedule;
 import com.ats.model.GetSponsor;
 import com.ats.model.LoginResponse;
 import com.ats.model.Organiser;
-
+import com.ats.model.QrCode;
 import com.ats.model.ScheduleDetail;
 import com.ats.model.ScheduleHeader;
 import com.ats.model.Sponsor;
@@ -56,7 +65,7 @@ import com.ats.model.Sponsor;
 public class OrganizerController {
 
 	RestTemplate rest = new RestTemplate();
-
+	List<ExhibitorWithOrgName> exhibitorList=null;
 	@RequestMapping(value = "/addOrganizer", method = RequestMethod.GET)
 	public ModelAndView addOrganizer(HttpServletRequest request, HttpServletResponse response) {
 
@@ -574,7 +583,7 @@ public class OrganizerController {
 			map.add("orgId", login.getOrganiser().getOrgId());
 			ExhibitorWithOrgName[] ExhibitorWithOrgName = rest.postForObject(
 					Constants.url + "/getAllExhibotorsByorgIdAndIsUsed", map, ExhibitorWithOrgName[].class);
-			List<ExhibitorWithOrgName> exhibitorList = new ArrayList<ExhibitorWithOrgName>(
+			 exhibitorList = new ArrayList<ExhibitorWithOrgName>(
 					Arrays.asList(ExhibitorWithOrgName));
 
 			model.addObject("exhibitorList", exhibitorList);
@@ -1590,5 +1599,272 @@ public class OrganizerController {
 			// TODO: handle exception
 		}
 		return model;
+	}
+
+	@RequestMapping(value = "/generateQrCode", method = RequestMethod.POST)
+	public ModelAndView generateQrCode(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/exhibitorQr");
+
+		try
+		{ 
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			String[] checkbox=request.getParameterValues("select_for_qrcode");
+			List<ExhibitorWithOrgName> exhList=new ArrayList<ExhibitorWithOrgName>();
+			String exhIds="";
+			for(int j = 0; j<checkbox.length;j++)
+			{					
+				exhIds=exhIds+","+checkbox[j];
+
+			}			exhIds=exhIds.substring(1);
+
+			if(checkbox.length>0)
+			{
+			 for(int i = 0 ; i<exhibitorList.size();i++)
+				{
+					for(int j = 0; j<checkbox.length;j++)
+					{	
+						if(Integer.parseInt(checkbox[j])==exhibitorList.get(i).getExhId())
+						{
+							ExhibitorWithOrgName exhibitorWithOrgName=new ExhibitorWithOrgName();
+							QrCode.qrCodeGeneration(""+exhibitorList.get(i).getExhId(), Constants.filePath+"qrCode"+exhibitorList.get(i).getExhId()+".png");
+							exhibitorWithOrgName.setAboutCompany(exhibitorList.get(i).getAboutCompany());
+							exhibitorWithOrgName.setAddress(exhibitorList.get(i).getAddress());
+							exhibitorWithOrgName.setCompanyType(exhibitorList.get(i).getCompanyType());
+							exhibitorWithOrgName.setCompanyTypeId(exhibitorList.get(i).getCompanyTypeId());
+							exhibitorWithOrgName.setCompanyTypeName(exhibitorList.get(i).getCompanyTypeName());
+							exhibitorWithOrgName.setCompLat(exhibitorList.get(i).getCompLat());
+							exhibitorWithOrgName.setCompLong(exhibitorList.get(i).getCompLong());
+							exhibitorWithOrgName.setContactPersonName1(exhibitorList.get(i).getContactPersonName1());
+							exhibitorWithOrgName.setContactPersonName2(exhibitorList.get(i).getContactPersonName2());
+							exhibitorWithOrgName.setExhCompany(exhibitorList.get(i).getExhCompany());
+							exhibitorWithOrgName.setExhId(exhibitorList.get(i).getExhId());
+							exhibitorWithOrgName.setExhName(exhibitorList.get(i).getExhName());
+							exhibitorWithOrgName.setIsUsed(exhibitorList.get(i).getIsUsed());
+							exhibitorWithOrgName.setLocationId(exhibitorList.get(i).getLocationId());
+							exhibitorWithOrgName.setLocationName(exhibitorList.get(i).getLocationName());
+							exhibitorWithOrgName.setLogo(exhibitorList.get(i).getLogo());
+							exhibitorWithOrgName.setOrgId(exhibitorList.get(i).getOrgId());
+							exhibitorWithOrgName.setOrgName(exhibitorList.get(i).getOrgName());
+							exhibitorWithOrgName.setPassword(exhibitorList.get(i).getPassword());
+							exhibitorWithOrgName.setPersonEmail1(exhibitorList.get(i).getPersonEmail1());
+							exhibitorWithOrgName.setPersonEmail2(exhibitorList.get(i).getPersonEmail2());
+							exhibitorWithOrgName.setPersonMob1(exhibitorList.get(i).getPersonMob1());
+							exhibitorWithOrgName.setPersonMob2(exhibitorList.get(i).getPersonMob2());
+							exhibitorWithOrgName.setUserMob(exhibitorList.get(i).getUserMob());
+							exhibitorWithOrgName.setQrCodePath(Constants.filePath+"qrCode"+exhibitorList.get(i).getExhId()+".png");
+							exhList.add(exhibitorWithOrgName);
+						}
+					}
+				}
+			}
+			model.addObject("exhibitorList", exhList);
+			model.addObject("checkbox", exhIds);
+			model.addObject("orgId", login.getOrganiser().getOrgId());
+		}
+		catch (Exception e) {
+		e.printStackTrace();
+		}
+		
+		return model;
+	}
+	@RequestMapping(value = "pdf/generateQrCodePdf/{orgId}/{checkbox}", method = RequestMethod.GET)
+	public ModelAndView generateQrCodePdf(@PathVariable("orgId")int orgId,@PathVariable("checkbox")List<Integer> checkbox,HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/QrCodePdf");
+
+		try
+		{ 
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", orgId);
+			
+			ExhibitorWithOrgName[] ExhibitorWithOrgName = rest.postForObject(Constants.url + "/getAllExhibotorsByorgIdAndIsUsed",map, 
+					ExhibitorWithOrgName[].class); 
+			List<ExhibitorWithOrgName> exhibitorList = new ArrayList<ExhibitorWithOrgName>(Arrays.asList(ExhibitorWithOrgName));
+			System.out.println(exhibitorList);
+			List<ExhibitorWithOrgName> exhList=new ArrayList<ExhibitorWithOrgName>();
+			if(checkbox.size()>0)
+			{
+			 for(int i = 0 ; i<exhibitorList.size();i++)
+				{
+					for(int j = 0; j<checkbox.size();j++)
+					{
+						if(checkbox.get(j)==exhibitorList.get(i).getExhId())
+						{
+							ExhibitorWithOrgName exhibitorWithOrgName=new ExhibitorWithOrgName();
+							exhibitorWithOrgName.setAboutCompany(exhibitorList.get(i).getAboutCompany());
+							exhibitorWithOrgName.setAddress(exhibitorList.get(i).getAddress());
+							exhibitorWithOrgName.setCompanyType(exhibitorList.get(i).getCompanyType());
+							exhibitorWithOrgName.setCompanyTypeId(exhibitorList.get(i).getCompanyTypeId());
+							exhibitorWithOrgName.setCompanyTypeName(exhibitorList.get(i).getCompanyTypeName());
+							exhibitorWithOrgName.setCompLat(exhibitorList.get(i).getCompLat());
+							exhibitorWithOrgName.setCompLong(exhibitorList.get(i).getCompLong());
+							exhibitorWithOrgName.setContactPersonName1(exhibitorList.get(i).getContactPersonName1());
+							exhibitorWithOrgName.setContactPersonName2(exhibitorList.get(i).getContactPersonName2());
+							exhibitorWithOrgName.setExhCompany(exhibitorList.get(i).getExhCompany());
+							exhibitorWithOrgName.setExhId(exhibitorList.get(i).getExhId());
+							exhibitorWithOrgName.setExhName(exhibitorList.get(i).getExhName());
+							exhibitorWithOrgName.setIsUsed(exhibitorList.get(i).getIsUsed());
+							exhibitorWithOrgName.setLocationId(exhibitorList.get(i).getLocationId());
+							exhibitorWithOrgName.setLocationName(exhibitorList.get(i).getLocationName());
+							exhibitorWithOrgName.setLogo(exhibitorList.get(i).getLogo());
+							exhibitorWithOrgName.setOrgId(exhibitorList.get(i).getOrgId());
+							exhibitorWithOrgName.setOrgName(exhibitorList.get(i).getOrgName());
+							exhibitorWithOrgName.setPassword(exhibitorList.get(i).getPassword());
+							exhibitorWithOrgName.setPersonEmail1(exhibitorList.get(i).getPersonEmail1());
+							exhibitorWithOrgName.setPersonEmail2(exhibitorList.get(i).getPersonEmail2());
+							exhibitorWithOrgName.setPersonMob1(exhibitorList.get(i).getPersonMob1());
+							exhibitorWithOrgName.setPersonMob2(exhibitorList.get(i).getPersonMob2());
+							exhibitorWithOrgName.setUserMob(exhibitorList.get(i).getUserMob());
+							exhibitorWithOrgName.setQrCodePath("qrCode"+exhibitorList.get(i).getExhId()+".png");
+							exhList.add(exhibitorWithOrgName);
+						}
+					}
+				}
+			}
+			System.err.println(exhList.toString());
+			model.addObject("exhibitorList", exhList);
+			model.addObject("filePath",Constants.filePath);
+		}
+		catch (Exception e) {
+		e.printStackTrace();
+		}
+		
+		return model;
+	}
+	private Dimension format = PD4Constants.A4;
+	private boolean landscapeValue = false;
+	private int topValue = 8;
+	private int leftValue = 0;
+	private int rightValue = 0;
+	private int bottomValue = 8;
+	private String unitsValue = "m";
+	private String proxyHost = "";
+	private int proxyPort = 0;
+
+	private int userSpaceWidth = 750;
+	private static int BUFFER_SIZE = 1024;
+	
+	@RequestMapping(value = "/pdf", method = RequestMethod.GET)
+	public void showPDF(HttpServletRequest request, HttpServletResponse response) {
+
+		String url = request.getParameter("url");
+		System.out.println("URL " + url);
+		// http://monginis.ap-south-1.elasticbeanstalk.com
+	    File f = new File("/home/ats-12/qrCodes.pdf");
+		//File f = new File("/home/ats-11/pdf/ordermemo221.pdf");
+		//File f = new File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
+
+		System.out.println("I am here " + f.toString());
+		try {
+			runConverter(Constants.ReportURL + url, f, request, response);
+			System.out.println("Come on lets get ");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+
+			System.out.println("Pdf conversion exception " + e.getMessage());
+		}
+
+		// get absolute path of the application
+		ServletContext context = request.getSession().getServletContext();
+		String appPath = context.getRealPath("");
+		String filename = "ordermemo221.pdf";
+		 //String filePath = "/report.pdf";
+		String filePath = "/home/ats-12/qrCodes.pdf";
+		//String filePath = "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
+
+		// construct the complete absolute path of the file
+		String fullPath = appPath + filePath;
+		File downloadFile = new File(filePath);
+		FileInputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(downloadFile);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			// get MIME type of the file
+			String mimeType = context.getMimeType(fullPath);
+			if (mimeType == null) {
+				// set to binary type if MIME mapping not found
+				mimeType = "application/pdf";
+			}
+			System.out.println("MIME type: " + mimeType);
+
+			String headerKey = "Content-Disposition";
+
+			// response.addHeader("Content-Disposition", "attachment;filename=report.pdf");
+			response.setContentType("application/pdf");
+
+			// get output stream of the response
+			OutputStream outStream;
+
+			outStream = response.getOutputStream();
+
+			byte[] buffer = new byte[BUFFER_SIZE];
+			int bytesRead = -1;
+
+			// write bytes read from the input stream into the output stream
+
+			while ((bytesRead = inputStream.read(buffer)) != -1) {
+				outStream.write(buffer, 0, bytesRead);
+			}
+
+			inputStream.close();
+			outStream.close();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void runConverter(String urlstring, File output, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+		if (urlstring.length() > 0) {
+			if (!urlstring.startsWith("http://") && !urlstring.startsWith("file:")) {
+				urlstring = "http://" + urlstring;
+			}
+			System.out.println("PDF URL " + urlstring);
+			java.io.FileOutputStream fos = new java.io.FileOutputStream(output);
+
+			PD4ML pd4ml = new PD4ML();
+
+			try {
+
+				PD4PageMark footer = new PD4PageMark();  
+				footer.setPageNumberTemplate("page $[page] of $[total]");  
+				footer.setTitleAlignment(PD4PageMark.LEFT_ALIGN);  
+				footer.setPageNumberAlignment(PD4PageMark.RIGHT_ALIGN);  
+				footer.setInitialPageNumber(1);  
+				footer.setFontSize(8);  
+				footer.setAreaHeight(15); 
+			
+				pd4ml.setPageFooter(footer);
+
+			} catch (Exception e) {
+				System.out.println("Pdf conversion method excep " + e.getMessage());
+			}
+			try {
+				pd4ml.setPageSize(landscapeValue ? pd4ml.changePageOrientation(format) : format);
+			} catch (Exception e) {
+				System.out.println("Pdf conversion ethod excep " + e.getMessage());
+			}
+
+			if (unitsValue.equals("mm")) {
+				pd4ml.setPageInsetsMM(new Insets(topValue, leftValue, bottomValue, rightValue));
+			} else {
+				pd4ml.setPageInsets(new Insets(topValue, leftValue, bottomValue, rightValue));
+			}
+
+			pd4ml.setHtmlWidth(userSpaceWidth);
+
+			pd4ml.render(urlstring, fos);
+
+		}
 	}
 }
