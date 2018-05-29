@@ -1426,6 +1426,12 @@ RestTemplate rest = new RestTemplate();
 					EventWithOrgName.class); 
 			model.addObject("editEvent", editEvent);
 			
+			Organiser[] organiser = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsed", 
+					Organiser[].class); 
+			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
+			
+			model.addObject("organiserList", organiserList); 
+			
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -1560,127 +1566,28 @@ RestTemplate rest = new RestTemplate();
 	}
 	
 	
-	/*private Dimension format = PD4Constants.A2;
-	private boolean landscapeValue = false;
-	private int topValue = 8;
-	private int leftValue = 0;
-	private int rightValue = 0;
-	private int bottomValue =8;
-	private String unitsValue = "m";
-	private String proxyHost = "";
-	private int proxyPort = 0;
+	@RequestMapping(value = "/addEventByAdmin", method = RequestMethod.GET)
+	public ModelAndView addEventByAdmin(HttpServletRequest request, HttpServletResponse response) {
 
-	private int userSpaceWidth = 750;
-	private static int BUFFER_SIZE = 1024;
-
-	@RequestMapping(value = "/report", method = RequestMethod.GET)
-	public void showPDF(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("Inside PDf For Report URL ");
-		String url = request.getParameter("url");
-		System.out.println("URL " + url);
-		
-		//File f = new File("/opt/tomcat-latest/webapps/uploads/Inward.pdf");
-		File f = new File("C:/pdf/ordermemo221.pdf");
-
-		try {
-			runConverter(Constants.ReportURL + url, f,request,response);
-			//runConverter("www.google.com", f,request,response);
-
-		} catch (IOException e) {
-
-			System.out.println("Pdf conversion exception " + e.getMessage());
-		}
-
-		// get absolute path of the application
-		ServletContext context = request.getSession().getServletContext();
-		String appPath = context.getRealPath("");
-		 String filePath = "C:/pdf/ordermemo221.pdf";
-
-		//String filePath = "/opt/tomcat-latest/webapps/uploads/Inward.pdf";
-
-		// construct the complete absolute path of the file
-		String fullPath = appPath + filePath;
-		File downloadFile = new File(filePath);
-		FileInputStream inputStream = null;
-		try {
-			inputStream = new FileInputStream(downloadFile);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		try {
-			// get MIME type of the file
-			String mimeType = context.getMimeType(fullPath);
-			if (mimeType == null) {
-				// set to binary type if MIME mapping not found
-				mimeType = "application/pdf";
-			}
-			System.out.println("MIME type: " + mimeType);
-
-			String headerKey = "Content-Disposition";
-
-			// response.addHeader("Content-Disposition", "attachment;filename=report.pdf");
-			response.setContentType("application/pdf");
-
-			OutputStream outStream;
-
-			outStream = response.getOutputStream();
-
-			byte[] buffer = new byte[BUFFER_SIZE];
-			int bytesRead = -1;
-
-
-			while ((bytesRead = inputStream.read(buffer)) != -1) {
-				outStream.write(buffer, 0, bytesRead);
-			}
-
-			inputStream.close();
-			outStream.close();
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void runConverter(String urlstring, File output, HttpServletRequest request, HttpServletResponse response ) throws IOException {
-
-		if (urlstring.length() > 0) {
-			if (!urlstring.startsWith("http://") && !urlstring.startsWith("file:")) {
-				urlstring = "http://" + urlstring;
-			}
-			System.out.println("PDF URL " + urlstring);
-			java.io.FileOutputStream fos = new java.io.FileOutputStream(output);
-
-			PD4ML pd4ml = new PD4ML();
-		
-			try {
-
-				Dimension landscapeA4 = pd4ml.changePageOrientation(PD4Constants.A4);
-				pd4ml.setPageSize(landscapeA4);
+		ModelAndView model = new ModelAndView("SuperAdmin/editEventByAdmin");
+		try
+		{ 
+			 
+			 
+			Organiser[] organiser = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsed", 
+					Organiser[].class); 
+			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
 			
-				PD4PageMark footer = new PD4PageMark();  
-				
-	            footer.setPageNumberTemplate("Page $[page] of $[total]");  
-	            footer.setPageNumberAlignment(PD4PageMark.RIGHT_ALIGN);  
-	            footer.setFontSize(10);  
-	            footer.setAreaHeight(20);     
-	            
-	            pd4ml.setPageFooter(footer); 
-				
-			} catch (Exception e) {
-				System.out.println("Pdf conversion method excep " + e.getMessage());
-			}
-
-			if (unitsValue.equals("mm")) {
-				pd4ml.setPageInsetsMM(new Insets(topValue, leftValue, bottomValue, rightValue));
-			} else {
-				pd4ml.setPageInsets(new Insets(topValue, leftValue, bottomValue, rightValue));
-			}
-
-			pd4ml.setHtmlWidth(userSpaceWidth);
-
-			pd4ml.render(urlstring, fos);
+			model.addObject("organiserList", organiserList); 
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
 		}
-	}*/
+
+		return model;
+	}
+	
+	 
 
 }

@@ -141,8 +141,8 @@
 						<li>
 					</c:otherwise>
 				</c:choose>
-				<%--   <c:choose>
-						<c:when test="${sessionScope.employee.empType==2}">  --%>
+				<c:choose>
+						<c:when test="${sessionScope.organiser.orgType==0}">
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Super Admin</span> <b class="arrow fa fa-angle-right"></b>
 				</a>
@@ -189,8 +189,14 @@
 
 					<li><a href="${pageContext.request.contextPath}/orgnizerList">Organizer
 							List</a></li>
+							
+							<li><a href="${pageContext.request.contextPath}/addExhibitorBySuperAdmin">Add Exhibitor By Admin</a></li>
+							
+							<li><a href="${pageContext.request.contextPath}/addEventByAdmin">Add Event By Admin</a></li>
 
 				</ul>
+				</c:when>
+				</c:choose>
 
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Organizer</span> <b class="arrow fa fa-angle-right"></b>
@@ -285,8 +291,7 @@
 					</li>
 					 
 				</ul> --%>
-				<%-- 	 </c:when>
-				</c:choose> --%>
+				 
 
 				<%-- <a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Stock</span> <b class="arrow fa fa-angle-right"></b>

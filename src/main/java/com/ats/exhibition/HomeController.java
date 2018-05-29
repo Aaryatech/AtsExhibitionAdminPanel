@@ -27,6 +27,7 @@ import com.ats.model.EventWithOrgName;
 import com.ats.model.ExhibitorWithOrgName;
 import com.ats.model.LoginResponse;
 import com.ats.model.Organiser;
+import com.ats.model.VisitorWithOrgEventName;
  
 
 /**
@@ -103,9 +104,15 @@ public class HomeController {
 								 Organiser[].class);
 						 List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
 						 
+						 
+						 VisitorWithOrgEventName[]  visitorWithOrgEventName = rest.getForObject(Constants.url + "/getAllVisitorsByIsUsed",
+								 VisitorWithOrgEventName[].class);
+						 List<VisitorWithOrgEventName> visitorList = new ArrayList<VisitorWithOrgEventName>(Arrays.asList(visitorWithOrgEventName));
+						 
 						 mav.addObject("eventList", eventList);
 						 mav.addObject("exhibitorList", exhibitorList);
 						 mav.addObject("organiserList", organiserList);
+						 mav.addObject("visitorList", visitorList);
 					}
 					else
 					{
@@ -119,8 +126,13 @@ public class HomeController {
 								 ExhibitorWithOrgName[].class);
 						 List<ExhibitorWithOrgName> exhibitorList = new ArrayList<ExhibitorWithOrgName>(Arrays.asList(exhibitorWithOrgName));
 						 
+						 VisitorWithOrgEventName[]  visitorWithOrgEventName = rest.postForObject(Constants.url + "/getAllVisitorsByOrgId",map,
+								 VisitorWithOrgEventName[].class);
+						 List<VisitorWithOrgEventName> visitorList = new ArrayList<VisitorWithOrgEventName>(Arrays.asList(visitorWithOrgEventName));
+						 
 						 mav.addObject("eventList", eventList);
 						 mav.addObject("exhibitorList", exhibitorList); 
+						 mav.addObject("visitorList", visitorList);
 					}
 
 				} else {

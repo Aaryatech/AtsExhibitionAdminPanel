@@ -51,7 +51,7 @@
 								<i class="fa fa-table"></i>Add Exhibitor
 							</h3>
 							<div class="box-tool">
-								<a href="${pageContext.request.contextPath}/exhibitorList"> Exhibitor List</a> <a data-action="collapse" href="#"><i
+								<a href="${pageContext.request.contextPath}/exhibitorListByLocationAndCompType"> Exhibitor List</a> <a data-action="collapse" href="#"><i
 									class="fa fa-chevron-up"></i></a>
 							</div>
 

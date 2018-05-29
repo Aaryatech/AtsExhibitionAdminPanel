@@ -65,12 +65,12 @@
 								<div class="box-content"> 
 								
 									<div class="col-md-2">Event Name*</div>
-									<div class="col-md-3">
+									<div class="col-md-3"> 
 										<input type="text" id="eventName" name="eventName"
 											class="form-control" value="${editEvent.eventName}"
 											placeholder=" Event Name " required /> 
 											<input type="hidden" name="eventId" value="${editEvent.eventId}" />
-											<input type="hidden" name="orgId" value="${editEvent.orgId}" />
+											<%-- <input type="hidden" name="orgId" value="${editEvent.orgId}" /> --%>
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Event Location*</div>
@@ -155,9 +155,20 @@
 									
 									<div class="col-md-2">Organiser Name</div>
 									<div class="col-md-3">
-										<input type="text" name="orgName"
-											value="${editEvent.orgName}"   class="form-control"
-											placeholder="Organiser Name" disabled/>
+										<select  name="orgId" id="orgId" class="form-control" required >
+											<option value="">select</option>
+										 <c:forEach items="${organiserList}" var="organiserList" >
+										 	<c:choose>
+										 		<c:when test="${organiserList.orgId==editEvent.orgId}">
+										 		<option value="${organiserList.orgId}" selected>${organiserList.orgName}</option>
+										 		</c:when>
+										 		<c:otherwise>
+										 		<option value="${organiserList.orgId}"> ${organiserList.orgName}</option>
+										 		</c:otherwise>
+										 	</c:choose> 
+											</c:forEach>
+										  
+											</select>
 
 									</div>
  

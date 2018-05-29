@@ -64,7 +64,7 @@
 					<a href=""> <i
 							class="fa fa-off"></i> Logout
 					</a> --%> <a href="${pageContext.request.contextPath}/logout">Logout <c:out
-								value="${sessionScope.employee.empName}" />
+								value="${sessionScope.organiser.orgName}" />
 					</a>
 
 					</li>

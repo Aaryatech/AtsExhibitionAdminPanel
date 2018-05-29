@@ -161,7 +161,7 @@
 										<i class="fa fa-comments"></i>
 									</div>
 									<div class="content">
-										<p class="big">0</p>
+										<p class="big">${visitorList.size()}</p>
 										<p class="title">Total Visitor</p>
 									</div>
 								</div>
