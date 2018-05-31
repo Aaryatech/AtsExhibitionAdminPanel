@@ -53,6 +53,7 @@ import com.ats.model.FloarMap;
 import com.ats.model.GetFloarMap;
 import com.ats.model.GetSchedule;
 import com.ats.model.GetSponsor;
+import com.ats.model.Location;
 import com.ats.model.LoginResponse;
 import com.ats.model.Organiser;
 import com.ats.model.QrCode;
@@ -72,6 +73,13 @@ public class OrganizerController {
 		ModelAndView model = new ModelAndView("organizer/addOrganizer");
 		try {
 
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
+					Location[].class); 
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+			
+			model.addObject("locationList", locationList);
+
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -152,6 +160,12 @@ public class OrganizerController {
 			map.add("orgId", orgId);
 			Organiser editOrganiser = rest.postForObject(Constants.url + "/getOrganiserByOrgId", map, Organiser.class);
 			model.addObject("editOrganiser", editOrganiser);
+			
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
+					Location[].class); 
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+			
+			model.addObject("locationList", locationList);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -502,6 +516,19 @@ public class OrganizerController {
 
 		ModelAndView model = new ModelAndView("organizer/addExhibitor");
 		try {
+			
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
+					Location[].class); 
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+			
+			System.out.println("locationList " + locationList);
+			
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
+					CompanyType[].class); 
+			List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+			
+			model.addObject("companyTypeList", companyTypeList);
+			model.addObject("locationList", locationList);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -604,9 +631,22 @@ public class OrganizerController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("exhId", exhId);
-			ExhibitorWithOrgName editExhibitor = rest.postForObject(Constants.url + "/getExhibitorByExhId", map,
-					ExhibitorWithOrgName.class);
+			ExhibitorWithOrgName editExhibitor = rest.postForObject(Constants.url + "/getExhibitorByExhId",map,
+					ExhibitorWithOrgName.class); 
 			model.addObject("editExhibitor", editExhibitor);
+			
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
+					Location[].class); 
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+			
+			System.out.println("locationList " + locationList);
+			
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
+					CompanyType[].class); 
+			List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+			
+			model.addObject("companyTypeList", companyTypeList);
+			model.addObject("locationList", locationList);
 
 		} catch (Exception e) {
 			e.printStackTrace();
