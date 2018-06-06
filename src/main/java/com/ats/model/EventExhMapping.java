@@ -7,7 +7,15 @@ public class EventExhMapping {
 	private int exhId; 
 	private int eventId; 
 	private String eventName; 
+	private String stallNo;
 	private int isUsed;
+	
+	public String getStallNo() {
+		return stallNo;
+	}
+	public void setStallNo(String stallNo) {
+		this.stallNo = stallNo;
+	}
 	public int getMapId() {
 		return mapId;
 	}
@@ -41,9 +49,9 @@ public class EventExhMapping {
 	@Override
 	public String toString() {
 		return "EventExhMapping [mapId=" + mapId + ", exhId=" + exhId + ", eventId=" + eventId + ", eventName="
-				+ eventName + ", isUsed=" + isUsed + "]";
+				+ eventName + ", stallNo=" + stallNo + ", isUsed=" + isUsed + "]";
 	}
-	
+    
 	
 
 }

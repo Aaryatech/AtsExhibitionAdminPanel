@@ -11,10 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class VpsImageUpload {
 
 	//public static final String FR_FOLDER = "/home/ats-12/";
-	public static final String FR_FOLDER = "C:/pdf/";
-	public static final String SPONSOR_FOLDER = "/home/ats-12/";
+	public static final String FLOUR_MAP= "http://exhibition.aaryatechindia.in:12756/uploads/FLOURMAP/";
+	public static final String SPONSOR_FOLDER = "http://exhibition.aaryatechindia.in:12756/uploads/SPONSOR/";
 
-	public static final String GALLARY_FOLDER = "/home/ats-12/";
+	public static final String GALLARY_FOLDER = "http://exhibition.aaryatechindia.in:12756/uploads/GALLARY/";
 	
 	public static final String M_SP_CAKE_FOLDER = "/opt/tomcat-latest/webapps/uploads/MSPCAKE/";
 	
@@ -39,20 +39,20 @@ public class VpsImageUpload {
 
 			}
 
-			Path path = Paths.get(FR_FOLDER + imageName);
+			Path path = Paths.get(FLOUR_MAP + imageName);
 
 			byte[] bytes = file.getBytes();
 
 			if (imageType == 1) {
 				System.out.println("Inside Image Type =1");
 
-				path = Paths.get(FR_FOLDER + imageName);
+				path = Paths.get(FLOUR_MAP + imageName);
 
 				System.out.println("Path= " + path.toString());
 
 			} else if (imageType == 2) {
 
-				path = Paths.get(SPONSOR_FOLDER + imageName);
+				path = Paths.get(FLOUR_MAP + imageName);
 
 			} else if (imageType == 3) {
 

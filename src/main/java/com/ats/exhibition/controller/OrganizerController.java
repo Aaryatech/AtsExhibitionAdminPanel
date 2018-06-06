@@ -50,6 +50,7 @@ import com.ats.model.Events;
 import com.ats.model.Exhibitor;
 import com.ats.model.ExhibitorWithOrgName;
 import com.ats.model.FloarMap;
+import com.ats.model.GetExhEventSubscription;
 import com.ats.model.GetFloarMap;
 import com.ats.model.GetSchedule;
 import com.ats.model.GetSponsor;
@@ -768,11 +769,13 @@ public class OrganizerController {
 			for (int i = 0; i < eventExhMappingList.size(); i++) {
 				for (int j = 0; j < checkbox.length; j++) {
 					if (Integer.parseInt(checkbox[j]) == eventExhMappingList.get(i).getExhId()) {
+						String stallNo=request.getParameter("stallNo"+eventExhMappingList.get(i).getExhId());
 						EventExhMapping eventExh = new EventExhMapping();
 						eventExh.setEventId(eventId);
 						eventExh.setEventName(eventName);
 						eventExh.setExhId(eventExhMappingList.get(i).getExhId());
 						eventExh.setIsUsed(1);
+						eventExh.setStallNo(stallNo);
 						insert.add(eventExh);
 					}
 				}
@@ -1773,6 +1776,55 @@ public class OrganizerController {
 		}
 		
 		return model;
+	}
+	int error=2;
+	@RequestMapping(value = "/showExhEventSubscription", method = RequestMethod.GET)
+	public ModelAndView showExhEventSubscription(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/exhEventSubscription");
+		try {
+
+			HttpSession session = request.getSession();
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgId", login.getOrganiser().getOrgId());
+			
+			List<GetExhEventSubscription> subList=rest.postForObject(Constants.url+"getExhEventSubscriptionList",map, List.class);
+		    model.addObject("subList", subList);
+			model.addObject("error", error);
+			error=2;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	@RequestMapping(value = "/approveSubscription/{exhEsubId}", method = RequestMethod.GET)
+	public String approveSubscription(@PathVariable int exhEsubId, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("organizer/exhEventSubscription");
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("exhEsubId", exhEsubId);
+			ErrorMessage sub = rest.postForObject(Constants.url + "/approveSubscription", map,
+					ErrorMessage.class);
+
+			if(sub.isError()==false)
+			{
+				error=0;
+			}else
+			{
+				error=1;
+	
+			}
+			
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/showExhEventSubscription";
 	}
 	private Dimension format = PD4Constants.A4;
 	private boolean landscapeValue = false;
