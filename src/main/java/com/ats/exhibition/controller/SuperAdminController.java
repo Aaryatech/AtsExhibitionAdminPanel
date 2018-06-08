@@ -33,11 +33,14 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView; 
 import com.ats.exhibition.common.Constants;
 import com.ats.exhibition.common.DateConvertor;
+import com.ats.exhibition.common.VpsImageUpload;
 import com.ats.model.CompanyType;
 import com.ats.model.ErrorMessage;
 import com.ats.model.EventExhMapping;
@@ -1435,6 +1438,21 @@ RestTemplate rest = new RestTemplate();
 			model.addObject("organiserList", organiserList); 
 			model.addObject("isEdit", 1);
 			
+			model.addObject("imageUrl",Constants.imageUrl);
+			 
+			 Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
+						Location[].class); 
+				List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+				
+				System.out.println("locationList " + locationList);
+				
+				CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
+						CompanyType[].class); 
+				List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+				
+				model.addObject("companyTypeList", companyTypeList);
+				model.addObject("locationList", locationList);
+			
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -1444,7 +1462,7 @@ RestTemplate rest = new RestTemplate();
 	}
 	
 	@RequestMapping(value = "/insertEventByAdmin", method = RequestMethod.POST)
-	public String insertEvent(HttpServletRequest request, HttpServletResponse response) {
+	public String insertEvent(@RequestParam("documentFile") List<MultipartFile> documentFile,HttpServletRequest request, HttpServletResponse response) {
 
 		 
 		try
@@ -1466,13 +1484,32 @@ RestTemplate rest = new RestTemplate();
 			String latitude = request.getParameter("latitude");
 			String longitude = request.getParameter("longitude");
 			int orgId = Integer.parseInt(request.getParameter("orgId"));
+			int companyTypeId = Integer.parseInt(request.getParameter("companyTypeId"));
+			int location = Integer.parseInt(request.getParameter("location"));
+			 
+			String document = request.getParameter("docPath");
 			
-			HttpSession session = request.getSession();
-			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
+			VpsImageUpload upload = new VpsImageUpload();
+			String docFile = null;
+			try {
+				docFile = documentFile.get(0).getOriginalFilename();
+				 
+
+				upload.saveUploadedFiles(documentFile, Constants.FLOAR_MAP_TYPE,
+						documentFile.get(0).getOriginalFilename());
+			 
+				System.out.println("upload method called for image Upload " + documentFile.toString());
+
+			} catch (IOException e) {
+
+				System.out.println("Exce in File Upload In GATE ENTRY  Insert " + e.getMessage());
+				e.printStackTrace();
+			}
+			
 			 
 			Events event = new Events();
 			
-			if(eventId=="" || eventId == null)
+			if (eventId.equalsIgnoreCase("")|| eventId.equalsIgnoreCase(null))
 				event.setEventId(0);
 			else
 				event.setEventId(Integer.parseInt(eventId));
@@ -1494,6 +1531,12 @@ RestTemplate rest = new RestTemplate();
 			event.setEventLocLong(longitude);
 			event.setIsUsed(1);
 			event.setOrgId(orgId);
+			event.setLocationId(location);
+			event.setCompanyTypeId(companyTypeId);
+			if(docFile!=null && docFile.length()>0) 
+				event.setEventLogo(docFile); 
+			else
+				event.setEventLogo(document);
 			
 			Events res = rest.postForObject(Constants.url + "/saveEvents",event,
 					Events.class); 
@@ -1582,6 +1625,19 @@ RestTemplate rest = new RestTemplate();
 			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
 			
 			model.addObject("organiserList", organiserList); 
+			
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
+					Location[].class); 
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+			
+			System.out.println("locationList " + locationList);
+			
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
+					CompanyType[].class); 
+			List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+			
+			model.addObject("companyTypeList", companyTypeList);
+			model.addObject("locationList", locationList);
 			
 		}catch(Exception e)
 		{

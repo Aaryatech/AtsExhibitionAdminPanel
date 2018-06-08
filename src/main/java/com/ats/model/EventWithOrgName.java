@@ -22,6 +22,9 @@ public class EventWithOrgName {
 	private String person1EmailId; 
 	private String person2EmailId; 
 	private int isUsed;
+	private int locationId; 
+	private int companyTypeId;
+	
 	public int getEventId() {
 		return eventId;
 	}
@@ -142,6 +145,19 @@ public class EventWithOrgName {
 	public void setIsUsed(int isUsed) {
 		this.isUsed = isUsed;
 	}
+	
+	public int getLocationId() {
+		return locationId;
+	}
+	public void setLocationId(int locationId) {
+		this.locationId = locationId;
+	}
+	public int getCompanyTypeId() {
+		return companyTypeId;
+	}
+	public void setCompanyTypeId(int companyTypeId) {
+		this.companyTypeId = companyTypeId;
+	}
 	@Override
 	public String toString() {
 		return "EventWithOrgName [eventId=" + eventId + ", orgId=" + orgId + ", orgName=" + orgName + ", eventName="
@@ -150,7 +166,8 @@ public class EventWithOrgName {
 				+ ", eventLocLong=" + eventLocLong + ", aboutEvent=" + aboutEvent + ", eventLogo=" + eventLogo
 				+ ", contactPersonName1=" + contactPersonName1 + ", contactPersonName2=" + contactPersonName2
 				+ ", person1Mob=" + person1Mob + ", person2Mob=" + person2Mob + ", person1EmailId=" + person1EmailId
-				+ ", person2EmailId=" + person2EmailId + ", isUsed=" + isUsed + "]";
+				+ ", person2EmailId=" + person2EmailId + ", isUsed=" + isUsed + ", locationId=" + locationId
+				+ ", companyTypeId=" + companyTypeId + "]";
 	}
 	
 	

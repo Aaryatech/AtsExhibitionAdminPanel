@@ -105,7 +105,7 @@ public class OrganizerController {
 	}
 
 	@RequestMapping(value = "/insertOrganizer", method = RequestMethod.POST)
-	public String insertOrganizer(HttpServletRequest request, HttpServletResponse response) {
+	public String insertOrganizer(@RequestParam("documentFile") List<MultipartFile> documentFile, HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 			String orgId = request.getParameter("orgId");
@@ -120,9 +120,27 @@ public class OrganizerController {
 			int locationId = Integer.parseInt(request.getParameter("location"));
 			String mob = request.getParameter("mob");
 			String password = request.getParameter("password");
+			String document = request.getParameter("docPath");
+			
+			VpsImageUpload upload = new VpsImageUpload();
+			String docFile = null;
+			try {
+				docFile = documentFile.get(0).getOriginalFilename();
+				 
 
+				upload.saveUploadedFiles(documentFile, Constants.FLOAR_MAP_TYPE,
+						documentFile.get(0).getOriginalFilename());
+			 
+				System.out.println("upload method called for image Upload " + documentFile.toString());
+
+			} catch (IOException e) {
+
+				System.out.println("Exce in File Upload In GATE ENTRY  Insert " + e.getMessage());
+				e.printStackTrace();
+			}
+			
 			Organiser organiser = new Organiser();
-			if (orgId == "" || orgId == null)
+			if (orgId.equalsIgnoreCase("") || orgId.equalsIgnoreCase(null))
 				organiser.setOrgId(0);
 			else
 				organiser.setOrgId(Integer.parseInt(orgId));
@@ -139,6 +157,10 @@ public class OrganizerController {
 			organiser.setUserMob(mob);
 			organiser.setUserPassword(password);
 			organiser.setLocationId(locationId);
+			if(docFile!=null && docFile.length()>0) 
+				organiser.setOrgImage(docFile); 
+			else
+				organiser.setOrgImage(document);
 
 			Organiser res = rest.postForObject(Constants.url + "/saveOrganiser", organiser, Organiser.class);
 
@@ -168,7 +190,7 @@ public class OrganizerController {
 			
 			model.addObject("locationList", locationList);
             model.addObject("isEdit",1);
-
+            model.addObject("imageUrl",Constants.imageUrl);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -199,6 +221,19 @@ public class OrganizerController {
 
 		ModelAndView model = new ModelAndView("organizer/addEvent");
 		try {
+			
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
+					Location[].class); 
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+			
+			System.out.println("locationList " + locationList);
+			
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
+					CompanyType[].class); 
+			List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+			
+			model.addObject("companyTypeList", companyTypeList);
+			model.addObject("locationList", locationList);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -208,7 +243,7 @@ public class OrganizerController {
 	}
 
 	@RequestMapping(value = "/insertEvent", method = RequestMethod.POST)
-	public String insertEvent(HttpServletRequest request, HttpServletResponse response) {
+	public String insertEvent(@RequestParam("documentFile") List<MultipartFile> documentFile, HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 			String eventId = request.getParameter("eventId");
@@ -227,13 +262,34 @@ public class OrganizerController {
 			String email2 = request.getParameter("email2");
 			String latitude = request.getParameter("latitude");
 			String longitude = request.getParameter("longitude");
+			int companyTypeId = Integer.parseInt(request.getParameter("companyTypeId"));
+			int location = Integer.parseInt(request.getParameter("location"));
+			 
+			String document = request.getParameter("docPath");
+			
+			VpsImageUpload upload = new VpsImageUpload();
+			String docFile = null;
+			try {
+				docFile = documentFile.get(0).getOriginalFilename();
+				 
+
+				upload.saveUploadedFiles(documentFile, Constants.FLOAR_MAP_TYPE,
+						documentFile.get(0).getOriginalFilename());
+			 
+				System.out.println("upload method called for image Upload " + documentFile.toString());
+
+			} catch (IOException e) {
+
+				System.out.println("Exce in File Upload In GATE ENTRY  Insert " + e.getMessage());
+				e.printStackTrace();
+			}
 
 			HttpSession session = request.getSession();
 			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail");
 
 			Events event = new Events();
 
-			if (eventId == "" || eventId == null)
+			if (eventId.equalsIgnoreCase("")|| eventId.equalsIgnoreCase(null))
 				event.setEventId(0);
 			else
 				event.setEventId(Integer.parseInt(eventId));
@@ -255,7 +311,13 @@ public class OrganizerController {
 			event.setEventLocLong(longitude);
 			event.setIsUsed(1);
 			event.setOrgId(login.getOrganiser().getOrgId());
-
+			event.setLocationId(location);
+			event.setCompanyTypeId(companyTypeId);
+			if(docFile!=null && docFile.length()>0) 
+				event.setEventLogo(docFile); 
+			else
+				event.setEventLogo(document);
+			
 			Events res = rest.postForObject(Constants.url + "/saveEvents", event, Events.class);
 
 			System.out.println("res " + res);
@@ -311,8 +373,8 @@ public class OrganizerController {
 		return model;
 	}
 
-	@RequestMapping(value = "/deleteEvent/{eventId}", method = RequestMethod.GET)
-	public String deleteEvent(@PathVariable int eventId, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/deleteEvent/{eventId}/{ret}", method = RequestMethod.GET)
+	public String deleteEvent(@PathVariable int eventId,@PathVariable int ret, HttpServletRequest request, HttpServletResponse response) {
 
 		// ModelAndView model = new ModelAndView("organizer/addOrganizer");
 		try {
@@ -325,8 +387,13 @@ public class OrganizerController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return "redirect:/eventList";
+		
+		String retr = new String();
+		if(ret==0) 
+			 retr = "redirect:/eventList";
+		else
+			retr = "redirect:/showEventList";
+		return retr;
 	}
 
 	@RequestMapping(value = "/editEvent/{eventId}", method = RequestMethod.GET)
@@ -340,6 +407,21 @@ public class OrganizerController {
 			EventWithOrgName editEvent = rest.postForObject(Constants.url + "/getAllEventsByEventId", map,
 					EventWithOrgName.class);
 			model.addObject("editEvent", editEvent);
+			model.addObject("isEdit", 1);
+			 model.addObject("imageUrl",Constants.imageUrl);
+			 
+			 Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
+						Location[].class); 
+				List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+				
+				System.out.println("locationList " + locationList);
+				
+				CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
+						CompanyType[].class); 
+				List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+				
+				model.addObject("companyTypeList", companyTypeList);
+				model.addObject("locationList", locationList);
 
 		} catch (Exception e) {
 			e.printStackTrace();
