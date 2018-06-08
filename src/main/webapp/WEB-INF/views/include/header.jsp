@@ -28,7 +28,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/flaty.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/flaty-responsive.css">
 
-<link rel="icon" href="${pageContext.request.contextPath}/resources/img/images.png" type="image/x-icon" >
+<link rel="icon" href="${pageContext.request.contextPath}/resources/img/atslogo.png" type="image/x-icon" >
 </head>
 <body>
 
@@ -47,8 +47,8 @@
 			<!-- BEGIN Button User -->
 			<li class="user-profile"><a data-toggle="dropdown" href="#"
 				class="user-menu dropdown-toggle"> <!--<img class="nav-user-photo" src="resoucres/img/demo/avatar/avatar1.jpg" alt="Penny's Photo" />-->
-					<span class="hhh" id="user_info"> Admin </span> <i
-					class="fa fa-caret-down"></i>
+					<span class="hhh" id="user_info" style="color: blue;"> Admin  <i
+					class="fa fa-caret-down"></i></span>
 			</a> <!-- BEGIN User Dropdown -->
 				<ul class="dropdown-menu dropdown-navbar" id="user_menu">
 					<!--<li class="nav-header">
