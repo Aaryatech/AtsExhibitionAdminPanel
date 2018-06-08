@@ -35,7 +35,7 @@
 				<div>
 					<h1>
 
-						<i class="fa fa-file-o"></i>Add Event
+						<i class="fa fa-file-o"></i> Event
 
 					</h1>
 				</div>
@@ -48,7 +48,10 @@
 					<div class="box" id="todayslist">
 						<div class="box-title">
 							<h3>
-								<i class="fa fa-table"></i>Add Event
+								<i class="fa fa-table"></i><c:choose>
+								<c:when test="${isEdit==1}">Edit Event</c:when>
+								<c:otherwise>Add Event</c:otherwise>
+								</c:choose>
 							</h3>
 							<div class="box-tool">
 								<a href="${pageContext.request.contextPath}/eventList"> Event List</a> <a data-action="collapse" href="#"><i

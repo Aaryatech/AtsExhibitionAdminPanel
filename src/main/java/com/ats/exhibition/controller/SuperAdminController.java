@@ -133,10 +133,6 @@ RestTemplate rest = new RestTemplate();
 			 eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
 			 
 			 
-			 
-			 
-			 
-			
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -1437,6 +1433,7 @@ RestTemplate rest = new RestTemplate();
 			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
 			
 			model.addObject("organiserList", organiserList); 
+			model.addObject("isEdit", 1);
 			
 		}catch(Exception e)
 		{

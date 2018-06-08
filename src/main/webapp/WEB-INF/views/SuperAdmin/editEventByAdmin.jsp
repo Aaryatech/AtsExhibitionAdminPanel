@@ -35,7 +35,7 @@
 				<div>
 					<h1>
 
-						<i class="fa fa-file-o"></i>Add Event
+						<i class="fa fa-file-o"></i> Event
 
 					</h1>
 				</div>
@@ -48,7 +48,10 @@
 					<div class="box" id="todayslist">
 						<div class="box-title">
 							<h3>
-								<i class="fa fa-table"></i>Add Event
+								<i class="fa fa-table"></i><c:choose>
+								<c:when test="${isEdit==1}">Edit Event</c:when>
+								<c:otherwise>Add Event</c:otherwise>
+								</c:choose>
 							</h3>
 							<div class="box-tool">
 								<a href="${pageContext.request.contextPath}/showEventList"> Event List</a> <a data-action="collapse" href="#"><i
@@ -73,14 +76,25 @@
 											<%-- <input type="hidden" name="orgId" value="${editEvent.orgId}" /> --%>
 									</div>
 									<div class="col-md-1"></div>
-									<div class="col-md-2">Event Location*</div>
+										<div class="col-md-2">Organizer Name</div>
 									<div class="col-md-3">
-										<input type="text" name="eventLocation"
-											value="${editEvent.eventLocation}" class="form-control"
-											placeholder="Event Location" required />
+										<select  name="orgId" id="orgId" class="form-control" required >
+											<option value="">Select Organizer</option>
+										 <c:forEach items="${organiserList}" var="organiserList" >
+										 	<c:choose>
+										 		<c:when test="${organiserList.orgId==editEvent.orgId}">
+										 		<option value="${organiserList.orgId}" selected>${organiserList.orgName}</option>
+										 		</c:when>
+										 		<c:otherwise>
+										 		<option value="${organiserList.orgId}"> ${organiserList.orgName}</option>
+										 		</c:otherwise>
+										 	</c:choose> 
+											</c:forEach>
+										  
+											</select>
+
 									</div>
 									
-									 
 								</div>
 								<br>
 
@@ -150,28 +164,17 @@
 										<textarea  name="aboutEvent" class="form-control" placeholder="About Event" required >${editEvent.aboutEvent}</textarea>
 											 
 
-									</div><br><br>
-									<div class="col-md-1"></div>
-									
-									<div class="col-md-2">Organizer Name</div>
-									<div class="col-md-3">
-										<select  name="orgId" id="orgId" class="form-control" required >
-											<option value="">Select Organizer</option>
-										 <c:forEach items="${organiserList}" var="organiserList" >
-										 	<c:choose>
-										 		<c:when test="${organiserList.orgId==editEvent.orgId}">
-										 		<option value="${organiserList.orgId}" selected>${organiserList.orgName}</option>
-										 		</c:when>
-										 		<c:otherwise>
-										 		<option value="${organiserList.orgId}"> ${organiserList.orgName}</option>
-										 		</c:otherwise>
-										 	</c:choose> 
-											</c:forEach>
-										  
-											</select>
-
 									</div>
- 
+									<div class="col-md-1"></div>
+									<div class="col-md-2">Event Location*</div>
+									<div class="col-md-3">
+										<textarea name="eventLocation"
+											class="form-control"
+											placeholder="Event Location" required >${editEvent.eventLocation}</textarea>
+									</div>
+									
+								
+ <br>
 								</div>
 								<br>
 								
@@ -252,7 +255,7 @@
 									<div class="col-md-2">Latitude*</div>
 									<div class="col-md-3">
 										<input type="text" name="latitude"
-											value="${editEvent.eventLocLat}" class="form-control"
+											value="${editEvent.eventLocLat}" pattern="[+-]?([0-9]*[.])?[0-9]+" class="form-control"
 											placeholder="Latitude"  required />
 
 									</div>
@@ -262,7 +265,7 @@
 									<div class="col-md-3">
 										<input type="text" name="longitude"
 											value="${editEvent.eventLocLong}" class="form-control"
-											placeholder="Longitude" required />
+											placeholder="Longitude" pattern="[+-]?([0-9]*[.])?[0-9]+" required />
 
 									</div>
 
@@ -276,6 +279,8 @@
 											id="submit"  >
 
 
+   <a href="${pageContext.request.contextPath}/showEventList" >	<input type="button" class="btn btn-default" value="Cancel"
+										               	id="Cancel"  ></a>
 
 									</div>
 								</div>
