@@ -35,7 +35,7 @@
 				<div>
 					<h1>
 
-						<i class="fa fa-file-o"></i>Edit Event
+						<i class="fa fa-file-o"></i>Add Event
 
 					</h1>
 				</div>
@@ -48,7 +48,7 @@
 					<div class="box" id="todayslist">
 						<div class="box-title">
 							<h3>
-								<i class="fa fa-table"></i>Edit Event
+								<i class="fa fa-table"></i>Add Event
 							</h3>
 							<div class="box-tool">
 								<a href="${pageContext.request.contextPath}/showEventList"> Event List</a> <a data-action="collapse" href="#"><i
@@ -86,7 +86,7 @@
 
 								<div class="box-content">
 
-									<div class="col-md-2">Event From Date*</div>
+									<div class="col-md-2">From Date*</div>
 									<div class="col-md-3">
 										<input type="text" name="fromDate"
 											value="${editEvent.eventFromDate}" class="form-control date-picker"
@@ -94,11 +94,11 @@
 									</div>
 									
 									<div class="col-md-1"></div>
-									<div class="col-md-2">Event To Date*</div>
+									<div class="col-md-2">To Date*</div>
 									<div class="col-md-3">
 										<input type="text" name="toDate"
 											value="${editEvent.eventToDate}" class="form-control date-picker"
-											placeholder="From To" required />
+											placeholder="To Date" required />
 									</div>
 
 
@@ -109,7 +109,7 @@
 
 									<div class="col-md-2">From Time*</div>
 									<div class="col-md-3">
-										<input type="text" name="fromTime"
+										<input type="time" name="fromTime"
 											value="${editEvent.fromTime}"   class="form-control"
 											placeholder="From Time" required />
 									</div>
@@ -126,7 +126,7 @@
 
 									<div class="col-md-2">To Time*</div>
 									<div class="col-md-3">
-										<input type="text" name="toTime"
+										<input type="time" name="toTime"
 											value="${editEvent.toTime}"   class="form-control"
 											placeholder="To Time" required />
 
@@ -150,13 +150,13 @@
 										<textarea  name="aboutEvent" class="form-control" placeholder="About Event" required >${editEvent.aboutEvent}</textarea>
 											 
 
-									</div><br>
+									</div><br><br>
 									<div class="col-md-1"></div>
 									
-									<div class="col-md-2">Organiser Name</div>
+									<div class="col-md-2">Organizer Name</div>
 									<div class="col-md-3">
 										<select  name="orgId" id="orgId" class="form-control" required >
-											<option value="">select</option>
+											<option value="">Select Organizer</option>
 										 <c:forEach items="${organiserList}" var="organiserList" >
 										 	<c:choose>
 										 		<c:when test="${organiserList.orgId==editEvent.orgId}">
@@ -181,7 +181,7 @@
 									<div class="col-md-3">
 										<input type="text" name="pers1"
 											value="${editEvent.contactPersonName1}" class="form-control"
-											placeholder="Contact Person"   
+											placeholder="Contact Person1"   
 											required />
 
 									</div>
@@ -191,7 +191,7 @@
 									<div class="col-md-3">
 										<input type="text" id="pers2" name="pers2"
 											 value="${editEvent.contactPersonName2 }" class="form-control"
-											placeholder="Contact Person " required>
+											placeholder="Contact Person2 " required>
 
 									</div>
 
@@ -203,9 +203,9 @@
 
 									<div class="col-md-2">Person1 Contact No.*</div>
 									<div class="col-md-3">
-										<input type="text" name="mob1"
+										<input type="text" name="mob1"  id="mob1"
 											value="${editEvent.person1Mob}" class="form-control"
-											placeholder="Mobile No"   pattern="^\d{10}$"
+											placeholder="Person1 Contact No."    autofocus  pattern="^(\+\d{1,3}[- ]?)?\d{10}$" title="Enter 10 digit mobile number"
 											required />
 
 									</div>
@@ -213,9 +213,9 @@
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Person2 Contact No.*</div>
 									<div class="col-md-3">
-										<input type="text" name="mob2"
+										<input type="text" name="mob2" id="mob2" 
 											value="${editEvent.person2Mob}" class="form-control"
-											placeholder="Mobile No"   pattern="^\d{10}$"
+											placeholder="Person2 Contact No."    autofocus  pattern="^(\+\d{1,3}[- ]?)?\d{10}$" title="Enter 10 digit mobile number"
 											required />
 
 									</div>
@@ -230,7 +230,7 @@
 									<div class="col-md-3">
 										<input type="email" name="email1"
 											value="${editEvent.person1EmailId}" class="form-control"
-											placeholder="Email"  required />
+											placeholder="Person1 Email"  required />
 
 									</div>
 
@@ -239,7 +239,7 @@
 									<div class="col-md-3">
 										<input type="email" name="email2"
 											value="${editEvent.person2EmailId}" class="form-control"
-											placeholder="Email" required />
+											placeholder="Person2 Email" required />
 
 									</div>
 
@@ -290,7 +290,7 @@
 			</div>
 			<!-- END Main Content -->
 			<footer>
-			<p>2018 © SONA ELECTRICALS</p>
+			<p>2018 © ATS Exhibition</p>
 			</footer>
 
 			<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
@@ -382,6 +382,22 @@
 
 			}
 		}
+		  $('#mob1').on('input', function(e) {
+			   this.setCustomValidity('')
+			     if ($(this).val().length>10) {
+			       this.setCustomValidity('Please enter 10 digit valid mobile No.')
+			     }
+			     // e.target.checkValidity()
+			     this.reportValidity();
+			   })
+			    $('#mob2').on('input', function(e) {
+			   this.setCustomValidity('')
+			     if ($(this).val().length>10) {
+			       this.setCustomValidity('Please enter 10 digit valid mobile No.')
+			     }
+			     // e.target.checkValidity()
+			     this.reportValidity();
+			   })
 	</script>
 
 </body>

@@ -63,7 +63,6 @@ import com.ats.model.ScheduleHeader;
 import com.ats.model.Sponsor;
 
 @Controller
-@Scope("session")
 public class OrganizerController {
 
 	RestTemplate rest = new RestTemplate();
@@ -79,7 +78,7 @@ public class OrganizerController {
 			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
 			
 			model.addObject("locationList", locationList);
-
+            model.addObject("isEdit",0);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,7 +117,7 @@ public class OrganizerController {
 			String workArea = request.getParameter("workArea");
 			String aboutOrg = request.getParameter("aboutOrg");
 			int orgType = Integer.parseInt(request.getParameter("orgType"));
-
+			int locationId = Integer.parseInt(request.getParameter("location"));
 			String mob = request.getParameter("mob");
 			String password = request.getParameter("password");
 
@@ -139,6 +138,7 @@ public class OrganizerController {
 			organiser.setIsActive(1);
 			organiser.setUserMob(mob);
 			organiser.setUserPassword(password);
+			organiser.setLocationId(locationId);
 
 			Organiser res = rest.postForObject(Constants.url + "/saveOrganiser", organiser, Organiser.class);
 
@@ -167,6 +167,7 @@ public class OrganizerController {
 			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
 			
 			model.addObject("locationList", locationList);
+            model.addObject("isEdit",1);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -990,6 +991,7 @@ public class OrganizerController {
 			map.add("scheduleId", scheduleId);
 			GetSchedule getScheduleRes = rest.postForObject(Constants.url + "/getScheduleHeaderById", map,
 					GetSchedule.class);
+			System.err.println(getScheduleRes.toString());
 
 			model.addObject("scheduleRes", getScheduleRes);
 			if (!getScheduleRes.getScheduleDetailList().isEmpty()) {
@@ -1248,6 +1250,7 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/searchEventSchedule", method = RequestMethod.POST)
 	public ModelAndView searchEventSchedule(HttpServletRequest request, HttpServletResponse response) {
+        System.err.println("ji");
 
 		ModelAndView model = new ModelAndView("organizer/shedules");
 		try {
@@ -1259,6 +1262,8 @@ public class OrganizerController {
 			List<GetSchedule> scheduleList = rest.postForObject(Constants.url + "/getScheduleByEventId", map,
 					List.class);
 			model.addObject("scheduleList", scheduleList);
+	           System.err.println(scheduleList.toString());
+
 			HttpSession session = request.getSession();
 			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail");
 			map = new LinkedMultiValueMap<String, Object>();
@@ -1267,11 +1272,11 @@ public class OrganizerController {
 			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",
 					map, EventWithOrgName[].class);
 			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
-
+           System.err.println(eventList.toString());
 			model.addObject("eventList", eventList);
 			model.addObject("eventId", eventId);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return model;
 	}
@@ -1358,10 +1363,10 @@ public class OrganizerController {
 			} catch (Exception e) {
 				scheduleHeaderId = 0;
 			}
-			int eventId = Integer.parseInt(request.getParameter("eventId"));
+			String eventId = request.getParameter("eventId");
 			System.out.println("eventId" + eventId);
 
-			String date = request.getParameter("date");
+			String date = request.getParameter("dates");
 			System.out.println("date" + date);
 			Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse(date);
 
@@ -1374,7 +1379,7 @@ public class OrganizerController {
 			scheduleHeader.setDate(dmyFormat.format(date1));
 			scheduleHeader.setEventName(eventName);
 			scheduleHeader.setDayName(day);
-			scheduleHeader.setEventId(eventId);
+			scheduleHeader.setEventId(Integer.parseInt(eventId));
 			scheduleHeader.setIsUsed(1);
 			scheduleHeader.setScheduleDetailList(scheduleDetailList);
 			if (!scheduleDetailList.isEmpty()) {

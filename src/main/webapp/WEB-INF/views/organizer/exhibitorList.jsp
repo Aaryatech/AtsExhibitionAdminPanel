@@ -53,6 +53,7 @@
 				</div>
 
 			</div>
+			<form action="${pageContext.request.contextPath}/generateQrCode"		method="post">
 			<div class=" box-content">
 
 				<div class="box-content">
@@ -63,6 +64,7 @@
 						<table class="table table-advance" id="table1">
 							<thead>
 								<tr>
+								<th style="width:18px"><input type="checkbox" onClick="selectAll(this)" /></th>
 									<th style="width: 18px">Sr No</th>
 									<th>Exhibitor Name</th>
 									<th>Exhibitor Company</th>
@@ -74,6 +76,8 @@
 							<tbody>
 								<c:forEach items="${exhibitorList}" var="exhibitorList" varStatus="count">
 									<tr class="table-flag-blue">
+				<td><input type="checkbox"   name="select_for_qrcode" id="select_for_qrcode${exhibitorList.exhId}" value="${exhibitorList.exhId}"/>
+									</td>
 										<td>${count.index+1}</td>
 										<td>${exhibitorList.exhName}</td>
 										<td>${exhibitorList.exhCompany}</td>
@@ -95,7 +99,15 @@
 				</div>
 
 			</div>
+			<br>
+        	<div class=" box-content">
+									<div class="col-md-12" style="text-align: center">
+										<input type="submit" class="btn btn-info" value="Generate Qr Code"
+											id="submit"  >
 
+					</div>
+		</div>
+         </form>
 
 
 		</div>

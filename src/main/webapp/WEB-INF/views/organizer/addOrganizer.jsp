@@ -32,7 +32,7 @@
 				<div>
 					<h1>
 
-						<i class="fa fa-file-o"></i>Add Organizer
+						<i class="fa fa-file-o"></i><c:choose><c:when test="${isEdit==1}">Edit Organizer</c:when><c:otherwise>Add Organizer</c:otherwise></c:choose>
 
 					</h1>
 				</div>
@@ -45,13 +45,13 @@
 					<div class="box" id="todayslist">
 						<div class="box-title">
 							<h3>
-								<i class="fa fa-table"></i>Add Organizer
+								<i class="fa fa-table"></i><c:choose><c:when test="${isEdit==1}">Edit Organizer</c:when><c:otherwise>Add Organizer</c:otherwise></c:choose>
 							</h3>
-							<div class="box-tool">
-								<a href="${pageContext.request.contextPath}/orgnizerList"></a> <a data-action="collapse" href="#"><i
+						
+	                        <div class="box-tool">
+								<a href="${pageContext.request.contextPath}/orgnizerList"> Organizer List</a> <a data-action="collapse" href="#"><i
 									class="fa fa-chevron-up"></i></a>
 							</div>
-
 						</div>
 
 						<div class=" box-content">
@@ -84,9 +84,9 @@
 
 									<div class="col-md-2">Contact No.*</div>
 									<div class="col-md-3">
-										<input type="text" name="contNo"
+										<input type="text" name="contNo" id="contNo"
 											value="${editOrganiser.orgContactNo}" class="form-control"
-											placeholder="Contact No"   pattern="^\d{10}$"
+											placeholder="Contact No" autofocus  pattern="^(\+\d{1,3}[- ]?)?\d{10}$" title="Enter 10 digit mobile number"
 											required />
 
 									</div>
@@ -105,15 +105,15 @@
 
 								<div class="box-content">
 
-									<div class="col-md-2">Website Link*</div>
+									<div class="col-md-2">Website Link</div>
 									<div class="col-md-3">
 										<input type="text" name="webLink"
 											value="${editOrganiser.websiteLink}" class="form-control"
-											placeholder="Website Link" required />
+											placeholder="Website Link"  />
 									</div>
 									<div class="col-md-1"></div>
 
-									<div class="col-md-2">Work Area*</div>
+									<div class="col-md-2">Work, Area*</div>
 									<div class="col-md-3">
 										<input type="text" name="workArea"
 											value="${editOrganiser.workAreaKeywords}" class="form-control"
@@ -125,76 +125,37 @@
 
 								</div>
 								<br>
-								 
-
-								<c:choose>
-									<c:when test="${editOrganiser.orgType==0}">
-										<c:set var="type" value="ATS"></c:set>
-									</c:when>
-									<c:when test="${editOrganiser.orgType==1}">
-										<c:set var="type" value="OTHER"></c:set>
-									</c:when>
-								</c:choose>
-
+							
 								<div class="box-content">
 
-									<div class="col-md-2">Organization Type*</div>
+									<div class="col-md-2">User Type*</div>
 									<div class="col-md-3">
 										<select id="orgType" name="orgType"  
 											class="form-control chosen" required>
-
-											<option value=""></option>
-											<option value="${editOrganiser.orgType}" selected>${type}</option>
-											<option value="0">ATS</option>
-											<option value="1">OTHER</option>
+											<option value="">Select User Type</option>
+											<c:choose>
+											<c:when test="${editOrganiser.orgType==0}">
+											<option value="0" selected>Super Admin</option>
+											<option value="1">Regular</option>
+											</c:when>
+											<c:when test="${editOrganiser.orgType==1}">
+											<option value="0" >Super Admin</option>
+											<option value="1" selected>Regular</option>
+											</c:when>
+											<c:otherwise>
+											<option value="0">Super Admin</option>
+											<option value="1">Regular</option>
+											</c:otherwise>
+											</c:choose>
+											
 										</select>
 									</div>
 
 									<div class="col-md-1"></div> 
-									<div class="col-md-2">About Organization*</div>
-									<div class="col-md-3">
-										<textarea  name="aboutOrg" class="form-control"
-											placeholder="About Organization" required />${editOrganiser.aboutOrg}</textarea>
-
-									</div><br>
-									 
-								</div>
-								<br>
-
-
-
-
-								<div class="box-content">
-
-									<div class="col-md-2">Mobile No*</div>
-									<div class="col-md-3">
-										<input type="text" name="mob"
-											value="${editOrganiser.userMob}" class="form-control"
-											placeholder="Mobile No"   pattern="^\d{10}$"
-											required />
-
-									</div>
-
-									<div class="col-md-1"></div>
-									<div class="col-md-2"> Password*</div>
-									<div class="col-md-3">
-										<input type="password" id="password" name="password"
-											 value="${editOrganiser.userPassword }" class="form-control"
-											placeholder="Password " required>
-
-									</div>
-
-
-								</div>
-								<br>
-								
-								<div class="box-content">
-
-								 
-									<div class="col-md-2">Select Location*</div>
+								<div class="col-md-2">Location*</div>
 									<div class="col-md-3">
 										<select  name="location" class="form-control" required >
-										<option value="">select</option>
+										<option value="">Select Location</option>
 										  
 										 
 										  <c:forEach items="${locationList}" var="locationList" >
@@ -212,18 +173,46 @@
 											</select>
 
 									</div>
-
-									 
 									 
 								</div>
 								<br>
+								<div class="box-content">
 
+									<div class="col-md-2">Mobile No*</div>
+									<div class="col-md-3">
+										<input type="text" name="mob" id="mob"
+											value="${editOrganiser.userMob}" class="form-control"
+											placeholder="Mobile No"   autofocus  pattern="^(\+\d{1,3}[- ]?)?\d{10}$" title="Enter 10 digit mobile number"
+											required />
 
+									</div>
+
+									<div class="col-md-1"></div>
+									<div class="col-md-2"> Password*</div>
+									<div class="col-md-3">
+										<input type="text" id="password" name="password"
+											 value="${editOrganiser.userPassword }" class="form-control"
+											placeholder="Password " required>
+
+									</div>
+
+<br>
+								</div>
+								<div class="box-content">
+                              <div class="col-md-2">About Organization*</div>
+									<div class="col-md-3">
+										<textarea  name="aboutOrg" class="form-control" rows="3"
+											placeholder="About Organization" required />${editOrganiser.aboutOrg}</textarea>
+
+									</div>
+<br>
+                               </div><br><br><br>
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
 										<input type="submit" class="btn btn-info" value="Submit"
 											id="submit"  >
-
+                      <a href="${pageContext.request.contextPath}/orgnizerList" >	<input type="button" class="btn btn-default" value="Cancel"
+										               	id="Cancel"  ></a>
 
 
 									</div>
@@ -239,7 +228,7 @@
 			</div>
 			<!-- END Main Content -->
 			<footer>
-			<p>2018 © SONA ELECTRICALS</p>
+			<p>2018 © ATS Exhibition</p>
 			</footer>
 
 			<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
@@ -331,6 +320,22 @@
 
 			}
 		}
+		 $('#contNo').on('input', function(e) {
+			   this.setCustomValidity('')
+			     if ($(this).val().length>10) {
+			       this.setCustomValidity('Please enter 10 digit valid mobile No.')
+			     }
+			     // e.target.checkValidity()
+			     this.reportValidity();
+			   })
+			    $('#mob').on('input', function(e) {
+			   this.setCustomValidity('')
+			     if ($(this).val().length>10) {
+			       this.setCustomValidity('Please enter 10 digit valid mobile No.')
+			     }
+			     // e.target.checkValidity()
+			     this.reportValidity();
+			   })
 	</script>
 
 </body>

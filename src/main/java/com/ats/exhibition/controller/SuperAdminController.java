@@ -83,7 +83,13 @@ RestTemplate rest = new RestTemplate();
 			Organiser[] organiser = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsed", 
 					Organiser[].class); 
 			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
-			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("orgList", 0);
+			System.out.println(map);
+			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/eventListByMultipleOrgId",map, 
+					EventWithOrgName[].class); 
+			 eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
+				model.addObject("eventList", eventList);
 			model.addObject("organiserList", organiserList);
 			
 		}catch(Exception e)

@@ -54,8 +54,7 @@
 
 			</div>
 			<div class=" box-content">
-			<form id="addSupplier"
-								action="${pageContext.request.contextPath}/sumbitMapping"
+			<form action="${pageContext.request.contextPath}/sumbitMapping"
 								method="post">
 					<div class="box-content">
  
@@ -86,7 +85,7 @@
 										<input type="button" class="btn btn-info" value="Search"
 										onclick="searchExibitor()"	id="search"  >
 
-<input type="hidden"   name="eventId" id="eventId" value="${eventId}"/>
+                       <input type="hidden"   name="eventId" id="eventId" value="${eventId}"/>
 
 									</div>
 								</div> 
@@ -116,9 +115,9 @@
 											</c:choose>
 								
 									<th style="width: 18px">Sr No</th>
-									<th>Exhibitor Name</th>
-								 
-									<th>Action</th>
+									<th >Exhibitor Name</th>
+								 	<th class="col-md-2">Stall No</th>
+									<th >Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -129,7 +128,7 @@
 											<input type="checkbox"   name="select_to_approve" id="select_to_approve${eventExhMappingList.exhId}" value="${eventExhMappingList.exhId}" disabled/>
 											</c:when>
 											<c:otherwise>
-											<input type="checkbox"   name="select_to_approve" id="select_to_approve${eventExhMappingList.exhId}" value="${eventExhMappingList.exhId}"/>
+											<input type="checkbox"   name="select_to_approve" id="select_to_approve${eventExhMappingList.exhId}" value="${eventExhMappingList.exhId}" />
 											</c:otherwise>
 											</c:choose>
 											</td>
@@ -139,9 +138,16 @@
 											<c:choose>
 											<c:when test="${exhibitorList.exhId==eventExhMappingList.exhId}">
 											<td>${exhibitorList.exhName}</td>
+											 <c:choose>
+											<c:when test="${eventExhMappingList.mapId!=0}">
+											<td><input type="text" name="stallNo${eventExhMappingList.exhId}" id="stallNo${eventExhMappingList.exhId}" class="form-control" value="${eventExhMappingList.stallNo}" disabled/></td>
+											</c:when>
+												<c:when test="${eventExhMappingList.mapId==0}">
+											<td><input type="text" name="stallNo${eventExhMappingList.exhId}" id="stallNo${eventExhMappingList.exhId}" class="form-control" /></td>
 											</c:when>
 											</c:choose>
-											
+											</c:when>
+											</c:choose>
 										  </c:forEach>
 										 
 										 <td> 
@@ -164,14 +170,12 @@
 				</div><br>
 				
 				<div class=" box-content">
-									<div class="col-md-12" style="text-align: center">
+				<div class="col-md-12" style="text-align: center">
 										<input type="submit" class="btn btn-info" value="Submit"
 											id="submit"  >
 
-
-
-									</div>
-								</div>
+				</div>
+			</div>
 </form>
 			</div>
 
@@ -254,15 +258,16 @@
 function searchExibitor() {
 	 
 		var eventId = $('#eventId').val();
-		 
+		// alert(eventId)
 		if(eventId!="" && eventId!=null)
 			{
 			window.location.href='${pageContext.request.contextPath}/eventMapList/'+eventId+'';
 			
 			}
-		 
+	
 	 
 }
+
  </script>
 
 </body>

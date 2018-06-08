@@ -53,7 +53,7 @@
 				</div>
 
 			</div>
-			   <form action="${pageContext.request.contextPath}/searchEventSchedule" method="post" enctype="multipart/form-data">
+			   <form action="${pageContext.request.contextPath}/searchEventSchedule" method="post" id="f1">
 						<div class=" box-content" >
 		<div class="box-content">
 		<div class="col-md-2">Event*</div>

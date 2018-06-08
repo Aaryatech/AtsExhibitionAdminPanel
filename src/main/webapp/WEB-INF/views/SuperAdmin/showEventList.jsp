@@ -89,6 +89,7 @@
 				<div class="box-content"> 
 					<br /> <br />
 					<div class="clearfix"></div>
+					
 					<div class="table-responsive" style="border: 0">
 						<table class="table table-advance" id="table1">
 							<thead>
@@ -101,7 +102,7 @@
 									<th>From Date</th>
 									<th>To Date</th> 
 									<th>Organizer Name</th> 
-								 <th>Action</th>
+								     <th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -113,10 +114,15 @@
 											 
 											 
 											<td>${eventList.eventName}</td>
-										<td>${eventList.orgName}</td>	 
-										 <td>${eventList.orgName}</td>
-										 <td>${eventList.orgName}</td>
-										 
+										 <td>${eventList.eventLocation}</td>
+										 <td>${eventList.eventFromDate}</td>
+										 <td>${eventList.eventToDate}</td>
+										 <td>${eventList.orgName}</td>	 
+										  <td>
+										  <a href='${pageContext.request.contextPath}/editEventBySuperAdmin/${eventList.eventId}' class='action_btn' data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> 
+							  			<a href='${pageContext.request.contextPath}/eventDetailAndAssignExhList/${eventList.eventId}' class='action_btn' data-toggle="tooltip" title="Exhibitor List"><i class="glyphicon glyphicon-list"></i></a>  
+							  			<a href='${pageContext.request.contextPath}/eventSchedule/${eventList.eventId}' class='action_btn' data-toggle="tooltip" title="Schedule"><i class="glyphicon glyphicon-calendar"></i></a>
+										  </td>
 										 
 									</tr>
 								</c:forEach>
@@ -207,6 +213,10 @@
 		src="${pageContext.request.contextPath}/resources/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
+	 <script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
 
 	<!--flaty scripts-->
 	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>

@@ -108,7 +108,7 @@
 
 									<div class="col-md-2">From Time*</div>
 									<div class="col-md-3">
-										<input type="text" name="fromTime"
+										<input type="time" name="fromTime"
 											value="${editEvent.fromTime}"   class="form-control"
 											placeholder="From Time" required />
 									</div>
@@ -125,7 +125,7 @@
 
 									<div class="col-md-2">To Time*</div>
 									<div class="col-md-3">
-										<input type="text" name="toTime"
+										<input type="time" name="toTime"
 											value="${editEvent.toTime}"   class="form-control"
 											placeholder="To Time" required />
 

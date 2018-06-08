@@ -151,20 +151,24 @@
 
 					<li><a href="${pageContext.request.contextPath}/addOrganizer">Add
 							Organizer</a></li>
+							
+					<li><a href="${pageContext.request.contextPath}/orgnizerList">Organizer
+							List</a></li>
+					<li><a href="${pageContext.request.contextPath}/addEventByAdmin">Add Event</a></li>
+				
 					<li><a href="${pageContext.request.contextPath}/showEventList">All
-							Event List By Organizer</a></li>
+							Event List</a></li>
+					<li><a href="${pageContext.request.contextPath}/addExhibitorBySuperAdmin">Add Exhibitor</a></li>
 
 					<li><a
 						href="${pageContext.request.contextPath}/showExhibitorList">All
-							Exhibitor List By Organizer</a></li>
+							Exhibitor List</a></li>
 							
-							<li>
-  						<a href="${pageContext.request.contextPath}/showVisitorSortedList">All Visitor </a>
-						</li>
+						
 
 					<li><a
 						href="${pageContext.request.contextPath}/exhibitorListByLocationAndCompType">All
-							Exhibitor By Location And Company Type</a></li>
+							Exhibitor By Place And Company</a></li>
 
 					<li><a
 						href="${pageContext.request.contextPath}/exhibitorPakageList">Exhibitor
@@ -186,13 +190,11 @@
 						href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor
 							Subscription List</a></li>
 
-
-					<li><a href="${pageContext.request.contextPath}/orgnizerList">Organizer
-							List</a></li>
+	               <li>
+  						<a href="${pageContext.request.contextPath}/showVisitorSortedList">All Visitors </a>
+						</li>
 							
-							<li><a href="${pageContext.request.contextPath}/addExhibitorBySuperAdmin">Add Exhibitor By Admin</a></li>
 							
-							<li><a href="${pageContext.request.contextPath}/addEventByAdmin">Add Event By Admin</a></li>
 
 				</ul>
 				</c:when>
@@ -234,6 +236,8 @@
 					<li><a
 						href="${pageContext.request.contextPath}/searchExhibitor">Search
 							And Map Exhibitor</a></li>
+						<li><a
+						href="${pageContext.request.contextPath}/showExhEventSubscription">Approve Subscribed Exhibitor For Event</a></li>
 					<li><a href="${pageContext.request.contextPath}/showGallary">Gallary</a>
 					</li>
 					<%-- <li> 

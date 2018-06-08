@@ -3,6 +3,9 @@
 	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/assets/bootstrap-datepicker/css/datepicker.css" />
+ 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
 
@@ -52,16 +55,15 @@
 							</div>
 
 						</div>
-            <form action="${pageContext.request.contextPath}/addScheduleDetail" method="post" enctype="multipart/form-data">
+            <form action="${pageContext.request.contextPath}/addScheduleDetail" method="post" id="form1">
 						<div class=" box-content" style="border: 4px solid #b6d1f2;">
 							<input type="hidden" id="scheduleHeaderId" name="scheduleHeaderId"
 										 value="${scheduleRes.scheduleId}" required />
-							
 								<div class="box-content">
 									<div class="col-md-2">Date *</div>
 									<div class="col-md-3">
-										<input type="text" id="date" name="date"
-											class="form-control date-picker" placeholder="Date" value="${scheduleRes.date}" required />
+										<input type="text" name="dates" id="date"
+											class="form-control date-picker" placeholder="dd-mm-yyyy"  value="${scheduleRes.date}" required />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Event*</div>
@@ -72,7 +74,7 @@
 											<c:forEach items="${eventList}" var="eventList">
 												<c:choose>
 													<c:when test="${eventList.eventId==scheduleRes.eventId}">
-														<option value="${eventList.eventId}" selected>${eventList.eventName}</option>
+														<option  value="${eventList.eventId}" selected>${eventList.eventName}</option>
 													</c:when>
 													<c:otherwise>
 														<option value="${eventList.eventId}">${eventList.eventName}</option>
@@ -276,12 +278,11 @@
 		src="${pageContext.request.contextPath}/resources/assets/ckeditor/ckeditor.js"></script>
 
 	<!--flaty scripts-->
-<%-- 	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
- --%>	<script type="text/javascript"
+	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
+	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
-
 <script type="text/javascript">
 
 var editFlag=false;
