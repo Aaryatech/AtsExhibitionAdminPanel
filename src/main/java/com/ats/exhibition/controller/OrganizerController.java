@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +58,7 @@ import com.ats.model.GetSponsor;
 import com.ats.model.Location;
 import com.ats.model.LoginResponse;
 import com.ats.model.Organiser;
+import com.ats.model.Package1;
 import com.ats.model.QrCode;
 import com.ats.model.ScheduleDetail;
 import com.ats.model.ScheduleHeader;
@@ -66,20 +68,20 @@ import com.ats.model.Sponsor;
 public class OrganizerController {
 
 	RestTemplate rest = new RestTemplate();
-	List<ExhibitorWithOrgName> exhibitorList=null;
+	List<ExhibitorWithOrgName> exhibitorList = null;
+
 	@RequestMapping(value = "/addOrganizer", method = RequestMethod.GET)
 	public ModelAndView addOrganizer(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("organizer/addOrganizer");
 		try {
 
-			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
-					Location[].class); 
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", Location[].class);
 			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
-			
+
 			model.addObject("locationList", locationList);
-            model.addObject("isEdit",0);
-			
+			model.addObject("isEdit", 0);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -105,7 +107,8 @@ public class OrganizerController {
 	}
 
 	@RequestMapping(value = "/insertOrganizer", method = RequestMethod.POST)
-	public String insertOrganizer(@RequestParam("documentFile") List<MultipartFile> documentFile, HttpServletRequest request, HttpServletResponse response) {
+	public String insertOrganizer(@RequestParam("documentFile") List<MultipartFile> documentFile,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 			String orgId = request.getParameter("orgId");
@@ -121,16 +124,15 @@ public class OrganizerController {
 			String mob = request.getParameter("mob");
 			String password = request.getParameter("password");
 			String document = request.getParameter("docPath");
-			
+
 			VpsImageUpload upload = new VpsImageUpload();
 			String docFile = null;
 			try {
 				docFile = documentFile.get(0).getOriginalFilename();
-				 
 
 				upload.saveUploadedFiles(documentFile, Constants.FLOAR_MAP_TYPE,
 						documentFile.get(0).getOriginalFilename());
-			 
+
 				System.out.println("upload method called for image Upload " + documentFile.toString());
 
 			} catch (IOException e) {
@@ -138,7 +140,7 @@ public class OrganizerController {
 				System.out.println("Exce in File Upload In GATE ENTRY  Insert " + e.getMessage());
 				e.printStackTrace();
 			}
-			
+
 			Organiser organiser = new Organiser();
 			if (orgId.equalsIgnoreCase("") || orgId.equalsIgnoreCase(null))
 				organiser.setOrgId(0);
@@ -157,8 +159,8 @@ public class OrganizerController {
 			organiser.setUserMob(mob);
 			organiser.setUserPassword(password);
 			organiser.setLocationId(locationId);
-			if(docFile!=null && docFile.length()>0) 
-				organiser.setOrgImage(docFile); 
+			if (docFile != null && docFile.length() > 0)
+				organiser.setOrgImage(docFile);
 			else
 				organiser.setOrgImage(document);
 
@@ -174,7 +176,8 @@ public class OrganizerController {
 	}
 
 	@RequestMapping(value = "/editOrg/{orgId}/{userType}", method = RequestMethod.GET)
-	public ModelAndView editOrg(@PathVariable int orgId, @PathVariable int userType, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView editOrg(@PathVariable int orgId, @PathVariable int userType, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("organizer/addOrganizer");
 		try {
@@ -183,15 +186,14 @@ public class OrganizerController {
 			map.add("orgId", orgId);
 			Organiser editOrganiser = rest.postForObject(Constants.url + "/getOrganiserByOrgId", map, Organiser.class);
 			model.addObject("editOrganiser", editOrganiser);
-			
-			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
-					Location[].class); 
+
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", Location[].class);
 			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
-			
+
 			model.addObject("locationList", locationList);
-            model.addObject("isEdit",1);
-            model.addObject("imageUrl",Constants.imageUrl);
-            model.addObject("userType",userType);
+			model.addObject("isEdit", 1);
+			model.addObject("imageUrl", Constants.imageUrl);
+			model.addObject("userType", userType);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -222,17 +224,16 @@ public class OrganizerController {
 
 		ModelAndView model = new ModelAndView("organizer/addEvent");
 		try {
-			
-			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
-					Location[].class); 
+
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", Location[].class);
 			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
-			
+
 			System.out.println("locationList " + locationList);
-			
-			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
-					CompanyType[].class); 
+
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed",
+					CompanyType[].class);
 			List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
-			
+
 			model.addObject("companyTypeList", companyTypeList);
 			model.addObject("locationList", locationList);
 
@@ -244,7 +245,8 @@ public class OrganizerController {
 	}
 
 	@RequestMapping(value = "/insertEvent", method = RequestMethod.POST)
-	public String insertEvent(@RequestParam("documentFile") List<MultipartFile> documentFile, HttpServletRequest request, HttpServletResponse response) {
+	public String insertEvent(@RequestParam("documentFile") List<MultipartFile> documentFile,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 			String eventId = request.getParameter("eventId");
@@ -265,18 +267,17 @@ public class OrganizerController {
 			String longitude = request.getParameter("longitude");
 			int companyTypeId = Integer.parseInt(request.getParameter("companyTypeId"));
 			int location = Integer.parseInt(request.getParameter("location"));
-			 
+
 			String document = request.getParameter("docPath");
-			
+
 			VpsImageUpload upload = new VpsImageUpload();
 			String docFile = null;
 			try {
 				docFile = documentFile.get(0).getOriginalFilename();
-				 
 
 				upload.saveUploadedFiles(documentFile, Constants.FLOAR_MAP_TYPE,
 						documentFile.get(0).getOriginalFilename());
-			 
+
 				System.out.println("upload method called for image Upload " + documentFile.toString());
 
 			} catch (IOException e) {
@@ -290,7 +291,7 @@ public class OrganizerController {
 
 			Events event = new Events();
 
-			if (eventId.equalsIgnoreCase("")|| eventId.equalsIgnoreCase(null))
+			if (eventId.equalsIgnoreCase("") || eventId.equalsIgnoreCase(null))
 				event.setEventId(0);
 			else
 				event.setEventId(Integer.parseInt(eventId));
@@ -314,11 +315,11 @@ public class OrganizerController {
 			event.setOrgId(login.getOrganiser().getOrgId());
 			event.setLocationId(location);
 			event.setCompanyTypeId(companyTypeId);
-			if(docFile!=null && docFile.length()>0) 
-				event.setEventLogo(docFile); 
+			if (docFile != null && docFile.length() > 0)
+				event.setEventLogo(docFile);
 			else
 				event.setEventLogo(document);
-			
+
 			Events res = rest.postForObject(Constants.url + "/saveEvents", event, Events.class);
 
 			System.out.println("res " + res);
@@ -375,7 +376,8 @@ public class OrganizerController {
 	}
 
 	@RequestMapping(value = "/deleteEvent/{eventId}/{ret}", method = RequestMethod.GET)
-	public String deleteEvent(@PathVariable int eventId,@PathVariable int ret, HttpServletRequest request, HttpServletResponse response) {
+	public String deleteEvent(@PathVariable int eventId, @PathVariable int ret, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		// ModelAndView model = new ModelAndView("organizer/addOrganizer");
 		try {
@@ -388,10 +390,10 @@ public class OrganizerController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		String retr = new String();
-		if(ret==0) 
-			 retr = "redirect:/eventList";
+		if (ret == 0)
+			retr = "redirect:/eventList";
 		else
 			retr = "redirect:/showEventList";
 		return retr;
@@ -409,20 +411,19 @@ public class OrganizerController {
 					EventWithOrgName.class);
 			model.addObject("editEvent", editEvent);
 			model.addObject("isEdit", 1);
-			 model.addObject("imageUrl",Constants.imageUrl);
-			 
-			 Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
-						Location[].class); 
-				List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
-				
-				System.out.println("locationList " + locationList);
-				
-				CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
-						CompanyType[].class); 
-				List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
-				
-				model.addObject("companyTypeList", companyTypeList);
-				model.addObject("locationList", locationList);
+			model.addObject("imageUrl", Constants.imageUrl);
+
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", Location[].class);
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+
+			System.out.println("locationList " + locationList);
+
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed",
+					CompanyType[].class);
+			List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+
+			model.addObject("companyTypeList", companyTypeList);
+			model.addObject("locationList", locationList);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -601,17 +602,16 @@ public class OrganizerController {
 
 		ModelAndView model = new ModelAndView("organizer/addExhibitor");
 		try {
-			
-			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
-					Location[].class); 
+
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", Location[].class);
 			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
-			
+
 			System.out.println("locationList " + locationList);
-			
-			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
-					CompanyType[].class); 
+
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed",
+					CompanyType[].class);
 			List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
-			
+
 			model.addObject("companyTypeList", companyTypeList);
 			model.addObject("locationList", locationList);
 
@@ -695,8 +695,7 @@ public class OrganizerController {
 			map.add("orgId", login.getOrganiser().getOrgId());
 			ExhibitorWithOrgName[] ExhibitorWithOrgName = rest.postForObject(
 					Constants.url + "/getAllExhibotorsByorgIdAndIsUsed", map, ExhibitorWithOrgName[].class);
-			 exhibitorList = new ArrayList<ExhibitorWithOrgName>(
-					Arrays.asList(ExhibitorWithOrgName));
+			exhibitorList = new ArrayList<ExhibitorWithOrgName>(Arrays.asList(ExhibitorWithOrgName));
 
 			model.addObject("exhibitorList", exhibitorList);
 
@@ -716,20 +715,19 @@ public class OrganizerController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("exhId", exhId);
-			ExhibitorWithOrgName editExhibitor = rest.postForObject(Constants.url + "/getExhibitorByExhId",map,
-					ExhibitorWithOrgName.class); 
+			ExhibitorWithOrgName editExhibitor = rest.postForObject(Constants.url + "/getExhibitorByExhId", map,
+					ExhibitorWithOrgName.class);
 			model.addObject("editExhibitor", editExhibitor);
-			
-			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", 
-					Location[].class); 
+
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", Location[].class);
 			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
-			
+
 			System.out.println("locationList " + locationList);
-			
-			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed", 
-					CompanyType[].class); 
+
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed",
+					CompanyType[].class);
 			List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
-			
+
 			model.addObject("companyTypeList", companyTypeList);
 			model.addObject("locationList", locationList);
 
@@ -853,7 +851,7 @@ public class OrganizerController {
 			for (int i = 0; i < eventExhMappingList.size(); i++) {
 				for (int j = 0; j < checkbox.length; j++) {
 					if (Integer.parseInt(checkbox[j]) == eventExhMappingList.get(i).getExhId()) {
-						String stallNo=request.getParameter("stallNo"+eventExhMappingList.get(i).getExhId());
+						String stallNo = request.getParameter("stallNo" + eventExhMappingList.get(i).getExhId());
 						EventExhMapping eventExh = new EventExhMapping();
 						eventExh.setEventId(eventId);
 						eventExh.setEventName(eventName);
@@ -1333,7 +1331,7 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/searchEventSchedule", method = RequestMethod.POST)
 	public ModelAndView searchEventSchedule(HttpServletRequest request, HttpServletResponse response) {
-        System.err.println("ji");
+		System.err.println("ji");
 
 		ModelAndView model = new ModelAndView("organizer/shedules");
 		try {
@@ -1345,7 +1343,7 @@ public class OrganizerController {
 			List<GetSchedule> scheduleList = rest.postForObject(Constants.url + "/getScheduleByEventId", map,
 					List.class);
 			model.addObject("scheduleList", scheduleList);
-	           System.err.println(scheduleList.toString());
+			System.err.println(scheduleList.toString());
 
 			HttpSession session = request.getSession();
 			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail");
@@ -1355,7 +1353,7 @@ public class OrganizerController {
 			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",
 					map, EventWithOrgName[].class);
 			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
-           System.err.println(eventList.toString());
+			System.err.println(eventList.toString());
 			model.addObject("eventList", eventList);
 			model.addObject("eventId", eventId);
 		} catch (Exception e) {
@@ -1737,29 +1735,25 @@ public class OrganizerController {
 
 		ModelAndView model = new ModelAndView("organizer/exhibitorQr");
 
-		try
-		{ 
+		try {
 			HttpSession session = request.getSession();
-			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail"); 
-			String[] checkbox=request.getParameterValues("select_for_qrcode");
-			List<ExhibitorWithOrgName> exhList=new ArrayList<ExhibitorWithOrgName>();
-			String exhIds="";
-			for(int j = 0; j<checkbox.length;j++)
-			{					
-				exhIds=exhIds+","+checkbox[j];
+			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail");
+			String[] checkbox = request.getParameterValues("select_for_qrcode");
+			List<ExhibitorWithOrgName> exhList = new ArrayList<ExhibitorWithOrgName>();
+			String exhIds = "";
+			for (int j = 0; j < checkbox.length; j++) {
+				exhIds = exhIds + "," + checkbox[j];
 
-			}			exhIds=exhIds.substring(1);
+			}
+			exhIds = exhIds.substring(1);
 
-			if(checkbox.length>0)
-			{
-			 for(int i = 0 ; i<exhibitorList.size();i++)
-				{
-					for(int j = 0; j<checkbox.length;j++)
-					{	
-						if(Integer.parseInt(checkbox[j])==exhibitorList.get(i).getExhId())
-						{
-							ExhibitorWithOrgName exhibitorWithOrgName=new ExhibitorWithOrgName();
-							QrCode.qrCodeGeneration(""+exhibitorList.get(i).getExhId(), Constants.filePath+"qrCode"+exhibitorList.get(i).getExhId()+".png");
+			if (checkbox.length > 0) {
+				for (int i = 0; i < exhibitorList.size(); i++) {
+					for (int j = 0; j < checkbox.length; j++) {
+						if (Integer.parseInt(checkbox[j]) == exhibitorList.get(i).getExhId()) {
+							ExhibitorWithOrgName exhibitorWithOrgName = new ExhibitorWithOrgName();
+							QrCode.qrCodeGeneration("" + exhibitorList.get(i).getExhId(),
+									Constants.filePath + "qrCode" + exhibitorList.get(i).getExhId() + ".png");
 							exhibitorWithOrgName.setAboutCompany(exhibitorList.get(i).getAboutCompany());
 							exhibitorWithOrgName.setAddress(exhibitorList.get(i).getAddress());
 							exhibitorWithOrgName.setCompanyType(exhibitorList.get(i).getCompanyType());
@@ -1784,7 +1778,8 @@ public class OrganizerController {
 							exhibitorWithOrgName.setPersonMob1(exhibitorList.get(i).getPersonMob1());
 							exhibitorWithOrgName.setPersonMob2(exhibitorList.get(i).getPersonMob2());
 							exhibitorWithOrgName.setUserMob(exhibitorList.get(i).getUserMob());
-							exhibitorWithOrgName.setQrCodePath(Constants.filePath+"qrCode"+exhibitorList.get(i).getExhId()+".png");
+							exhibitorWithOrgName.setQrCodePath(
+									Constants.filePath + "qrCode" + exhibitorList.get(i).getExhId() + ".png");
 							exhList.add(exhibitorWithOrgName);
 						}
 					}
@@ -1793,38 +1788,36 @@ public class OrganizerController {
 			model.addObject("exhibitorList", exhList);
 			model.addObject("checkbox", exhIds);
 			model.addObject("orgId", login.getOrganiser().getOrgId());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		catch (Exception e) {
-		e.printStackTrace();
-		}
-		
+
 		return model;
 	}
+
 	@RequestMapping(value = "pdf/generateQrCodePdf/{orgId}/{checkbox}", method = RequestMethod.GET)
-	public ModelAndView generateQrCodePdf(@PathVariable("orgId")int orgId,@PathVariable("checkbox")List<Integer> checkbox,HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView generateQrCodePdf(@PathVariable("orgId") int orgId,
+			@PathVariable("checkbox") List<Integer> checkbox, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("organizer/QrCodePdf");
 
-		try
-		{ 
+		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("orgId", orgId);
-			
-			ExhibitorWithOrgName[] ExhibitorWithOrgName = rest.postForObject(Constants.url + "/getAllExhibotorsByorgIdAndIsUsed",map, 
-					ExhibitorWithOrgName[].class); 
-			List<ExhibitorWithOrgName> exhibitorList = new ArrayList<ExhibitorWithOrgName>(Arrays.asList(ExhibitorWithOrgName));
+
+			ExhibitorWithOrgName[] ExhibitorWithOrgName = rest.postForObject(
+					Constants.url + "/getAllExhibotorsByorgIdAndIsUsed", map, ExhibitorWithOrgName[].class);
+			List<ExhibitorWithOrgName> exhibitorList = new ArrayList<ExhibitorWithOrgName>(
+					Arrays.asList(ExhibitorWithOrgName));
 			System.out.println(exhibitorList);
-			List<ExhibitorWithOrgName> exhList=new ArrayList<ExhibitorWithOrgName>();
-			if(checkbox.size()>0)
-			{
-			 for(int i = 0 ; i<exhibitorList.size();i++)
-				{
-					for(int j = 0; j<checkbox.size();j++)
-					{
-						if(checkbox.get(j)==exhibitorList.get(i).getExhId())
-						{
-							ExhibitorWithOrgName exhibitorWithOrgName=new ExhibitorWithOrgName();
+			List<ExhibitorWithOrgName> exhList = new ArrayList<ExhibitorWithOrgName>();
+			if (checkbox.size() > 0) {
+				for (int i = 0; i < exhibitorList.size(); i++) {
+					for (int j = 0; j < checkbox.size(); j++) {
+						if (checkbox.get(j) == exhibitorList.get(i).getExhId()) {
+							ExhibitorWithOrgName exhibitorWithOrgName = new ExhibitorWithOrgName();
 							exhibitorWithOrgName.setAboutCompany(exhibitorList.get(i).getAboutCompany());
 							exhibitorWithOrgName.setAddress(exhibitorList.get(i).getAddress());
 							exhibitorWithOrgName.setCompanyType(exhibitorList.get(i).getCompanyType());
@@ -1849,7 +1842,7 @@ public class OrganizerController {
 							exhibitorWithOrgName.setPersonMob1(exhibitorList.get(i).getPersonMob1());
 							exhibitorWithOrgName.setPersonMob2(exhibitorList.get(i).getPersonMob2());
 							exhibitorWithOrgName.setUserMob(exhibitorList.get(i).getUserMob());
-							exhibitorWithOrgName.setQrCodePath("qrCode"+exhibitorList.get(i).getExhId()+".png");
+							exhibitorWithOrgName.setQrCodePath("qrCode" + exhibitorList.get(i).getExhId() + ".png");
 							exhList.add(exhibitorWithOrgName);
 						}
 					}
@@ -1857,15 +1850,16 @@ public class OrganizerController {
 			}
 			System.err.println(exhList.toString());
 			model.addObject("exhibitorList", exhList);
-			model.addObject("filePath",Constants.filePath);
+			model.addObject("filePath", Constants.filePath);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		catch (Exception e) {
-		e.printStackTrace();
-		}
-		
+
 		return model;
 	}
-	int error=2;
+
+	int error = 2;
+
 	@RequestMapping(value = "/showExhEventSubscription", method = RequestMethod.GET)
 	public ModelAndView showExhEventSubscription(HttpServletRequest request, HttpServletResponse response) {
 
@@ -1876,11 +1870,12 @@ public class OrganizerController {
 			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("orgId", login.getOrganiser().getOrgId());
-			
-			List<GetExhEventSubscription> subList=rest.postForObject(Constants.url+"getExhEventSubscriptionList",map, List.class);
-		    model.addObject("subList", subList);
+
+			List<GetExhEventSubscription> subList = rest.postForObject(Constants.url + "getExhEventSubscriptionList",
+					map, List.class);
+			model.addObject("subList", subList);
 			model.addObject("error", error);
-			error=2;
+			error = 2;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1888,6 +1883,7 @@ public class OrganizerController {
 
 		return model;
 	}
+
 	@RequestMapping(value = "/approveSubscription/{exhEsubId}", method = RequestMethod.GET)
 	public String approveSubscription(@PathVariable int exhEsubId, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -1896,24 +1892,22 @@ public class OrganizerController {
 		try {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("exhEsubId", exhEsubId);
-			ErrorMessage sub = rest.postForObject(Constants.url + "/approveSubscription", map,
-					ErrorMessage.class);
+			ErrorMessage sub = rest.postForObject(Constants.url + "/approveSubscription", map, ErrorMessage.class);
 
-			if(sub.isError()==false)
-			{
-				error=0;
-			}else
-			{
-				error=1;
-	
+			if (sub.isError() == false) {
+				error = 0;
+			} else {
+				error = 1;
+
 			}
-			
-			} catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return "redirect:/showExhEventSubscription";
 	}
+
 	private Dimension format = PD4Constants.A4;
 	private boolean landscapeValue = false;
 	private int topValue = 8;
@@ -1926,16 +1920,17 @@ public class OrganizerController {
 
 	private int userSpaceWidth = 750;
 	private static int BUFFER_SIZE = 1024;
-	
+
 	@RequestMapping(value = "/pdf", method = RequestMethod.GET)
 	public void showPDF(HttpServletRequest request, HttpServletResponse response) {
 
 		String url = request.getParameter("url");
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
-	    File f = new File("/home/ats-12/qrCodes.pdf");
-		//File f = new File("/home/ats-11/pdf/ordermemo221.pdf");
-		//File f = new File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
+		File f = new File("/home/ats-12/qrCodes.pdf");
+		// File f = new File("/home/ats-11/pdf/ordermemo221.pdf");
+		// File f = new
+		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
 
 		System.out.println("I am here " + f.toString());
 		try {
@@ -1951,9 +1946,10 @@ public class OrganizerController {
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 		String filename = "ordermemo221.pdf";
-		 //String filePath = "/report.pdf";
+		// String filePath = "/report.pdf";
 		String filePath = "/home/ats-12/qrCodes.pdf";
-		//String filePath = "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
+		// String filePath =
+		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file
 		String fullPath = appPath + filePath;
@@ -2016,14 +2012,14 @@ public class OrganizerController {
 
 			try {
 
-				PD4PageMark footer = new PD4PageMark();  
-				footer.setPageNumberTemplate("page $[page] of $[total]");  
-				footer.setTitleAlignment(PD4PageMark.LEFT_ALIGN);  
-				footer.setPageNumberAlignment(PD4PageMark.RIGHT_ALIGN);  
-				footer.setInitialPageNumber(1);  
-				footer.setFontSize(8);  
-				footer.setAreaHeight(15); 
-			
+				PD4PageMark footer = new PD4PageMark();
+				footer.setPageNumberTemplate("page $[page] of $[total]");
+				footer.setTitleAlignment(PD4PageMark.LEFT_ALIGN);
+				footer.setPageNumberAlignment(PD4PageMark.RIGHT_ALIGN);
+				footer.setInitialPageNumber(1);
+				footer.setFontSize(8);
+				footer.setAreaHeight(15);
+
 				pd4ml.setPageFooter(footer);
 
 			} catch (Exception e) {
@@ -2047,4 +2043,47 @@ public class OrganizerController {
 
 		}
 	}
+
+	// AJAX Call
+	@RequestMapping(value = "/organiserMobileNo", method = RequestMethod.GET)
+	public @ResponseBody Organiser organiserMobileNo(HttpServletRequest request, HttpServletResponse response) {
+
+		Organiser organiser = new Organiser();
+
+		try {
+
+			String userMob = request.getParameter("userMob");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("userMob", userMob);
+			organiser = rest.postForObject(Constants.url + "/organiserMobileNoAndIsUSed", map, Organiser.class);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return organiser;
+	}
+
+	// AJAX Call
+	@RequestMapping(value = "/exhibitorMobileNo", method = RequestMethod.GET)
+	public @ResponseBody Exhibitor exhibitorMobileNo(HttpServletRequest request, HttpServletResponse response) {
+
+		Exhibitor exhibitor = new Exhibitor();
+
+		try {
+
+			String userMob = request.getParameter("userMob");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("userMob", userMob);
+			exhibitor = rest.postForObject(Constants.url + "/exhibitorMobileNoAndIsUSed", map, Exhibitor.class);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return exhibitor;
+	}
+
 }
