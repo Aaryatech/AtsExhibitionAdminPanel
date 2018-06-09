@@ -5,13 +5,14 @@
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/assets/bootstrap-datepicker/css/datepicker.css" />
- 
+
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
 
 
 	<c:url var="getMixingListWithDate" value="/getMixingListWithDate"></c:url>
-	<c:url var="getMixingAllListWithDate" value="/getMixingAllListWithDate"></c:url> 
+	<c:url var="getMixingAllListWithDate" value="/getMixingAllListWithDate"></c:url>
+	<c:url var="exhibitorMobileNo" value="/exhibitorMobileNo"></c:url>
 
 
 	<div class="container" id="main-container">
@@ -51,7 +52,8 @@
 								<i class="fa fa-table"></i>Add Exhibitor
 							</h3>
 							<div class="box-tool">
-								<a href="${pageContext.request.contextPath}/exhibitorList"> Exhibitor List</a> <a data-action="collapse" href="#"><i
+								<a href="${pageContext.request.contextPath}/exhibitorList">
+									Exhibitor List</a> <a data-action="collapse" href="#"><i
 									class="fa fa-chevron-up"></i></a>
 							</div>
 
@@ -62,14 +64,14 @@
 								action="${pageContext.request.contextPath}/insertExhibitor"
 								method="post">
 
-								<div class="box-content"> 
-								
+								<div class="box-content">
+
 									<div class="col-md-2">Exhibitor Name*</div>
 									<div class="col-md-3">
 										<input type="text" id="exhibitorName" name="exhibitorName"
 											class="form-control" value="${editExhibitor.exhName}"
-											placeholder=" Exhibitor Name " required /> 
-											<input type="hidden" name="exhId" value="${editExhibitor.exhId}" />
+											placeholder=" Exhibitor Name " required /> <input
+											type="hidden" name="exhId" value="${editExhibitor.exhId}" />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Company Name*</div>
@@ -78,80 +80,82 @@
 											value="${editExhibitor.exhCompany}" class="form-control"
 											placeholder="Company Name" required />
 									</div>
-									
-									 
+
+
 								</div>
 								<br>
- 
+
 								<div class="box-content">
-								
-								<div class="col-md-2">Company Type*</div>
+
+									<div class="col-md-2">Company Type*</div>
 									<div class="col-md-3">
-										<select  name="companyTypeId" id="companyTypeId" class="form-control chosen" required >
+										<select name="companyTypeId" id="companyTypeId"
+											class="form-control chosen" required>
 											<option value="">select</option>
-										 <c:forEach items="${companyTypeList}" var="companyTypeList" >
-										 	<c:choose>
-										 		<c:when test="${companyTypeList.companyTypeId==editExhibitor.companyTypeId}">
-										 		<option value="${companyTypeList.companyTypeId}" selected>${companyTypeList.companyTypeName}</option>
-										 		</c:when>
-										 		<c:otherwise>
-										 		<option value="${companyTypeList.companyTypeId}"> ${companyTypeList.companyTypeName}</option>
-										 		</c:otherwise>
-										 	</c:choose>
-											
-										 
-									 
-									 	
+											<c:forEach items="${companyTypeList}" var="companyTypeList">
+												<c:choose>
+													<c:when
+														test="${companyTypeList.companyTypeId==editExhibitor.companyTypeId}">
+														<option value="${companyTypeList.companyTypeId}" selected>${companyTypeList.companyTypeName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${companyTypeList.companyTypeId}">
+															${companyTypeList.companyTypeName}</option>
+													</c:otherwise>
+												</c:choose>
+
+
+
+
 											</c:forEach>
-										  
-											</select>
+
+										</select>
 
 									</div>
-											<div class="col-md-1"></div>
+									<div class="col-md-1"></div>
 									<div class="col-md-2">About Company*</div>
 									<div class="col-md-3">
-										<textarea  name="aboutCompany" class="form-control"
-											placeholder="About Company" required >${editExhibitor.aboutCompany}</textarea>
-											 
+										<textarea name="aboutCompany" class="form-control"
+											placeholder="About Company" required>${editExhibitor.aboutCompany}</textarea>
 
-									</div><br>
+
+									</div>
+									<br>
 									<div class="col-md-1"></div>
- 
+
 								</div>
 								<br>
-								
+
 								<div class="box-content">
 
 									<div class="col-md-2">Contact Person1*</div>
 									<div class="col-md-3">
 										<input type="text" name="pers1"
-											value="${editExhibitor.contactPersonName1}" class="form-control"
-											placeholder="Contact Person"   
-											required />
+											value="${editExhibitor.contactPersonName1}"
+											class="form-control" placeholder="Contact Person" required />
 
 									</div>
 
 									<div class="col-md-1"></div>
-									<div class="col-md-2"> Contact Person2*</div>
+									<div class="col-md-2">Contact Person2*</div>
 									<div class="col-md-3">
 										<input type="text" id="pers2" name="pers2"
-											 value="${editExhibitor.contactPersonName2 }" class="form-control"
-											placeholder="Contact Person " required>
+											value="${editExhibitor.contactPersonName2 }"
+											class="form-control" placeholder="Contact Person " required>
 
 									</div>
 
 
 								</div>
 								<br>
-								
+
 								<div class="box-content">
 
 									<div class="col-md-2">Person1 Contact No.*</div>
 									<div class="col-md-3">
 										<input type="text" name="mob1"
 											value="${editExhibitor.personMob1}" class="form-control"
-											placeholder="Mobile No"   pattern="^\d{10}$"
-											required />
+											placeholder="Mobile No" pattern="^\d{10}$" required />
 
 									</div>
 
@@ -160,22 +164,21 @@
 									<div class="col-md-3">
 										<input type="text" name="mob2"
 											value="${editExhibitor.personMob2}" class="form-control"
-											placeholder="Mobile No"   pattern="^\d{10}$"
-											required />
+											placeholder="Mobile No" pattern="^\d{10}$" required />
 
 									</div>
 
 
 								</div>
 								<br>
-								
+
 								<div class="box-content">
 
 									<div class="col-md-2">Person1 Email*</div>
 									<div class="col-md-3">
 										<input type="email" name="email1"
 											value="${editExhibitor.personEmail2}" class="form-control"
-											placeholder="Email"  required />
+											placeholder="Email" required />
 
 									</div>
 
@@ -191,17 +194,17 @@
 
 								</div>
 								<br>
-								  
-								  <div class="box-content">
+
+								<div class="box-content">
 
 									<div class="col-md-2">Latitude*</div>
 									<div class="col-md-3">
 										<input type="text" name="latitude"
 											value="${editExhibitor.compLat}" class="form-control"
-											placeholder="Latitude"  required />
+											placeholder="Latitude" required />
 
 									</div>
- 
+
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Longitude*</div>
 									<div class="col-md-3">
@@ -214,55 +217,57 @@
 
 								</div>
 								<br>
-								 
+
 								<div class="box-content">
 
 									<div class="col-md-2">Address*</div>
 									<div class="col-md-3">
 										<input type="text" name="address"
 											value="${editExhibitor.address}" class="form-control"
-											placeholder="Address"  required />
+											placeholder="Address" required />
 
 									</div>
-  
+
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Select Location*</div>
 									<div class="col-md-3">
-										<select  name="location" id="location" class="form-control chosen" required >
-										<option value="">select</option>
-										  
-										 
-										  <c:forEach items="${locationList}" var="locationList" >
-										<c:choose>
-											<c:when test="${locationList.locationId==editExhibitor.locationId}">
-												<option value="${locationList.locationId}" selected>${locationList.locationName}</option>
-											</c:when>
-											<c:otherwise>
-											<option value="${locationList.locationId}">${locationList.locationName}</option>
-											</c:otherwise>
-										</c:choose>
-									 	
-											</c:forEach>  
-											
-											</select>
+										<select name="location" id="location"
+											class="form-control chosen" required>
+											<option value="">select</option>
+
+
+											<c:forEach items="${locationList}" var="locationList">
+												<c:choose>
+													<c:when
+														test="${locationList.locationId==editExhibitor.locationId}">
+														<option value="${locationList.locationId}" selected>${locationList.locationName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${locationList.locationId}">${locationList.locationName}</option>
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+
+										</select>
 
 									</div>
 
 
 								</div>
 								<br>
-								
+
 								<div class="box-content">
 
 									<div class="col-md-2">Mobile No*</div>
 									<div class="col-md-3">
 										<input type="text" name="usesrMob"
 											value="${editExhibitor.userMob}" class="form-control"
-											placeholder="Mobile No"   pattern="^\d{10}$"
-											required />
+											id="usesrMob" onkeyup="checkMobileNo();"
+											placeholder="Mobile No" pattern="^\d{10}$" required />
 
 									</div>
- 
+
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Password*</div>
 									<div class="col-md-3">
@@ -273,12 +278,13 @@
 									</div>
 
 
-								</div><br>
-								
+								</div>
+								<br>
+
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
 										<input type="submit" class="btn btn-info" value="Submit"
-											onclick="check();" id="submit"  >
+											onclick="check();" id="submit" disabled>
 
 
 
@@ -295,7 +301,7 @@
 			</div>
 			<!-- END Main Content -->
 			<footer>
-			<p>2018 © AARYATECH SOLUTIONS</p>
+				<p>2018 © AARYATECH SOLUTIONS</p>
 			</footer>
 
 			<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
@@ -387,21 +393,45 @@
 
 			}
 		}
-		
+
 		function check() {
-			   
+
 			var companyTypeId = document.getElementById("companyTypeId").value;
 			var location = document.getElementById("location").value;
- 
+
 			if (companyTypeId == "" || companyTypeId == null) {
-				 alert("Select Company Type");
+				alert("Select Company Type");
+			} else if (location == "" || location == null) {
+				alert("Select Location");
 			}
-			else if(location == "" || location == null)
-				{
-					 alert("Select Location");
-				}
 		}
 	</script>
+
+	<script type="text/javascript">
+		function checkMobileNo() {
+
+			var userMob = $('#usesrMob').val();
+
+			if (userMob.length == 10) {
+
+				$.getJSON('${exhibitorMobileNo}', {
+					userMob : userMob,
+
+					ajax : 'true'
+				}, function(data) {
+
+					/* 				document.getElementById("").value = data; */
+					if (data.exhId == 0) {
+						document.getElementById("submit").disabled = false;
+					} else {
+						document.getElementById("submit").disabled = true;
+						alert("Number Already Registered");
+					}
+				});
+			}
+		}
+	</script>
+
 
 </body>
 </html>
