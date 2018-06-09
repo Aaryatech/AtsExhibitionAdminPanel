@@ -31,7 +31,7 @@
 		<div class="page-title">
 			<div>
 				<h1>
-					<i class="fa fa-file-o"></i>OrgSubscription List
+					<i class="fa fa-file-o"></i>Organizer Subscription List
 				</h1>
 
 				<!-- <h4>Bill for franchises</h4> -->
@@ -44,11 +44,11 @@
 		<div class="box" id="pending">
 			<div class="box-title">
 				<h3>
-					<i class="fa fa-bars"></i>OrgSubscription List
+					<i class="fa fa-bars"></i>Organizer Subscription List
 				</h3>
 				<div class="box-tool">
 					<a href="${pageContext.request.contextPath}/showOrgSubscription">Add
-						OrgSubscription</a> <a data-action="collapse" href="#"><i
+						Organizer Subscription</a> <a data-action="collapse" href="#"><i
 						class="fa fa-chevron-up"></i></a>
 				</div>
 
@@ -68,7 +68,7 @@
 									<th>Package Name</th>
 									<th>From Date</th>
 									<th>To Date</th>
-									<th>Cost</th>
+									<th style="width: 100px">Subscription Amount</th>
 									<th>Paid Amount</th>
 									<th>Remaining Amount</th>
 									<th>Action</th>
@@ -83,9 +83,9 @@
 										<td>${orgSubscriptionList.pkgName}</td>
 										<td>${orgSubscriptionList.fromDate}</td>
 										<td>${orgSubscriptionList.toDate}</td>
-										<td>${orgSubscriptionList.pkgAmt}</td>
-										<td>${orgSubscriptionList.paidAmt}</td>
-										<td>${orgSubscriptionList.remAmt}</td>
+										<td >${orgSubscriptionList.pkgAmt}</td>
+										<td style="width: 18px">${orgSubscriptionList.paidAmt}</td>
+										<td style="width: 18px">${orgSubscriptionList.remAmt}</td>
 								<%--  <td><a
 											href="${pageContext.request.contextPath}/editOrgSubscriptionDetails/${orgSubscriptionList.subId}"><span
 												class="glyphicon glyphicon-edit"></span></a>  </td>
@@ -112,7 +112,7 @@
 	<!-- END Main Content -->
 
 	<footer>
-		<p>2018 © SONA ELECTRICALS.</p>
+		<p>2018 © AARYATECH SOLUTIONS</p>
 	</footer>
 
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
@@ -175,6 +175,7 @@
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
+		<script>
 	function searchEventList() {
 
 			var orgId = $('#orgId').val();

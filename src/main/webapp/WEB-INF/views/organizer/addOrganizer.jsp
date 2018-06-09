@@ -32,7 +32,7 @@
 				<div>
 					<h1>
 
-						<i class="fa fa-file-o"></i><c:choose><c:when test="${isEdit==1}">Edit Organizer</c:when><c:otherwise>Add Organizer</c:otherwise></c:choose>
+						<i class="fa fa-file-o"></i><c:choose><c:when test="${isEdit==1}">Edit Organizer</c:when><c:otherwise>Add Organizers</c:otherwise></c:choose>
 
 					</h1>
 				</div>
@@ -49,15 +49,21 @@
 							</h3>
 						
 	                        <div class="box-tool">
-								<a href="${pageContext.request.contextPath}/orgnizerList"> Organizer List</a> <a data-action="collapse" href="#"><i
+	                        <c:choose>
+	                        	<c:when test="${userType==0}">
+									<a href="${pageContext.request.contextPath}/orgnizerList"> Organizer List</a> <a data-action="collapse" href="#"><i
 									class="fa fa-chevron-up"></i></a>
+								</c:when>
+								 
+							</c:choose>
+									
 							</div>
 						</div>
 
 						<div class=" box-content">
 							<form id="addSupplier"
 								action="${pageContext.request.contextPath}/insertOrganizer"
-								method="post">
+								method="post" enctype="multipart/form-data">
 
 								<div class="box-content"> 
 								
@@ -154,7 +160,7 @@
 									<div class="col-md-1"></div> 
 								<div class="col-md-2">Location*</div>
 									<div class="col-md-3">
-										<select  name="location" class="form-control" required >
+										<select  name="location" id="location" class="form-control chosen" required >
 										<option value="">Select Location</option>
 										  
 										 
@@ -202,17 +208,58 @@
                               <div class="col-md-2">About Organization*</div>
 									<div class="col-md-3">
 										<textarea  name="aboutOrg" class="form-control" rows="3"
-											placeholder="About Organization" required />${editOrganiser.aboutOrg}</textarea>
+											placeholder="About Organization" required >${editOrganiser.aboutOrg}</textarea>
 
 									</div>
 <br>
                                </div><br><br><br>
+                                <div class="box-content">
+									<div class="form-group">
+									<div class="col-md-2">Image</div>
+									<div class="col-md-3">
+										<div class="fileupload fileupload-new"
+											data-provides="fileupload">
+											<div class="fileupload-new img-thumbnail"
+												style="width: 150px; height: 150px;">
+												<img
+													src="${imageUrl}${editOrganiser.orgImage}"
+													onerror="this.src='http://www.placehold.it/150x150/EFEFEF/AAAAAA&amp;text=no+image"
+													
+													alt="" />
+											</div>
+											<div
+												class="fileupload-preview fileupload-exists img-thumbnail"
+												style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+											<div>
+												<span class="btn btn-default btn-file"><span
+													class="fileupload-new">Select image</span> <span
+													class="fileupload-exists">Change</span> <input type="file"
+													class="file-input" name="documentFile" id="documentFile"
+													 /></span> <a href="#"
+													class="btn btn-default fileupload-exists"
+													data-dismiss="fileupload">Remove</a>
+													
+											</div>
+										</div>
+					<input class="form-control" id="docPath" placeholder="Current Km" value="${editOrganiser.orgImage}" size="16"
+											type="hidden" name="docPath"   />
+									</div>
+									
+									 </div>
+									
+								</div><br><br><br><br><br><br><br><br><br>
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
 										<input type="submit" class="btn btn-info" value="Submit"
-											id="submit"  >
-                      <a href="${pageContext.request.contextPath}/orgnizerList" >	<input type="button" class="btn btn-default" value="Cancel"
+										onclick="check();"	id="submit"  >
+										<c:choose>
+	                        	<c:when test="${userType==0}">
+									 <a href="${pageContext.request.contextPath}/orgnizerList" >	<input type="button" class="btn btn-default" value="Cancel"
 										               	id="Cancel"  ></a>
+								</c:when>
+								 
+							</c:choose>
+                     
 
 
 									</div>
@@ -228,7 +275,7 @@
 			</div>
 			<!-- END Main Content -->
 			<footer>
-			<p>2018 © ATS Exhibition</p>
+			<p>2018 © AARYATECH SOLUTIONS</p>
 			</footer>
 
 			<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
@@ -336,6 +383,20 @@
 			     // e.target.checkValidity()
 			     this.reportValidity();
 			   })
+			   
+			  function check() {
+			   
+			var orgType = document.getElementById("orgType").value;
+			var location = document.getElementById("location").value;
+ 
+			if (orgType == "" || orgType == null) {
+				 alert("Select User Type");
+			}
+			else if(location == "" || location == null)
+				{
+					 alert("Select Location");
+				}
+		}
 	</script>
 
 </body>

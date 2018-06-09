@@ -111,7 +111,7 @@
 	<!-- END Main Content -->
 
 	<footer>
-		<p>2018 © SONA ELECTRICALS.</p>
+		<p>2018 © AARYATECH SOLUTIONSS</p>
 	</footer>
 
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i

@@ -208,7 +208,7 @@
 	<!-- END Main Content -->
 
 	<footer>
-		<p>2018 © ATS Exhibition.</p>
+		<p>2018 © AARYATECH SOLUTIONS</p>
 	</footer>
 
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i

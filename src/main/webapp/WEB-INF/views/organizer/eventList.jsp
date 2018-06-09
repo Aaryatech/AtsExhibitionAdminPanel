@@ -82,7 +82,7 @@
 										 
 										 <td><a href="${pageContext.request.contextPath}/editEvent/${eventList.eventId}"><span
 												class="glyphicon glyphicon-edit"></span></a> 
-											<a href="${pageContext.request.contextPath}/deleteEvent/${eventList.eventId}"
+											<a href="${pageContext.request.contextPath}/deleteEvent/${eventList.eventId}/0"
 											onClick="return confirm('Are you sure want to delete this record');"><span
 												class="glyphicon glyphicon-remove"></span></a></td>  
 									</tr>
@@ -104,7 +104,7 @@
 	<!-- END Main Content -->
 
 	<footer>
-		<p>2018 © SONA ELECTRICALS.</p>
+		<p>2018 © AARYATECH SOLUTIONS</p>
 	</footer>
 
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i

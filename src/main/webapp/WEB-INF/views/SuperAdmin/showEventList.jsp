@@ -122,6 +122,7 @@
 										  <a href='${pageContext.request.contextPath}/editEventBySuperAdmin/${eventList.eventId}' class='action_btn' data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> 
 							  			<a href='${pageContext.request.contextPath}/eventDetailAndAssignExhList/${eventList.eventId}' class='action_btn' data-toggle="tooltip" title="Exhibitor List"><i class="glyphicon glyphicon-list"></i></a>  
 							  			<a href='${pageContext.request.contextPath}/eventSchedule/${eventList.eventId}' class='action_btn' data-toggle="tooltip" title="Schedule"><i class="glyphicon glyphicon-calendar"></i></a>
+							  			<a href="${pageContext.request.contextPath}/deleteEvent/${eventList.eventId}/1" onClick="return confirm('Are you sure want to delete this record');"><span class="glyphicon glyphicon-remove"></span></a>
 										  </td>
 										 
 									</tr>
@@ -153,7 +154,7 @@
 	<!-- END Main Content -->
 
 	<footer>
-		<p>2018 © SONA ELECTRICALS.</p>
+		<p>2018 © AARYATECH SOLUTIONS</p>
 	</footer>
 
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
@@ -279,9 +280,10 @@ function searchEventList() {
 							  	tr.append($('<td></td>').html(itemList.eventFromDate)); 
 							  	tr.append($('<td></td>').html(itemList.eventToDate)); 
 							  	tr.append($('<td></td>').html(itemList.orgName)); 
-							  	tr.append($('<td ></td>').html("<a href='${pageContext.request.contextPath}/editEventBySuperAdmin/"+itemList.eventId+"' class='action_btn'>Edit</a> " +
-							  			"<a href='${pageContext.request.contextPath}/eventDetailAndAssignExhList/"+itemList.eventId+"' class='action_btn'>Detail</a> " + 
-							  			"<a href='${pageContext.request.contextPath}/eventSchedule/"+itemList.eventId+"' class='action_btn'>Schedule</a> "));
+							  	tr.append($('<td ></td>').html("<a href='${pageContext.request.contextPath}/editEventBySuperAdmin/"+itemList.eventId+"' class='action_btn'data-toggle='tooltip' title='Edit'><i class='glyphicon glyphicon-edit'></i></a> " +
+							  			"<a href='${pageContext.request.contextPath}/eventDetailAndAssignExhList/"+itemList.eventId+"' class='action_btn' data-toggle='tooltip' title='Exhibitor List'><i class='glyphicon glyphicon-list'></i></a> " + 
+							  			"<a href='${pageContext.request.contextPath}/eventSchedule/"+itemList.eventId+"' class='action_btn' data-toggle='tooltip' title='Schedule'><i class='glyphicon glyphicon-calendar'></i></a> " + 
+							  			"<a href='${pageContext.request.contextPath}/deleteEvent/"+itemList.eventId+"/1' onClick='return confirm('Are you sure want to delete this record');'><span class='glyphicon glyphicon-remove'></span></a> "));
 								  
 								$('#table1 tbody').append(tr);
 								 

@@ -34,7 +34,7 @@
 		<div class="page-title">
 			<div>
 				<h1>
-					<i class="fa fa-file-o"></i>Org Subscription Details
+					<i class="fa fa-file-o"></i>Organizer Subscription Details
 				</h1>
 
 				<!-- <h4>Bill for franchises</h4> -->
@@ -47,7 +47,7 @@
 		<div class="box" id="pending">
 			<div class="box-title">
 				<h3>
-					<i class="fa fa-bars"></i>Org Subscription Details
+					<i class="fa fa-bars"></i>Organizer Subscription Details
 				</h3>
 				<div class="box-tool">
 					<a href="${pageContext.request.contextPath}/addOrganizer"> </a> <a
@@ -221,6 +221,9 @@
 	</div>
 
 	<!-- END Main Content -->
+	<footer>
+		<p>2018 © AARYATECH SOLUTIONS</p>
+	</footer>
 
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
 		class="fa fa-chevron-up"></i></a>

@@ -206,7 +206,7 @@
 				<!-- BEGIN Submenu -->
 				<ul class="submenu">
 					<li><a
-						href="${pageContext.request.contextPath}/editOrg/${sessionScope.organiser.orgId}">Edit
+						href="${pageContext.request.contextPath}/editOrg/${sessionScope.organiser.orgId}/1">Edit
 							Organizer</a></li>
 					<li><a href="${pageContext.request.contextPath}/addEvent">Add
 							Event</a></li>

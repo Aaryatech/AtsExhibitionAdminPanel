@@ -173,8 +173,8 @@ public class OrganizerController {
 		return "redirect:/orgnizerList";
 	}
 
-	@RequestMapping(value = "/editOrg/{orgId}", method = RequestMethod.GET)
-	public ModelAndView editOrg(@PathVariable int orgId, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/editOrg/{orgId}/{userType}", method = RequestMethod.GET)
+	public ModelAndView editOrg(@PathVariable int orgId, @PathVariable int userType, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("organizer/addOrganizer");
 		try {
@@ -191,6 +191,7 @@ public class OrganizerController {
 			model.addObject("locationList", locationList);
             model.addObject("isEdit",1);
             model.addObject("imageUrl",Constants.imageUrl);
+            model.addObject("userType",userType);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

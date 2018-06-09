@@ -87,7 +87,7 @@
 											target="_blank">${organiserList.websiteLink}</a></td>
 
 										<td><a
-											href="${pageContext.request.contextPath}/editOrg/${organiserList.orgId}"><span
+											href="${pageContext.request.contextPath}/editOrg/${organiserList.orgId}/0"><span
 												class="glyphicon glyphicon-edit"></span></a> <a
 											href="${pageContext.request.contextPath}/deleteOrg/${organiserList.orgId}"
 											onClick="return confirm('Are you sure want to delete this record');"><span
@@ -120,7 +120,7 @@
 	<!-- END Main Content -->
 
 	<footer>
-		<p>2018 © SONA ELECTRICALS.</p>
+		<p>2018 © AARYATECH SOLUTIONS</p>
 	</footer>
 
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i

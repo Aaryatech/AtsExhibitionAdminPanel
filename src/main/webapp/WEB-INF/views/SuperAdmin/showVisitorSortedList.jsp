@@ -131,8 +131,9 @@
 											 
 								
 									<th style="width: 18px">Sr No</th>
-									<th>Visitor Name</th> 
 									<th>Event Name</th>
+									<th>Visitor Name</th> 
+									
 									<th>Mobile No</th> 
 									 <th>Email</th> 
 									 <th>Location</th> 
@@ -146,8 +147,9 @@
 									 
 									
 										<td>${count.index+1}</td> 
+										<td>${exhibitorList.orgName}</td>	
 										<td>${exhibitorList.exhName}</td>
-										<td>${exhibitorList.orgName}</td>	 
+										 
 										 <td>${exhibitorList.locationName}</td>	
 										 <td>${exhibitorList.companyTypeName}</td>	
 										  
@@ -180,7 +182,7 @@
 	<!-- END Main Content -->
 
 	<footer>
-	<p>2018 © SONA ELECTRICALS.</p>
+	<p>2018 © AARYATECH SOLUTIONS</p>
 	</footer>
 
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
@@ -312,9 +314,10 @@
 						 
 										 
 										var tr = $('<tr></tr>');
-									  	tr.append($('<td></td>').html(key+1)); 
+									  	tr.append($('<td></td>').html(key+1));
+									  	tr.append($('<td></td>').html(itemList.eventName));
 									  	tr.append($('<td></td>').html(itemList.visitorName));
-									  	tr.append($('<td></td>').html(itemList.eventName)); 
+									  	 
 									  	tr.append($('<td></td>').html(itemList.visitorMobile)); 
 									  	tr.append($('<td></td>').html(itemList.visitoremail));
 									  	tr.append($('<td></td>').html(itemList.locationName)); 
@@ -392,8 +395,9 @@
 												 
 												var tr = $('<tr></tr>');
 											  	tr.append($('<td></td>').html(key+1)); 
-											  	tr.append($('<td></td>').html(itemList.visitorName));
 											  	tr.append($('<td></td>').html(itemList.eventName)); 
+											  	tr.append($('<td></td>').html(itemList.visitorName));
+											  	
 											  	tr.append($('<td></td>').html(itemList.visitorMobile)); 
 											  	tr.append($('<td></td>').html(itemList.visitoremail));
 											  	tr.append($('<td></td>').html(itemList.locationName)); 
@@ -471,9 +475,10 @@
 						 
 										 
 										var tr = $('<tr></tr>');
-									  	tr.append($('<td></td>').html(key+1)); 
+									  	tr.append($('<td></td>').html(key+1));
+									  	tr.append($('<td></td>').html(itemList.eventName));
 									  	tr.append($('<td></td>').html(itemList.visitorName));
-									  	tr.append($('<td></td>').html(itemList.eventName)); 
+									  	 
 									  	tr.append($('<td></td>').html(itemList.visitorMobile)); 
 									  	tr.append($('<td></td>').html(itemList.visitoremail));
 									  	tr.append($('<td></td>').html(itemList.locationName)); 

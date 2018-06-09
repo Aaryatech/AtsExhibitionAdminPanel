@@ -111,6 +111,7 @@
 									<th style="width: 18px">Sr No</th>
 									<th>Exhibitor Name</th>
 									 <th>Organizer Name</th>
+									 <th>Mobile No.</th>
 									 <th>Location</th>
 									 <th>Company Type</th>
 									 
@@ -123,7 +124,8 @@
 									
 										<td>${count.index+1}</td> 
 										<td>${exhibitorList.exhName}</td>
-										<td>${exhibitorList.orgName}</td>	 
+										<td>${exhibitorList.orgName}</td>
+										<td>${exhibitorList.userMob}</td>	 
 										 <td>${exhibitorList.locationName}</td>	
 										 <td>${exhibitorList.companyTypeName}</td>	
 										  
@@ -146,7 +148,7 @@
 	<!-- END Main Content -->
 
 	<footer>
-	<p>2018 © SONA ELECTRICALS.</p>
+	<p>2018 © AARYATECH SOLUTIONS</p>
 	</footer>
 
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
@@ -297,14 +299,17 @@
 									  	tr.append($('<td></td>').html(key+1)); 
 									  	tr.append($('<td></td>').html(itemList.exhName)); 
 									  	tr.append($('<td></td>').html(itemList.orgName)); 
+									  	tr.append($('<td></td>').html(itemList.userMob));
 									  	tr.append($('<td></td>').html(itemList.locationName)); 
 									  	tr.append($('<td></td>').html(itemList.companyTypeName)); 
 									  	
 									  	 
 										$('#table1 tbody').append(tr);
-										 
+										
 
 									})  
+									 
+									
 					});
 			 
 				}

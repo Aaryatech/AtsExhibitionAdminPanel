@@ -111,7 +111,7 @@
 									<div class="col-md-2">About Company*</div>
 									<div class="col-md-3">
 										<textarea  name="aboutCompany" class="form-control"
-											placeholder="About Company" required />${editExhibitor.aboutCompany}</textarea>
+											placeholder="About Company" required >${editExhibitor.aboutCompany}</textarea>
 											 
 
 									</div><br>
@@ -295,7 +295,7 @@
 			</div>
 			<!-- END Main Content -->
 			<footer>
-			<p>2018 © SONA ELECTRICALS</p>
+			<p>2018 © AARYATECH SOLUTIONS</p>
 			</footer>
 
 			<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
