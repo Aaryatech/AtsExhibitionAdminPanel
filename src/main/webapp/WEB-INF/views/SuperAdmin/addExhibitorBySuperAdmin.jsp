@@ -65,7 +65,7 @@
 								
 									<div class="col-md-2">Select Organiser*</div>
 									<div class="col-md-3">
-										<select  name="orgId" id="orgId" class="form-control" required >
+										<select  name="orgId" id="orgId" class="form-control chosen" required >
 											<option value="">select</option>
 										 <c:forEach items="${organiserList}" var="organiserList" >
 										 	<c:choose>
@@ -113,7 +113,7 @@
 								
 								<div class="col-md-2">Company Type*</div>
 									<div class="col-md-3">
-										<select  name="companyTypeId" id="companyTypeId" class="form-control" required >
+										<select  name="companyTypeId" id="companyTypeId" class="form-control chosen" required >
 											<option value="">select</option>
 										 <c:forEach items="${companyTypeList}" var="companyTypeList" >
 										 	<c:choose>
@@ -137,7 +137,7 @@
 									<div class="col-md-2">About Company*</div>
 									<div class="col-md-3">
 										<textarea  name="aboutCompany" class="form-control"
-											placeholder="About Company" required />${editExhibitor.aboutCompany}</textarea>
+											placeholder="About Company" required >${editExhibitor.aboutCompany}</textarea>
 											 
 
 									</div><br>
@@ -254,7 +254,7 @@
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Select Location*</div>
 									<div class="col-md-3">
-										<select  name="location" class="form-control" required >
+										<select  name="location" id="location" class="form-control chosen" required >
 										<option value="">select</option>
 										  
 										 
@@ -304,7 +304,7 @@
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
 										<input type="submit" class="btn btn-info" value="Submit"
-											id="submit"  >
+											onclick="check();" id="submit"  >
 
 
 
@@ -412,6 +412,23 @@
 				}
 
 			}
+		}
+		
+		function check() {
+			   
+			var companyTypeId = document.getElementById("companyTypeId").value;
+			var location = document.getElementById("location").value;
+			var orgId = document.getElementById("orgId").value;
+			if (orgId == "" || orgId == null) {
+				 alert("Select Orgnizer");
+			}
+			else if (companyTypeId == "" || companyTypeId == null) {
+				 alert("Select Company Type");
+			}
+			else if(location == "" || location == null)
+				{
+					 alert("Select Location");
+				}
 		}
 	</script>
 

@@ -144,7 +144,7 @@
 				<c:choose>
 						<c:when test="${sessionScope.organiser.orgType==0}">
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
-					<span>Super Admin</span> <b class="arrow fa fa-angle-right"></b>
+					<span>Super Admin Master</span> <b class="arrow fa fa-angle-right"></b>
 				</a>
 				<!-- BEGIN Submenu -->
 				<ul class="submenu">
@@ -156,27 +156,37 @@
 							List</a></li>
 					<li><a href="${pageContext.request.contextPath}/addEventByAdmin">Add Event</a></li>
 				
-					<li><a href="${pageContext.request.contextPath}/showEventList">All
-							Event List</a></li>
+					<li><a href="${pageContext.request.contextPath}/showEventList">All Event List</a></li>
 					<li><a href="${pageContext.request.contextPath}/addExhibitorBySuperAdmin">Add Exhibitor</a></li>
 
 					<li><a
 						href="${pageContext.request.contextPath}/showExhibitorList">All
 							Exhibitor List</a></li>
-							
-						
+				 
+				</ul>
+				
+				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
+					<span>Super Admin Transaction</span> <b class="arrow fa fa-angle-right"></b>
+				</a>
+				<!-- BEGIN Submenu -->
+				<ul class="submenu">
 
-					<li><a
-						href="${pageContext.request.contextPath}/exhibitorListByLocationAndCompType">All
-							Exhibitor By Place And Company</a></li>
+				  
 
 					<li><a
 						href="${pageContext.request.contextPath}/exhibitorPakageList">Exhibitor
 							Package List</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/addExhibitorPackage">Add Exhibitor
+							Package </a></li>
 
 					<li><a
 						href="${pageContext.request.contextPath}/organizerPakageList">Organizer
 							Package List</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/addOrganizerPackage">Add Organizer
+							Package </a></li>
+							
 					<li><a
 						href="${pageContext.request.contextPath}/showOrgSubscription">Add
 							Organizer Subscription</a></li>
@@ -190,6 +200,27 @@
 						href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor
 							Subscription List</a></li>
 
+	             
+
+				</ul>
+				
+				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
+					<span>Super Admin Report</span> <b class="arrow fa fa-angle-right"></b>
+				</a>
+				<!-- BEGIN Submenu -->
+				<ul class="submenu">
+
+				  
+				  
+					<li><a
+						href="${pageContext.request.contextPath}/showExhibitorList">All
+							Exhibitor List</a></li>
+							 
+					<li><a
+						href="${pageContext.request.contextPath}/exhibitorListByLocationAndCompType">All
+							Exhibitor By Place And Company</a></li>
+ 
+
 	               <li>
   						<a href="${pageContext.request.contextPath}/showVisitorSortedList">All Visitors </a>
 						</li>
@@ -201,19 +232,18 @@
 				</c:choose>
 
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
-					<span>Organizer</span> <b class="arrow fa fa-angle-right"></b>
+					<span>Organizer Master</span> <b class="arrow fa fa-angle-right"></b>
 				</a>
 				<!-- BEGIN Submenu -->
 				<ul class="submenu">
-					<li><a
-						href="${pageContext.request.contextPath}/editOrg/${sessionScope.organiser.orgId}/1">Edit
-							Organizer</a></li>
+					
 					<li><a href="${pageContext.request.contextPath}/addEvent">Add
 							Event</a></li>
-					<li><a href="${pageContext.request.contextPath}/scheduleList">Event
-							Schedule</a></li>
 					<li><a href="${pageContext.request.contextPath}/eventList">All
 							Event List</a></li>
+					<li><a href="${pageContext.request.contextPath}/scheduleList">Event
+							Schedule</a></li>
+					
 					<li><a
 						href="${pageContext.request.contextPath}/addCommitteeMember">Add
 							Committee Member</a></li>
@@ -222,6 +252,15 @@
 						href="${pageContext.request.contextPath}/committeeMemberList">Committee
 							Member List</a></li>
 
+					 
+				</ul>
+				
+				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
+					<span>Organizer Transaction</span> <b class="arrow fa fa-angle-right"></b>
+				</a>
+				<!-- BEGIN Submenu -->
+				<ul class="submenu">
+					 
 					<li><a href="${pageContext.request.contextPath}/addExhibitor">Add
 							Exhibitor</a></li>
 
@@ -240,25 +279,9 @@
 						href="${pageContext.request.contextPath}/showExhEventSubscription">Approve Subscribed Exhibitor For Event</a></li>
 					<li><a href="${pageContext.request.contextPath}/showGallary">Gallary</a>
 					</li>
-					<%-- <li> 
-					<a href="${pageContext.request.contextPath}/showAddNewForm">Add Form</a>
-					</li> --%>
-
-					<%-- <li> 
-					<a href="${pageContext.request.contextPath}/addGroup">Add Group</a>
-					</li>
-					<li> 
-					<a href="${pageContext.request.contextPath}/addCategory">Add Category</a>
-					</li>
-					<li> 
-					<a href="${pageContext.request.contextPath}/addItem">Add Item</a>
-					</li>
-					<li> 
-					<a href="${pageContext.request.contextPath}/addCustomer">Add Customer</a>
-					</li>
-					<li> 
-					<a href="${pageContext.request.contextPath}/addUser">Add User</a>
-					</li> --%>
+					 <li><a
+						href="${pageContext.request.contextPath}/editOrg/${sessionScope.organiser.orgId}/1">Edit
+							Profile</a></li>
 
 				</ul>
 
