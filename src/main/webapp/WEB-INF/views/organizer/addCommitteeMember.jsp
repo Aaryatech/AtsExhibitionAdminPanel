@@ -137,7 +137,7 @@
 										<input type="file" id="image" name="image"
 											class="form-control" value="${editComMember.image}"
 											placeholder=" Image " required /> <input type="hidden"
-											name="memImage" value="${editComMember.memImage}" />
+											name="memImage" value="${editComMember.image}" />
 									</div>
 								</div>
 
