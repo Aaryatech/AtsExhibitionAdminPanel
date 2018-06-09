@@ -67,7 +67,7 @@
 									<th>Exhibitor Name</th> 
 									<th>From Date</th>
 									<th>To Date</th>
-									<th>Cost</th>
+									<th style="width: 100px">Subscription Amount</th>
 									<th>Paid Amount</th>
 									<th>Remaining Amount</th>
 									<th>Action</th>

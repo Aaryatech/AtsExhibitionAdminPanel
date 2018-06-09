@@ -82,14 +82,14 @@
 										<input type="text" id="orgName" name="orgName"
 											class="form-control" value="${editOrganiser.orgName}"
 											placeholder=" Organizer Name " required /> <input
-											type="hidden" name="orgId" value="${editOrganiser.orgId}" />
+											maxlength="50" type="hidden" name="orgId" value="${editOrganiser.orgId}" />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Organizer Address*</div>
 									<div class="col-md-3">
 										<input type="text" name="orgAdd"
 											value="${editOrganiser.orgAddress}" class="form-control"
-											placeholder="Organizer Address" required />
+											maxlength="50" placeholder="Organizer Address" required />
 									</div>
 
 
@@ -102,7 +102,7 @@
 									<div class="col-md-3">
 										<input type="text" name="contNo" id="contNo"
 											value="${editOrganiser.orgContactNo}" class="form-control"
-											placeholder="Contact No" autofocus
+											maxlength="10" placeholder="Contact No" autofocus
 											pattern="^(\+\d{1,3}[- ]?)?\d{10}$"
 											title="Enter 10 digit mobile number" required />
 
@@ -133,7 +133,7 @@
 									<div class="col-md-2">Work, Area*</div>
 									<div class="col-md-3">
 										<input type="text" name="workArea"
-											value="${editOrganiser.workAreaKeywords}"
+											maxlength="50" value="${editOrganiser.workAreaKeywords}"
 											class="form-control" placeholder="Work Area" required />
 
 									</div>
@@ -199,12 +199,25 @@
 
 									<div class="col-md-2">Mobile No*</div>
 									<div class="col-md-3">
-										<input type="text" name="mob" id="mob"
+									<c:choose>
+									<c:when test="${isEdit==1}">
+									<input type="text" name="mob" id="mob"
 											value="${editOrganiser.userMob}" class="form-control"
 											placeholder="Mobile No" autofocus onkeyup="checkMobileNo()"
 											pattern="^(\+\d{1,3}[- ]?)?\d{10}$"
+											title="Enter 10 digit mobile number" readonly />
+									
+									</c:when>
+									<c:otherwise> 
+									<input type="text" name="mob" id="mob"
+											value="${editOrganiser.userMob}" class="form-control"
+											placeholder="Mobile No" autofocus onkeyup="checkMobileNo()"
+											maxlength="10" pattern="^(\+\d{1,3}[- ]?)?\d{10}$"
 											title="Enter 10 digit mobile number" required />
-
+									
+									</c:otherwise>
+								</c:choose>
+										 
 									</div>
 
 									<div class="col-md-1"></div>
@@ -222,7 +235,7 @@
 									<div class="col-md-2">About Organization*</div>
 									<div class="col-md-3">
 										<textarea name="aboutOrg" class="form-control" rows="3"
-											placeholder="About Organization" required>${editOrganiser.aboutOrg}</textarea>
+											maxlength="100" placeholder="About Organization" required>${editOrganiser.aboutOrg}</textarea>
 
 									</div>
 									<br>
@@ -440,6 +453,7 @@
 						document.getElementById("submit").disabled = false;
 					} else {
 						document.getElementById("submit").disabled = true;
+						alert("Mobile Already Register ");
 					}
 				});
 			}

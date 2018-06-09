@@ -65,7 +65,7 @@
 						<div class="col-md-3">
 							<select id="exhId" name="exhId" class="form-control chosen"
 								required>
-								<option value=" ">Select Exhibitor</option>
+								<option value="">Select Exhibitor</option>
 								<c:forEach items="${exhibitorList}" var="exhibitorList">
 
 									<option value="${exhibitorList.exhId}">${exhibitorList.exhName}</option>
@@ -76,7 +76,7 @@
 						<div class="col-md-3">
 							<select id="pkgId" name="pkgId" onchange="onPackage(this.value)"
 								class="form-control chosen" required>
-								<option value=" ">Select Package</option>
+								<option value="">Select Package</option>
 								<c:forEach items="${packageList}" var="packageList">
 									<option value="${packageList.pkgId}">${packageList.pkgName}</option>
 								</c:forEach>
@@ -119,7 +119,7 @@
 					<div class=" box-content">
 						<div class="col-md-12" style="text-align: center">
 							<input type="submit" class="btn btn-info" value="Submit"
-								id="submit">
+								onclick="check();" id="submit">
 						</div>
 					</div>
 				</form>
@@ -279,6 +279,19 @@
 			var remAmt = pkgAmt - paidAmt;
 			document.getElementById("remAmt").value = remAmt;
 
+		}
+		
+		function check() {
+			 
+			var pkgId = document.getElementById("pkgId").value;
+			var exhId = document.getElementById("exhId").value;
+
+			if (exhId == "" || exhId == null) {
+				alert("Select Exhibitor");
+			} else if (pkgId == "" || pkgId == null) {
+				alert("Select Pakage");
+			}
+			 
 		}
 	</script>
 

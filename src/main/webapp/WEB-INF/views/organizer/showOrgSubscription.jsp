@@ -65,10 +65,10 @@
 						<div class="col-md-3">
 							<select id="orgId" name="orgId" class="form-control chosen"
 								required>
-								<option value=" ">Select Organizer</option>
+								<option value="">Select Organizer</option>
 								<c:forEach items="${organiserList}" var="organiserList">
 
-									<option value="${organiserList.orgId}">${organiserList.orgName}</option>
+								<option value="${organiserList.orgId}">${organiserList.orgName}</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -76,7 +76,7 @@
 						<div class="col-md-3">
 							<select id="pkgId" name="pkgId" onchange="onPackage(this.value)"
 								class="form-control chosen" required>
-								<option value=" ">Select Package</option>
+								<option value="">Select Package</option>
 								<c:forEach items="${packageList}" var="packageList">
 									<option value="${packageList.pkgId}">${packageList.pkgName}</option>
 								</c:forEach>
@@ -119,7 +119,7 @@
 					<div class=" box-content">
 						<div class="col-md-12" style="text-align: center">
 							<input type="submit" class="btn btn-info" value="Submit"
-								id="submit">
+								onclick="check();" id="submit">
 						</div>
 					</div>
 				</form>
@@ -278,6 +278,19 @@
 			var remAmt = pkgAmt - paidAmt;
 			document.getElementById("remAmt").value = remAmt;
 
+		}
+		
+		function check() {
+				
+			var pkgId = document.getElementById("pkgId").value;
+			var orgId = document.getElementById("orgId").value;
+
+			if (orgId == "" || orgId == null) {
+				alert("Select Organizer");
+			} else if (pkgId == "" || pkgId == null) {
+				alert("Select Pakage");
+			}
+			 
 		}
 	</script>
 
