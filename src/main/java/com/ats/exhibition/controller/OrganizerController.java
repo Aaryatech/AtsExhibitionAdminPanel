@@ -129,6 +129,13 @@ public class OrganizerController {
 			String mob = request.getParameter("mob");
 			String password = request.getParameter("password");
 			String document = request.getParameter("docPath");
+			
+			String color1 = request.getParameter("color1");
+			String color2 = request.getParameter("color2");
+			String color3 = request.getParameter("color3");
+			String color4 = request.getParameter("color4");
+			
+			System.out.println("color1" + color1);
 
 			VpsImageUpload upload = new VpsImageUpload();
 			String docFile = null;
@@ -168,6 +175,10 @@ public class OrganizerController {
 				organiser.setOrgImage(docFile);
 			else
 				organiser.setOrgImage(document);
+			organiser.setColor1(color1);
+			organiser.setColor2(color2);
+			organiser.setColor3(color3);
+			organiser.setColor4(color4);
 
 			Organiser res = rest.postForObject(Constants.url + "/saveOrganiser", organiser, Organiser.class);
 

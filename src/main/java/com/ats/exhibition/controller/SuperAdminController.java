@@ -199,6 +199,7 @@ public class SuperAdminController {
 			String[] eventId = request.getParameterValues("eventId[]");
 			String[] compType = request.getParameterValues("compType[]");
 			String[] locationId = request.getParameterValues("locationId[]");
+			int orgId = Integer.parseInt(request.getParameter("orgId"));
 
 			String compTypeList = new String();
 			String LocationList = new String();
@@ -223,10 +224,9 @@ public class SuperAdminController {
 			}
 
 			if (eventId[0].equals("0")) {
-				for (int i = 0; i < eventListByOrgId.size(); i++) {
-					eventIdList = eventIdList + "," + eventListByOrgId.get(i).getEventId();
-				}
-				eventIdList = eventIdList.substring(1, eventIdList.length());
+				 
+					eventIdList = "0";
+			 
 			} else {
 				for (int i = 0; i < eventId.length; i++) {
 					eventIdList = eventIdList + "," + eventId[i];
@@ -242,7 +242,7 @@ public class SuperAdminController {
 			map.add("eventId", eventIdList);
 			map.add("locationId", LocationList);
 			map.add("companyType", compTypeList);
-
+			map.add("orgId", orgId);
 			System.out.println(map);
 
 			SortedExhibitor[] sortedExhibitor = rest.postForObject(
@@ -288,9 +288,9 @@ public class SuperAdminController {
 		return sortedExhibitorList;
 	}
 
-	@RequestMapping(value = "sortedExhibitorListPdf/{eventId}/{locationId}/{compType}", method = RequestMethod.GET)
+	@RequestMapping(value = "sortedExhibitorListPdf/{eventId}/{locationId}/{compType}/{orgId}", method = RequestMethod.GET)
 	public void sortedExhibitorListPdf(@PathVariable String eventId[], @PathVariable String locationId[],
-			@PathVariable String compType[], HttpServletRequest request, HttpServletResponse response)
+			@PathVariable String compType[],@PathVariable int orgId, HttpServletRequest request, HttpServletResponse response)
 			throws FileNotFoundException {
 
 		List<SortedExhibitor> sortedExhibitorList = new ArrayList<SortedExhibitor>();
@@ -320,10 +320,9 @@ public class SuperAdminController {
 		}
 
 		if (eventId[0].equals("0")) {
-			for (int i = 0; i < eventListByOrgId.size(); i++) {
-				eventIdList = eventIdList + "," + eventListByOrgId.get(i).getEventId();
-			}
-			eventIdList = eventIdList.substring(1, eventIdList.length());
+			 
+				eventIdList = "0";
+		 
 		} else {
 			for (int i = 0; i < eventId.length; i++) {
 				eventIdList = eventIdList + "," + eventId[i];
@@ -339,6 +338,7 @@ public class SuperAdminController {
 		map.add("eventId", eventIdList);
 		map.add("locationId", LocationList);
 		map.add("companyType", compTypeList);
+		map.add("orgId", orgId);
 
 		System.out.println(map);
 

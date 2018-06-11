@@ -142,6 +142,52 @@
 
 								</div>
 								<br>
+								
+								<div class="box-content">
+
+									<div class="col-md-2">Color1*</div>
+									<div class="col-md-3">
+										<input type="color" name="color1"
+											value="${editOrganiser.color1}" class="form-control"
+											placeholder="Color" />
+									</div>
+									<div class="col-md-1"></div>
+
+									<div class="col-md-2">Color2*</div>
+									<div class="col-md-3">
+										<input type="color" name="color2"
+											maxlength="50" value="${editOrganiser.color2}"
+											class="form-control" placeholder="Color" required />
+
+									</div>
+
+
+
+								</div>
+								<br>
+								
+								<div class="box-content">
+
+									<div class="col-md-2">Color3*</div>
+									<div class="col-md-3">
+										<input type="color" name="color3"
+											value="${editOrganiser.color3}" class="form-control"
+											placeholder="Color" />
+									</div>
+									<div class="col-md-1"></div>
+
+									<div class="col-md-2">Color4*</div>
+									<div class="col-md-3">
+										<input type="color" name="color4"
+											maxlength="50" value="${editOrganiser.color4}"
+											class="form-control" placeholder="Color" required />
+
+									</div>
+
+
+
+								</div>
+								<br>
 
 								<div class="box-content">
 
@@ -278,8 +324,17 @@
 								<br> <br>
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
-										<input type="submit" class="btn btn-info" value="Submit"
-											onclick="check();" id="submit" disabled>
+										<c:choose>
+											<c:when test="${isEdit==1}"> 
+												<input type="submit" class="btn btn-info" value="Submit"
+															onclick="check();" id="submit"  >
+											</c:when>
+											<c:otherwise> 
+												<input type="submit" class="btn btn-info" value="Submit"
+															onclick="check();" id="submit" disabled>
+											</c:otherwise>
+										</c:choose>
+										
 										<c:choose>
 											<c:when test="${userType==0}">
 												<a href="${pageContext.request.contextPath}/orgnizerList">

@@ -285,6 +285,7 @@ S
 			var eventId = $('#eventId').val();
 			var locationId = $('#locationId').val();
 			var compType = $('#compType').val();
+			var orgId=$('#orgId').val();
 			var valid=0;
 			/* if(orgId!="" && orgId!=null)
 				{
@@ -316,6 +317,7 @@ S
 						eventId : eventId,
 						compType : compType,
 						locationId : locationId,
+						orgId : orgId,
 						ajax : 'true'
 
 					},
@@ -353,6 +355,7 @@ S
 			var eventId = $('#eventId').val();
 			var locationId = $('#locationId').val();
 			var compType = $('#compType').val();
+			var orgId=$('#orgId').val();
 			var valid=0;
 			/* if(orgId!="" && orgId!=null)
 				{
@@ -379,7 +382,7 @@ S
 				 
 				if(valid==0)
 				{
-			    	window.open('${pageContext.request.contextPath}/sortedExhibitorListPdf/'+eventId+'/'+locationId+'/'+compType+'/');
+			    	window.open('${pageContext.request.contextPath}/sortedExhibitorListPdf/'+eventId+'/'+locationId+'/'+compType+'/'+orgId+'/');
 				}
 		    }
 		

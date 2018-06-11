@@ -50,8 +50,8 @@
 					<i class="fa fa-bars"></i>Organizer Subscription
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/addOrganizer"> </a> <a
-						data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
+					<a href="${pageContext.request.contextPath}/orgSubscriptionList">Organizer Subscription List</a> <a data-action="collapse" href="#"><i
+						class="fa fa-chevron-up"></i></a>
 				</div>
 
 			</div>
