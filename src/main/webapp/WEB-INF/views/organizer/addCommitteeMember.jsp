@@ -136,8 +136,9 @@
 									<div class="col-md-3">
 										<input type="file" id="image" name="image"
 											class="form-control" value="${editComMember.image}"
-											placeholder=" Image " required /> <input type="hidden"
-											name="memImage" value="${editComMember.image}" />
+											placeholder=" Image " required />
+										<%-- <input type="hidden"
+											name="image" value="${editComMember.image}" /> --%>
 									</div>
 								</div>
 
