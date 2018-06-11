@@ -5,6 +5,41 @@
 
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+<style>
+input[type=checkbox] {
+  transform: scale(1.5);
+}
+
+input[type=checkbox] {
+  width: 50px;
+  height: 20px;
+  margin-right: 8px;
+  cursor: pointer;
+  font-size: 17px;
+  visibility: hidden;
+}
+
+input[type=checkbox]:after {
+  content: " ";
+  background-color: #fff;
+  display: inline-block;
+  margin-left: 10px;
+  padding-bottom: 5px;
+  color: #00BFF0;
+  width: 22px;
+  height: 25px;
+  visibility: visible;
+  border: 1px solid #00BFF0;
+  padding-left: 3px;
+  border-radius: 5px;
+}
+
+input[type=checkbox]:checked:after {
+  content: "\2714";
+  padding: -5px;
+  font-weight: bold;
+}
+</style>
 <body>
 
 
@@ -54,11 +89,11 @@
 
 			</div>
 			
-			<div class=" box-content">
+			<div class=" box-content" style="border: 2px solid #b6d1f2;">
 					<div class="box-content">
  			<form action="${pageContext.request.contextPath}/searchExhibitorAvail"	method="post">
  
-									<div class="col-md-5">
+									<div class="col-md-6">
 									<c:choose>
 									<c:when test="${check==1}">
 									 <input type="checkbox"  name="check" value="1" checked="checked"/><b>Mobile No.</b> OR
@@ -84,7 +119,7 @@
 									   
 
 									     </div>
-									<div class="col-md-3">
+									<div class="col-md-2">
 										<input type="text" name="exh" id="exh" class="form-control" value="${exh}"/>
 									</div>
 
@@ -103,7 +138,7 @@
 							
 	<form action="${pageContext.request.contextPath}/sumbitMapping"
 								method="post">
-				<div class="box-content"> 
+				<div class="box-content" > 
 					<br /> <br />
 					<div class="clearfix"></div>
 					<div class="table-responsive" style="border: 0">
@@ -142,7 +177,7 @@
 					</div>
 				</div><br>
 				
-				<div class=" box-content">
+				<div class=" box-content" style="border:2px solid lightgrey;">
 									<div class="col-md-12" style="text-align: center">
  
 									<div class="col-md-2">Select Event*</div>
