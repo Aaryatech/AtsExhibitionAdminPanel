@@ -47,7 +47,7 @@
 					<i class="fa fa-bars"></i>Exhibitor List
 				</h3>
 				<div class="box-tool">
-				<a href="${pageContext.request.contextPath}/addEmployee">Add Employee</a> <a data-action="collapse" href="#"><i
+				<a href="${pageContext.request.contextPath}/addExhibitorBySuperAdmin">Add Exhibitor</a> <a data-action="collapse" href="#"><i
 									class="fa fa-chevron-up"></i></a>
 				</div>
 
@@ -114,6 +114,7 @@
 									 <th>Mobile No.</th>
 									 <th>Location</th>
 									 <th>Company Type</th>
+									 <th>Action</th>
 									 
 								</tr>
 							</thead>
@@ -302,7 +303,8 @@
 									  	tr.append($('<td></td>').html(itemList.userMob));
 									  	tr.append($('<td></td>').html(itemList.locationName)); 
 									  	tr.append($('<td></td>').html(itemList.companyTypeName)); 
-									  	
+									  	tr.append($('<td ></td>').html("<a href='${pageContext.request.contextPath}/editExhibitorBySuperAdmin/"+itemList.exhId+"' class='action_btn'data-toggle='tooltip' title='Edit'><i class='glyphicon glyphicon-edit'></i></a> " + 
+									  			"<a href='${pageContext.request.contextPath}/deleteExhibitorBySuperAdmin/"+itemList.exhId+"' onClick='return confirm('Are you sure want to delete this record'); data-toggle='tooltip' title='Delete''><span class='glyphicon glyphicon-remove'></span></a> "));
 									  	 
 										$('#table1 tbody').append(tr);
 										

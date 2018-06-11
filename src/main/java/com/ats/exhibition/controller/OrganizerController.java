@@ -654,7 +654,7 @@ public class OrganizerController {
 	}
 
 	@RequestMapping(value = "/insertExhibitor", method = RequestMethod.POST)
-	public String insertExhibitor(HttpServletRequest request, HttpServletResponse response) {
+	public String insertExhibitor(@RequestParam("documentFile") List<MultipartFile> documentFile,HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 			String exhId = request.getParameter("exhId");
@@ -670,16 +670,35 @@ public class OrganizerController {
 			String latitude = request.getParameter("latitude");
 			String longitude = request.getParameter("longitude");
 			String address = request.getParameter("address");
-			int companyType = Integer.parseInt(request.getParameter("companyType"));
+			int companyType = Integer.parseInt(request.getParameter("companyTypeId"));
+			int location = Integer.parseInt(request.getParameter("location"));
 			String usesrMob = request.getParameter("usesrMob");
 			String password = request.getParameter("password");
+			
+			String document = request.getParameter("docPath");
+			
+			VpsImageUpload upload = new VpsImageUpload();
+			String docFile = null;
+			try {
+				docFile = documentFile.get(0).getOriginalFilename();
+
+				upload.saveUploadedFiles(documentFile, Constants.FLOAR_MAP_TYPE,
+						documentFile.get(0).getOriginalFilename());
+
+				System.out.println("upload method called for image Upload " + documentFile.toString());
+
+			} catch (IOException e) {
+
+				System.out.println("Exce in File Upload In GATE ENTRY  Insert " + e.getMessage());
+				e.printStackTrace();
+			}
 
 			HttpSession session = request.getSession();
 			LoginResponse login = (LoginResponse) session.getAttribute("UserDetail");
 
 			Exhibitor exhibitor = new Exhibitor();
 
-			if (exhId == "" || exhId == null)
+			if (exhId.equalsIgnoreCase("") || exhId.equalsIgnoreCase(null))
 				exhibitor.setExhId(0);
 			else
 				exhibitor.setExhId(Integer.parseInt(exhId));
@@ -695,12 +714,17 @@ public class OrganizerController {
 			exhibitor.setCompLat(latitude);
 			exhibitor.setCompLong(longitude);
 			exhibitor.setAddress(address);
-			exhibitor.setCompanyType(companyType);
+			exhibitor.setCompanyTypeId(companyType);
 			exhibitor.setUserMob(usesrMob);
 			exhibitor.setPassword(password);
 			exhibitor.setOrgId(login.getOrganiser().getOrgId());
 			exhibitor.setIsUsed(1);
 			exhibitor.setIsUsed(1);
+			exhibitor.setLocationId(location);
+			if (docFile != null && docFile.length() > 0)
+				exhibitor.setLogo(docFile);
+			else
+				exhibitor.setLogo(document);
 
 			System.out.println("exhibitor " + exhibitor);
 
@@ -764,6 +788,8 @@ public class OrganizerController {
 
 			model.addObject("companyTypeList", companyTypeList);
 			model.addObject("locationList", locationList);
+			model.addObject("imageUrl", Constants.imageUrl);
+			model.addObject("edit", 1);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1410,6 +1436,9 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/addSchedule", method = RequestMethod.GET)
 	public ModelAndView addSchedule(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=4;
+		Constants.subAct=46;
 
 		ModelAndView model = new ModelAndView("organizer/schedule");
 		try {

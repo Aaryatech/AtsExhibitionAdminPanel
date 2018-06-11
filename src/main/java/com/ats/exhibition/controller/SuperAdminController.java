@@ -585,6 +585,8 @@ public class SuperAdminController {
 			ExhibitorWithOrgName[] exhibitorWithOrgName = rest.postForObject(
 					Constants.url + "/sortedExhibitorListByLocationAndCompType", map, ExhibitorWithOrgName[].class);
 			sortedExhibitorList = new ArrayList<ExhibitorWithOrgName>(Arrays.asList(exhibitorWithOrgName));
+			
+			System.out.println(sortedExhibitorList);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -891,7 +893,7 @@ public class SuperAdminController {
 	}
 
 	@RequestMapping(value = "/insertExhibitorBySuperAdmin", method = RequestMethod.POST)
-	public String insertExhibitor(HttpServletRequest request, HttpServletResponse response) {
+	public String insertExhibitor(@RequestParam("documentFile") List<MultipartFile> documentFile,HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 			String exhId = request.getParameter("exhId");
@@ -912,11 +914,29 @@ public class SuperAdminController {
 			String usesrMob = request.getParameter("usesrMob");
 			String password = request.getParameter("password");
 			int orgId = Integer.parseInt(request.getParameter("orgId"));
+			
+			String document = request.getParameter("docPath");
 			System.out.println(companyType);
+			
+			VpsImageUpload upload = new VpsImageUpload();
+			String docFile = null;
+			try {
+				docFile = documentFile.get(0).getOriginalFilename();
+
+				upload.saveUploadedFiles(documentFile, Constants.FLOAR_MAP_TYPE,
+						documentFile.get(0).getOriginalFilename());
+
+				System.out.println("upload method called for image Upload " + documentFile.toString());
+
+			} catch (IOException e) {
+
+				System.out.println("Exce in File Upload In GATE ENTRY  Insert " + e.getMessage());
+				e.printStackTrace();
+			}
 
 			Exhibitor exhibitor = new Exhibitor();
 
-			if (exhId == "" || exhId == null)
+			if (exhId.equalsIgnoreCase("") || exhId.equalsIgnoreCase(null))
 				exhibitor.setExhId(0);
 			else
 				exhibitor.setExhId(Integer.parseInt(exhId));
@@ -939,12 +959,72 @@ public class SuperAdminController {
 			exhibitor.setOrgId(orgId);
 			exhibitor.setIsUsed(1);
 			exhibitor.setLocationId(location);
+			if (docFile != null && docFile.length() > 0)
+				exhibitor.setLogo(docFile);
+			else
+				exhibitor.setLogo(document);
 
 			System.out.println("exhibitor " + exhibitor);
 
 			Exhibitor res = rest.postForObject(Constants.url + "/saveExhibitor", exhibitor, Exhibitor.class);
 
 			System.out.println("res " + res);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/exhibitorListByLocationAndCompType";
+	}
+	
+	@RequestMapping(value = "/editExhibitorBySuperAdmin/{exhId}", method = RequestMethod.GET)
+	public ModelAndView editExhibitorBySuperAdmin(@PathVariable int exhId, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("SuperAdmin/addExhibitorBySuperAdmin");
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("exhId", exhId);
+			ExhibitorWithOrgName editExhibitor = rest.postForObject(Constants.url + "/getExhibitorByExhId", map,
+					ExhibitorWithOrgName.class);
+			model.addObject("editExhibitor", editExhibitor);
+
+			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", Location[].class);
+			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
+
+			System.out.println("locationList " + locationList);
+
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed",
+					CompanyType[].class);
+			List<CompanyType> companyTypeList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+
+			Organiser[] organiser = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsed", Organiser[].class);
+			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
+			
+			model.addObject("organiserList", organiserList);
+			model.addObject("companyTypeList", companyTypeList);
+			model.addObject("locationList", locationList);
+			model.addObject("imageUrl", Constants.imageUrl);
+			model.addObject("edit", 1);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
+	@RequestMapping(value = "/deleteExhibitorBySuperAdmin/{exhId}", method = RequestMethod.GET)
+	public String deleteExhibitorBySuperAdmin(@PathVariable int exhId, HttpServletRequest request, HttpServletResponse response) {
+
+		// ModelAndView model = new ModelAndView("organizer/addOrganizer");
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("exhId", exhId);
+			ErrorMessage delete = rest.postForObject(Constants.url + "/deleteExhibitor", map, ErrorMessage.class);
+			System.out.println(delete);
 
 		} catch (Exception e) {
 			e.printStackTrace();

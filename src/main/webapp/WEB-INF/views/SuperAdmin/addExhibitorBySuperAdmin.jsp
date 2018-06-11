@@ -34,7 +34,10 @@
 				<div>
 					<h1>
 
-						<i class="fa fa-file-o"></i>Add Exhibitor
+						<i class="fa fa-file-o"></i> <c:choose>
+									<c:when test="${edit==1}">Edit Exhibitor</c:when>
+									<c:otherwise>Add Exhibitor</c:otherwise>
+								</c:choose>
 
 					</h1>
 				</div>
@@ -47,7 +50,10 @@
 					<div class="box" id="todayslist">
 						<div class="box-title">
 							<h3>
-								<i class="fa fa-table"></i>Add Exhibitor
+								<i class="fa fa-table"></i><c:choose>
+									<c:when test="${edit==1}">Edit Exhibitor</c:when>
+									<c:otherwise>Add Exhibitor</c:otherwise>
+								</c:choose>
 							</h3>
 							<div class="box-tool">
 								<a
@@ -61,7 +67,7 @@
 						<div class=" box-content">
 							<form id="addSupplier"
 								action="${pageContext.request.contextPath}/insertExhibitorBySuperAdmin"
-								method="post">
+								method="post" enctype="multipart/form-data">
 								<div class="box-content">
 
 									<div class="col-md-2">Select Organiser*</div>
@@ -288,10 +294,20 @@
 
 									<div class="col-md-2">Mobile No*</div>
 									<div class="col-md-3">
-										<input type="text" name="usesrMob" id="usesrMob"
-											onkeyup="checkMobileNo();" value="${editExhibitor.userMob}"
-											class="form-control" placeholder="Mobile No"
-											pattern="^\d{10}$" required />
+										<c:choose>
+									<c:when test="${edit==1}"> 
+											<input type="text" name="usesrMob"
+												value="${editExhibitor.userMob}" class="form-control"
+												id="usesrMob" onkeyup="checkMobileNo();"
+												placeholder="Mobile No" pattern="^\d{10}$" readonly />
+									</c:when>
+									<c:otherwise> 
+											<input type="text" name="usesrMob"
+													value="${editExhibitor.userMob}" class="form-control"
+													id="usesrMob" onkeyup="checkMobileNo();"
+													placeholder="Mobile No" pattern="^\d{10}$" required />
+									</c:otherwise>
+								</c:choose> 
 
 									</div>
 
@@ -307,12 +323,53 @@
 
 								</div>
 								<br>
+								
+								<div class="box-content">
+									<div class="form-group">
+										<div class="col-md-2">Image</div>
+										<div class="col-md-3">
+											<div class="fileupload fileupload-new"
+												data-provides="fileupload">
+												<div class="fileupload-new img-thumbnail"
+													style="width: 150px; height: 150px;">
+													<img src="${imageUrl}${editExhibitor.logo}"
+														onerror="this.src='http://www.placehold.it/150x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div
+													class="fileupload-preview fileupload-exists img-thumbnail"
+													style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+												<div>
+													<span class="btn btn-default btn-file"><span
+														class="fileupload-new">Select image</span> <span
+														class="fileupload-exists">Change</span> <input type="file"
+														class="file-input" name="documentFile" id="documentFile" /></span>
+													<a href="#" class="btn btn-default fileupload-exists"
+														data-dismiss="fileupload">Remove</a>
+
+												</div>
+											</div>
+											<input class="form-control" id="docPath"
+												placeholder="Current Km" value="${editExhibitor.logo}"
+												size="16" type="hidden" name="docPath" />
+										</div>
+
+									</div>
+
+								</div>
+								<br> <br> <br> <br> <br> <br> <br>
 
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
-										<input type="submit" class="btn btn-info" value="Submit"
+										<c:choose>
+									<c:when test="${edit==1}"> 
+									<input type="submit" class="btn btn-info" value="Submit"
+											onclick="check();" id="submit"  ></c:when>
+									<c:otherwise> 
+									<input type="submit" class="btn btn-info" value="Submit"
 											onclick="check();" id="submit" disabled>
-
+											</c:otherwise>
+								</c:choose> 
 
 
 									</div>

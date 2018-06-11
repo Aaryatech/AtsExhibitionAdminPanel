@@ -122,7 +122,7 @@
 										  <a href='${pageContext.request.contextPath}/editEventBySuperAdmin/${eventList.eventId}' class='action_btn' data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a> 
 							  			<a href='${pageContext.request.contextPath}/eventDetailAndAssignExhList/${eventList.eventId}' class='action_btn' data-toggle="tooltip" title="Exhibitor List"><i class="glyphicon glyphicon-list"></i></a>  
 							  			<a href='${pageContext.request.contextPath}/eventSchedule/${eventList.eventId}' class='action_btn' data-toggle="tooltip" title="Schedule"><i class="glyphicon glyphicon-calendar"></i></a>
-							  			<a href="${pageContext.request.contextPath}/deleteEvent/${eventList.eventId}/1" onClick="return confirm('Are you sure want to delete this record');"><span class="glyphicon glyphicon-remove"></span></a>
+							  			<a href="${pageContext.request.contextPath}/deleteEvent/${eventList.eventId}/1" onClick="return confirm('Are you sure want to delete this record');" data-toggle="tooltip" title="Delete"><span class="glyphicon glyphicon-remove"></span></a>
 										  </td>
 										 
 									</tr>
@@ -283,7 +283,7 @@ function searchEventList() {
 							  	tr.append($('<td ></td>').html("<a href='${pageContext.request.contextPath}/editEventBySuperAdmin/"+itemList.eventId+"' class='action_btn'data-toggle='tooltip' title='Edit'><i class='glyphicon glyphicon-edit'></i></a> " +
 							  			"<a href='${pageContext.request.contextPath}/eventDetailAndAssignExhList/"+itemList.eventId+"' class='action_btn' data-toggle='tooltip' title='Exhibitor List'><i class='glyphicon glyphicon-list'></i></a> " + 
 							  			"<a href='${pageContext.request.contextPath}/eventSchedule/"+itemList.eventId+"' class='action_btn' data-toggle='tooltip' title='Schedule'><i class='glyphicon glyphicon-calendar'></i></a> " + 
-							  			"<a href='${pageContext.request.contextPath}/deleteEvent/"+itemList.eventId+"/1' onClick='return confirm('Are you sure want to delete this record');'><span class='glyphicon glyphicon-remove'></span></a> "));
+							  			"<a href='${pageContext.request.contextPath}/deleteEvent/"+itemList.eventId+"/1' onClick='return confirm('Are you sure want to delete this record'); data-toggle='tooltip' title='Delete''><span class='glyphicon glyphicon-remove'></span></a> "));
 								  
 								$('#table1 tbody').append(tr);
 								 

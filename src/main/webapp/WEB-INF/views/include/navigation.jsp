@@ -417,6 +417,16 @@
 							<li> 
 						</c:otherwise>
 					</c:choose><a href="${pageContext.request.contextPath}/scheduleList">Event
+							Schedule List</a></li>
+							
+					<c:choose>
+						<c:when test="${Constants.subAct==46}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a href="${pageContext.request.contextPath}/addSchedule">Add Event
 							Schedule</a></li>
 					
 					<c:choose>
