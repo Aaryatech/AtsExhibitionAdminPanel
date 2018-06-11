@@ -86,8 +86,7 @@
 										<td>${exhibitorSubList.remAmt}</td>
 								 
 												<td><a 
-												href="${pageContext.request.contextPath}/exhiSubscriptionTranDetail/${exhibitorSubList.subHeaderId}">Details<span
-												class="button"></span></a></td>
+												href="${pageContext.request.contextPath}/exhiSubscriptionTranDetail/${exhibitorSubList.subHeaderId}" data-toggle="tooltip" title="Detail"> <i class="fa fa-list"></i></a></td>
 									</tr>
 								</c:forEach>
 

@@ -107,10 +107,10 @@
 										<td>${schedule.date}</td>
 										<td>${schedule.dayName}</td>
 										<td>${schedule.eventName}</td>
-										 <td><a href="${pageContext.request.contextPath}/editSchedule/${schedule.scheduleId}"><span
+										 <td><a href="${pageContext.request.contextPath}/editSchedule/${schedule.scheduleId}" data-toggle="tooltip" title="Edit"><span
 												class="glyphicon glyphicon-edit"></span></a> 
 											<a href="${pageContext.request.contextPath}/deleteSchedule/${schedule.scheduleId}"
-											onClick="return confirm('Are you sure want to delete this record');"><span
+											onClick="return confirm('Are you sure want to delete this record');" data-toggle="tooltip" title="Delete"><span
 												class="glyphicon glyphicon-remove"></span></a></td>  
 									</tr>
 								</c:forEach>

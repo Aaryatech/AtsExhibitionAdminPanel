@@ -85,10 +85,10 @@
 										 <td>${packageList.pkgName}</td>
 										<td>${packageList.pkgAmt}</td>	 
 										 <td>${packageList.subDuration}</td>	
-										  <td><a href="${pageContext.request.contextPath}/editExhibitorPackage/${packageList.pkgId}"><span
+										  <td><a href="${pageContext.request.contextPath}/editExhibitorPackage/${packageList.pkgId}" data-toggle="tooltip" title="Edit"><span
 												class="glyphicon glyphicon-edit"></span></a> 
 											<a href="${pageContext.request.contextPath}/deleteExhibitorPackage/${packageList.pkgId}"
-											onClick="return confirm('Are you sure want to delete this record');"><span
+											onClick="return confirm('Are you sure want to delete this record');" data-toggle="tooltip" title="Delete"><span
 												class="glyphicon glyphicon-remove"></span></a></td>
 										 
 									</tr>

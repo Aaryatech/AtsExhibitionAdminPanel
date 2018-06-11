@@ -259,9 +259,9 @@
 										<td>${sponsorRes.website}</td>
 										<td>${sponsorRes.remark}</td>
 										 
-										 <td><a href="${pageContext.request.contextPath}/editSponsor/${sponsorRes.sponsorId}"><span
+										 <td><a href="${pageContext.request.contextPath}/editSponsor/${sponsorRes.sponsorId}" data-toggle="tooltip" title="Edit"><span
 												class="glyphicon glyphicon-edit"></span></a> 
-											<a href="${pageContext.request.contextPath}/deleteSponsor/${sponsorRes.sponsorId}"
+											<a href="${pageContext.request.contextPath}/deleteSponsor/${sponsorRes.sponsorId}" data-toggle="tooltip" title="Delete"
 											onClick="return confirm('Are you sure want to delete this record');"><span
 												class="glyphicon glyphicon-remove"></span></a></td>  
 									</tr>

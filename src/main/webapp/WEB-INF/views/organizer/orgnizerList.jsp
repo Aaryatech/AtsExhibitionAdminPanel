@@ -69,9 +69,7 @@
 									<th>Contact No</th>
 									<th>Email</th>
 									<th>Web Site Link</th>
-									<th>Action</th>
-									<th>Action</th>
-									<th>Action</th>
+									<th style="width: 100px">Action</th> 
 								</tr>
 							</thead>
 							<tbody>
@@ -86,20 +84,17 @@
 										<td><a href="http://${organiserList.websiteLink}"
 											target="_blank">${organiserList.websiteLink}</a></td>
 
-										<td><a
-											href="${pageContext.request.contextPath}/editOrg/${organiserList.orgId}/0"><span
-												class="glyphicon glyphicon-edit"></span></a> <a
-											href="${pageContext.request.contextPath}/deleteOrg/${organiserList.orgId}"
-											onClick="return confirm('Are you sure want to delete this record');"><span
-												class="glyphicon glyphicon-remove"></span></a></td>
+										<td><a href="${pageContext.request.contextPath}/editOrg/${organiserList.orgId}/0" data-toggle="tooltip" title="Edit"><span
+												class="glyphicon glyphicon-edit"></span></a> 
+											 
+										 <a href="${pageContext.request.contextPath}/eventListByOrganizerId/${organiserList.orgId}" data-toggle="tooltip" title="Events"><i class="glyphicon glyphicon-calendar"></i><span
+												class="button"></span></a> 
 
-										<td><a
-											href="${pageContext.request.contextPath}/eventListByOrganizerId/${organiserList.orgId}">Events<span
-												class="button"></span></a></td>
-
-										<td><a
-											href="${pageContext.request.contextPath}/committeeMemberListByOrgId/${organiserList.orgId}">Committee<span
-												class="button"></span></a></td>
+										 <a href="${pageContext.request.contextPath}/committeeMemberListByOrgId/${organiserList.orgId}" data-toggle="tooltip" title="Committee Member"><i class="fa fa-users">  </i>
+										 			</a>
+										 			
+										 <a href="${pageContext.request.contextPath}/deleteOrg/${organiserList.orgId}" onClick="return confirm('Are you sure want to delete this record');" data-toggle="tooltip" title="Delete"><span
+												class="glyphicon glyphicon-remove"></span></a> </td>
 
 									</tr>
 								</c:forEach>

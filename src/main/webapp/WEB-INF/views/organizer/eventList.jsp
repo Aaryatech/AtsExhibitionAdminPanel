@@ -80,10 +80,10 @@
 										<td>${eventList.eventFromDate}</td>
 										<td>${eventList.eventToDate}</td>
 										 
-										 <td><a href="${pageContext.request.contextPath}/editEvent/${eventList.eventId}"><span
+										 <td><a href="${pageContext.request.contextPath}/editEvent/${eventList.eventId}" data-toggle="tooltip" title="Edit"><span
 												class="glyphicon glyphicon-edit"></span></a> 
 											<a href="${pageContext.request.contextPath}/deleteEvent/${eventList.eventId}/0"
-											onClick="return confirm('Are you sure want to delete this record');"><span
+											onClick="return confirm('Are you sure want to delete this record');" data-toggle="tooltip" title="Delete"><span
 												class="glyphicon glyphicon-remove"></span></a></td>  
 									</tr>
 								</c:forEach>

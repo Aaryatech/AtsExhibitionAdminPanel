@@ -91,8 +91,7 @@
 												class="glyphicon glyphicon-edit"></span></a>  </td>
 												 --%>
 												<td><a 
-												href="${pageContext.request.contextPath}/orgSubscriptionDetailsList/${orgSubscriptionList.subId}">Details<span
-												class="button"></span></a></td>
+												href="${pageContext.request.contextPath}/orgSubscriptionDetailsList/${orgSubscriptionList.subId}" data-toggle="tooltip" title="Detail"> <i class="fa fa-list"></i></a></td>
 									</tr>
 								</c:forEach>
 
