@@ -241,6 +241,10 @@ public class LocationController {
 
 	@RequestMapping(value = "/showOrgSubscription", method = RequestMethod.GET)
 	public ModelAndView showOrgSubscription(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=2;
+		Constants.subAct=25;
+		
 
 		ModelAndView model = new ModelAndView("organizer/showOrgSubscription");
 		try {
@@ -539,6 +543,9 @@ public class LocationController {
 
 	@RequestMapping(value = "/orgSubscriptionList", method = RequestMethod.GET)
 	public ModelAndView orgSubscriptionList(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=2;
+		Constants.subAct=26;
 
 		ModelAndView model = new ModelAndView("organizer/orgSubscriptionList");
 		try {

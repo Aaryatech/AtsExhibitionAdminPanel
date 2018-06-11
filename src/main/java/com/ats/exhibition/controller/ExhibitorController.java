@@ -40,6 +40,9 @@ public class ExhibitorController {
 	@RequestMapping(value = "/showExhibitor", method = RequestMethod.GET)
 	public ModelAndView addLocation(HttpServletRequest request, HttpServletResponse response) {
 
+		Constants.mainAct=2;
+		Constants.subAct=27;
+		
 		ModelAndView model = new ModelAndView("organizer/exhibitorSubscription");
 		try {
 
@@ -122,6 +125,9 @@ public class ExhibitorController {
 	
 	@RequestMapping(value = "/showExhibitorSubscriptionList", method = RequestMethod.GET)
 	public ModelAndView showExhibitorSubscriptionList(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=2;
+		Constants.subAct=28;
 
 		ModelAndView model = new ModelAndView("organizer/showExhibitorSubscriptionList");
 		try {

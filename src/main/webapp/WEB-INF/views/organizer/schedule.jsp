@@ -63,7 +63,7 @@
 									<div class="col-md-2">Date *</div>
 									<div class="col-md-3">
 										<input type="text" name="dates" id="date"
-											class="form-control date-picker" placeholder="dd-mm-yyyy"  value="${scheduleRes.date}" required />
+											class="form-control date-picker" placeholder="dd-mm-yyyy" onblur="convertDate();" value="${scheduleRes.date}" required />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Event*</div>
@@ -91,7 +91,7 @@
 									<div class="col-md-2">Day*</div>
 									<div class="col-md-3">
 										<input type="text" id="day" name="day" value="${scheduleRes.dayName}" class="form-control"
-											placeholder="Day" required />
+											placeholder="Day" readonly />
 									</div>
 								</div>
 								<br>
@@ -559,6 +559,23 @@ function deleteScheduleDetail(key){
 		{
 		isDel=false;
 		}
+}
+
+function convertDate() {
+ 
+	var date =  $("#date").val();
+	var splitDate = date.split("-");
+	
+	var mydate = new Date(splitDate[2], splitDate[1] - 1, splitDate[0]); 
+	
+	 var weekday=new Array("Sun","Mon","Tue","Wed","Thu",
+             "Fri","Sat")
+		var monthname=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug",
+             "Sep","Oct","Nov","Dec")
+	 var day = mydate.getDate()+" "+  monthname[mydate.getMonth()] +" "+ weekday[mydate.getDay()] ;
+	 document.getElementById("day").value=day;
+	  
+	 
 }
 </script>
 </body>

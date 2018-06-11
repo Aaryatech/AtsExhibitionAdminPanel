@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.ats.exhibition.common.*"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -132,77 +133,205 @@
 
 
 
-				<c:choose>
-					<c:when test="${Constants.mainAct==11}">
-						<li class="active">
-					</c:when>
-
-					<c:otherwise>
-						<li>
-					</c:otherwise>
-				</c:choose>
+				 
 				<c:choose>
 						<c:when test="${sessionScope.organiser.orgType==0}">
+							<c:choose>
+						<c:when test="${Constants.mainAct==1}">
+							<li class="active">
+						</c:when>
+	
+						<c:otherwise>
+							<li>
+						</c:otherwise>
+					</c:choose>
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Super Admin Master</span> <b class="arrow fa fa-angle-right"></b>
+					
 				</a>
 				<!-- BEGIN Submenu -->
 				<ul class="submenu">
 
-					<li><a href="${pageContext.request.contextPath}/addOrganizer">Add
+					<c:choose>
+						<c:when test="${Constants.subAct==11}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose>
+					<a href="${pageContext.request.contextPath}/addOrganizer">Add
 							Organizer</a></li>
 							
-					<li><a href="${pageContext.request.contextPath}/orgnizerList">Organizer
+						<c:choose>
+						<c:when test="${Constants.subAct==12}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose>
+					 <a href="${pageContext.request.contextPath}/orgnizerList">Organizer
 							List</a></li>
-					<li><a href="${pageContext.request.contextPath}/addEventByAdmin">Add Event</a></li>
+							
+					<c:choose>
+						<c:when test="${Constants.subAct==13}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose>
+					<a href="${pageContext.request.contextPath}/addEventByAdmin">Add Event</a></li>
 				
-					<li><a href="${pageContext.request.contextPath}/showEventList">All Event List</a></li>
-					<li><a href="${pageContext.request.contextPath}/addExhibitorBySuperAdmin">Add Exhibitor</a></li>
+					<c:choose>
+						<c:when test="${Constants.subAct==14}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose>
+					<a href="${pageContext.request.contextPath}/showEventList">All Event List</a></li>
+					<c:choose>
+						<c:when test="${Constants.subAct==15}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose>
+					<a href="${pageContext.request.contextPath}/addExhibitorBySuperAdmin">Add Exhibitor</a></li>
 
-					<li><a
+					<c:choose>
+						<c:when test="${Constants.subAct==16}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose>
+					<a
 						href="${pageContext.request.contextPath}/showExhibitorList">All
 							Exhibitor List</a></li>
 				 
 				</ul>
+				</li>
+				
+				<c:choose>
+						<c:when test="${Constants.mainAct==2}">
+							<li class="active">
+						</c:when>
+	
+						<c:otherwise>
+							<li>
+						</c:otherwise>
+					</c:choose>
 				
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
-					<span>Super Admin Transaction</span> <b class="arrow fa fa-angle-right"></b>
+					<span>Admin Transaction</span> <b class="arrow fa fa-angle-right"></b>
 				</a>
 				<!-- BEGIN Submenu -->
 				<ul class="submenu">
 
 				  
 
-					<li><a
-						href="${pageContext.request.contextPath}/exhibitorPakageList">Exhibitor
+					<c:choose>
+						<c:when test="${Constants.subAct==21}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose>
+					<a href="${pageContext.request.contextPath}/exhibitorPakageList">Exhibitor
 							Package List</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/addExhibitorPackage">Add Exhibitor
+					<c:choose>
+						<c:when test="${Constants.subAct==22}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose>
+					<a href="${pageContext.request.contextPath}/addExhibitorPackage">Add Exhibitor
 							Package </a></li>
 
-					<li><a
-						href="${pageContext.request.contextPath}/organizerPakageList">Organizer
+					<c:choose>
+						<c:when test="${Constants.subAct==23}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose>
+					<a href="${pageContext.request.contextPath}/organizerPakageList">Organizer
 							Package List</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/addOrganizerPackage">Add Organizer
+					<c:choose>
+						<c:when test="${Constants.subAct==24}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose>
+					<a href="${pageContext.request.contextPath}/addOrganizerPackage">Add Organizer
 							Package </a></li>
 							
-					<li><a
-						href="${pageContext.request.contextPath}/showOrgSubscription">Add
+					<c:choose>
+						<c:when test="${Constants.subAct==25}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose>
+					<a href="${pageContext.request.contextPath}/showOrgSubscription">Add
 							Organizer Subscription</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/orgSubscriptionList">Organizer
+					<c:choose>
+						<c:when test="${Constants.subAct==26}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a href="${pageContext.request.contextPath}/orgSubscriptionList">Organizer
 							Subscription List</a></li>
-					<li><a href="${pageContext.request.contextPath}/showExhibitor">Add
+							
+					<c:choose>
+						<c:when test="${Constants.subAct==27}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a href="${pageContext.request.contextPath}/showExhibitor">Add
 							Exhibitor Subscription</a></li>
 
-					<li><a
-						href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor
+					<c:choose>
+						<c:when test="${Constants.subAct==28}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor
 							Subscription List</a></li>
 
 	             
 
 				</ul>
+				</li>
+				
+				<c:choose>
+						<c:when test="${Constants.mainAct==3}">
+							<li class="active">
+						</c:when>
+	
+						<c:otherwise>
+							<li>
+						</c:otherwise>
+					</c:choose>
 				
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Super Admin Report</span> <b class="arrow fa fa-angle-right"></b>
@@ -216,75 +345,204 @@
 						href="${pageContext.request.contextPath}/showExhibitorList">All
 							Exhibitor List</a></li>
 							 
-					<li><a
+					<c:choose>
+						<c:when test="${Constants.subAct==31}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a
 						href="${pageContext.request.contextPath}/exhibitorListByLocationAndCompType">All
 							Exhibitor By Place And Company</a></li>
  
 
-	               <li>
+	               <c:choose>
+						<c:when test="${Constants.subAct==32}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose>
   						<a href="${pageContext.request.contextPath}/showVisitorSortedList">All Visitors </a>
 						</li>
 							
 							
 
 				</ul>
+				</li>
 				</c:when>
 				</c:choose>
 
+				<c:choose>
+						<c:when test="${Constants.mainAct==4}">
+							<li class="active">
+						</c:when>
+	
+						<c:otherwise>
+							<li>
+						</c:otherwise>
+					</c:choose>
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Organizer Master</span> <b class="arrow fa fa-angle-right"></b>
 				</a>
 				<!-- BEGIN Submenu -->
 				<ul class="submenu">
 					
-					<li><a href="${pageContext.request.contextPath}/addEvent">Add
+					<c:choose>
+						<c:when test="${Constants.subAct==41}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose>
+					<a href="${pageContext.request.contextPath}/addEvent">Add
 							Event</a></li>
-					<li><a href="${pageContext.request.contextPath}/eventList">All
+					<c:choose>
+						<c:when test="${Constants.subAct==42}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a href="${pageContext.request.contextPath}/eventList">All
 							Event List</a></li>
-					<li><a href="${pageContext.request.contextPath}/scheduleList">Event
+					<c:choose>
+						<c:when test="${Constants.subAct==43}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a href="${pageContext.request.contextPath}/scheduleList">Event
 							Schedule</a></li>
 					
-					<li><a
+					<c:choose>
+						<c:when test="${Constants.subAct==44}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a
 						href="${pageContext.request.contextPath}/addCommitteeMember">Add
 							Committee Member</a></li>
 
-					<li><a
+					<c:choose>
+						<c:when test="${Constants.subAct==45}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a
 						href="${pageContext.request.contextPath}/committeeMemberList">Committee
 							Member List</a></li>
 
 					 
 				</ul>
-				
+				</li>
+				<c:choose>
+						<c:when test="${Constants.mainAct==5}">
+							<li class="active">
+						</c:when>
+	
+						<c:otherwise>
+							<li>
+						</c:otherwise>
+					</c:choose>
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Organizer Transaction</span> <b class="arrow fa fa-angle-right"></b>
 				</a>
 				<!-- BEGIN Submenu -->
 				<ul class="submenu">
 					 
-					<li><a href="${pageContext.request.contextPath}/addExhibitor">Add
+					<c:choose>
+						<c:when test="${Constants.subAct==51}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a href="${pageContext.request.contextPath}/addExhibitor">Add
 							Exhibitor</a></li>
 
-					<li><a href="${pageContext.request.contextPath}/exhibitorList">Exhibitor
+					<c:choose>
+						<c:when test="${Constants.subAct==52}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a href="${pageContext.request.contextPath}/exhibitorList">Exhibitor
 							List</a></li>
 
-					<li><a
-						href="${pageContext.request.contextPath}/eventMapToExhibitor">Event
+					<c:choose>
+						<c:when test="${Constants.subAct==53}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a
+						href="${pageContext.request.contextPath}/eventMapToExhibitor">Exhibitor Event
 							Map</a></li>
-					<li><a href="${pageContext.request.contextPath}/showFloarMap">Floar
+							
+					<c:choose>
+						<c:when test="${Constants.subAct==54}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a href="${pageContext.request.contextPath}/showFloarMap">Floar
 							Map</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/searchExhibitor">Search
+					<c:choose>
+						<c:when test="${Constants.subAct==55}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a href="${pageContext.request.contextPath}/searchExhibitor">Search
 							And Map Exhibitor</a></li>
-						<li><a
-						href="${pageContext.request.contextPath}/showExhEventSubscription">Approve Subscribed Exhibitor For Event</a></li>
-					<li><a href="${pageContext.request.contextPath}/showGallary">Gallary</a>
+							
+						<c:choose>
+						<c:when test="${Constants.subAct==56}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose> <a href="${pageContext.request.contextPath}/showExhEventSubscription">Approve Subscribed Exhibitor For Event</a></li>
+					
+					<c:choose>
+						<c:when test="${Constants.subAct==57}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a href="${pageContext.request.contextPath}/showGallary">Gallary</a>
 					</li>
+					
+					<c:choose>
+						<c:when test="${Constants.subAct==58}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a href="${pageContext.request.contextPath}/addSponsor">Add
+							Sponsor</a></li> 
 					 <li><a
 						href="${pageContext.request.contextPath}/editOrg/${sessionScope.organiser.orgId}/1">Edit
 							Profile</a></li>
 
 				</ul>
-
+</li>
 
 				<%-- <a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Reports</span> <b class="arrow fa fa-angle-right"></b>
@@ -403,7 +661,15 @@
 					
 					</ul>  --%>
 
-
+					<c:choose>
+						<c:when test="${Constants.mainAct==6}">
+							<li class="active">
+						</c:when>
+	
+						<c:otherwise>
+							<li>
+						</c:otherwise>
+					</c:choose>
 				<a href="#" class="dropdown-toggle"> <i class="fa fa-list"></i>
 					<span>Logout</span> <b class="arrow fa fa-angle-right"></b>
 				</a>

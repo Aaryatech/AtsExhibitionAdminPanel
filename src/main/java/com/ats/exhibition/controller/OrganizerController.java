@@ -72,6 +72,9 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/addOrganizer", method = RequestMethod.GET)
 	public ModelAndView addOrganizer(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=1;
+		Constants.subAct=11;
 
 		ModelAndView model = new ModelAndView("organizer/addOrganizer");
 		try {
@@ -91,7 +94,9 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/orgnizerList", method = RequestMethod.GET)
 	public ModelAndView orgnizerList(HttpServletRequest request, HttpServletResponse response) {
-
+		
+		Constants.mainAct=1;
+		Constants.subAct=12;
 		ModelAndView model = new ModelAndView("organizer/orgnizerList");
 		try {
 			Organiser[] organiser = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsed", Organiser[].class);
@@ -221,6 +226,9 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/addEvent", method = RequestMethod.GET)
 	public ModelAndView addEmployee(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=4;
+		Constants.subAct=41;
 
 		ModelAndView model = new ModelAndView("organizer/addEvent");
 		try {
@@ -334,6 +342,9 @@ public class OrganizerController {
 	@RequestMapping(value = "/eventList", method = RequestMethod.GET)
 	public ModelAndView eventList(HttpServletRequest request, HttpServletResponse response) {
 
+		Constants.mainAct=4;
+		Constants.subAct=42;
+		
 		ModelAndView model = new ModelAndView("organizer/eventList");
 		try {
 			HttpSession session = request.getSession();
@@ -434,6 +445,9 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/addCommitteeMember", method = RequestMethod.GET)
 	public ModelAndView addCommitteeMember(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=4;
+		Constants.subAct=44;
 
 		ModelAndView model = new ModelAndView("organizer/addCommitteeMember");
 		try {
@@ -447,6 +461,9 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/committeeMemberList", method = RequestMethod.GET)
 	public ModelAndView committeeMemberList(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=4;
+		Constants.subAct=45;
 
 		ModelAndView model = new ModelAndView("organizer/committeeMemberList");
 		try {
@@ -599,6 +616,9 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/addExhibitor", method = RequestMethod.GET)
 	public ModelAndView addExhibitor(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=5;
+		Constants.subAct=51;
 
 		ModelAndView model = new ModelAndView("organizer/addExhibitor");
 		try {
@@ -686,6 +706,9 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/exhibitorList", method = RequestMethod.GET)
 	public ModelAndView exhibitorList(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=5;
+		Constants.subAct=52;
 
 		ModelAndView model = new ModelAndView("organizer/exhibitorList");
 		try {
@@ -758,6 +781,9 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/eventMapToExhibitor", method = RequestMethod.GET)
 	public ModelAndView eventMapToExhibitor(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=5;
+		Constants.subAct=53;
 
 		ModelAndView model = new ModelAndView("organizer/eventMapToExhibitor");
 		try {
@@ -891,6 +917,9 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/addSponsor", method = RequestMethod.GET)
 	public ModelAndView addSponsor(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=5;
+		Constants.subAct=58;
 
 		ModelAndView model = new ModelAndView("organizer/sponsor");
 		try {
@@ -1098,6 +1127,9 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/showFloarMap", method = RequestMethod.GET)
 	public ModelAndView showFloarMap(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=5;
+		Constants.subAct=54;
 
 		ModelAndView model = new ModelAndView("organizer/floarMap");
 		try {
@@ -1306,6 +1338,9 @@ public class OrganizerController {
 	@RequestMapping(value = "/scheduleList", method = RequestMethod.GET)
 	public ModelAndView scheduleList(HttpServletRequest request, HttpServletResponse response) {
 
+		Constants.mainAct=4;
+		Constants.subAct=43;
+		
 		ModelAndView model = new ModelAndView("organizer/shedules");
 		try {
 			scheduleDetailList = new ArrayList<>();
@@ -1564,6 +1599,9 @@ public class OrganizerController {
 	@RequestMapping(value = "/showGallary", method = RequestMethod.GET)
 	public ModelAndView showGallary(HttpServletRequest request, HttpServletResponse response) {
 
+		Constants.mainAct=5;
+		Constants.subAct=57;
+		
 		ModelAndView model = new ModelAndView("organizer/gallary");
 		try {
 			HttpSession session = request.getSession();
@@ -1680,6 +1718,9 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/searchExhibitor", method = RequestMethod.GET)
 	public ModelAndView searchExhibitor(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=5;
+		Constants.subAct=55;
 
 		ModelAndView model = new ModelAndView("organizer/exhibitorMap");
 		try {
@@ -1863,6 +1904,9 @@ public class OrganizerController {
 	@RequestMapping(value = "/showExhEventSubscription", method = RequestMethod.GET)
 	public ModelAndView showExhEventSubscription(HttpServletRequest request, HttpServletResponse response) {
 
+		Constants.mainAct=5;
+		Constants.subAct=56;
+		
 		ModelAndView model = new ModelAndView("organizer/exhEventSubscription");
 		try {
 

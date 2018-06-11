@@ -78,6 +78,9 @@ public class SuperAdminController {
 
 	@RequestMapping(value = "/showEventList", method = RequestMethod.GET)
 	public ModelAndView showEventList(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=1;
+		Constants.subAct=14;
 
 		ModelAndView model = new ModelAndView("SuperAdmin/showEventList");
 		try {
@@ -134,6 +137,9 @@ public class SuperAdminController {
 
 	@RequestMapping(value = "/showExhibitorList", method = RequestMethod.GET)
 	public ModelAndView showExhibitorList(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=1;
+		Constants.subAct=16;
 
 		ModelAndView model = new ModelAndView("SuperAdmin/showExhibitorList");
 		try {
@@ -510,6 +516,9 @@ public class SuperAdminController {
 	@RequestMapping(value = "/exhibitorListByLocationAndCompType", method = RequestMethod.GET)
 	public ModelAndView exhibitorListByLocationAndCompType(HttpServletRequest request, HttpServletResponse response) {
 
+		Constants.mainAct=3;
+		Constants.subAct=31;
+		
 		ModelAndView model = new ModelAndView("SuperAdmin/showExhibitorListByLocation");
 		try {
 
@@ -617,6 +626,9 @@ public class SuperAdminController {
 	@RequestMapping(value = "/addOrganizerPackage", method = RequestMethod.GET)
 	public ModelAndView exhibitorListByOrgId(HttpServletRequest request, HttpServletResponse response) {
 
+		Constants.mainAct=2;
+		Constants.subAct=24;
+		
 		ModelAndView model = new ModelAndView("SuperAdmin/addOrganizerPackage");
 		try {
 
@@ -630,6 +642,9 @@ public class SuperAdminController {
 	@RequestMapping(value = "/organizerPakageList", method = RequestMethod.GET)
 	public ModelAndView organizerPakageList(HttpServletRequest request, HttpServletResponse response) {
 
+		Constants.mainAct=2;
+		Constants.subAct=23;
+		
 		ModelAndView model = new ModelAndView("SuperAdmin/organizerPakageList");
 		try {
 
@@ -717,6 +732,8 @@ public class SuperAdminController {
 	@RequestMapping(value = "/addExhibitorPackage", method = RequestMethod.GET)
 	public ModelAndView addExhibitorPackage(HttpServletRequest request, HttpServletResponse response) {
 
+		Constants.mainAct=2;
+		Constants.subAct=22;
 		ModelAndView model = new ModelAndView("SuperAdmin/addExhibitorPackage");
 		try {
 
@@ -729,6 +746,9 @@ public class SuperAdminController {
 
 	@RequestMapping(value = "/exhibitorPakageList", method = RequestMethod.GET)
 	public ModelAndView exhibitorPakageList(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=2;
+		Constants.subAct=21;
 
 		ModelAndView model = new ModelAndView("SuperAdmin/exhibitorPakageList");
 		try {
@@ -841,6 +861,9 @@ public class SuperAdminController {
 
 	@RequestMapping(value = "/addExhibitorBySuperAdmin", method = RequestMethod.GET)
 	public ModelAndView addExhibitorBySuperAdmin(HttpServletRequest request, HttpServletResponse response) {
+		
+		Constants.mainAct=1;
+		Constants.subAct=15;
 
 		ModelAndView model = new ModelAndView("SuperAdmin/addExhibitorBySuperAdmin");
 		try {
@@ -935,6 +958,9 @@ public class SuperAdminController {
 	@RequestMapping(value = "/showVisitorSortedList", method = RequestMethod.GET)
 	public ModelAndView showVisitorSortedList(HttpServletRequest request, HttpServletResponse response) {
 
+		Constants.mainAct=3;
+		Constants.subAct=32;
+		
 		ModelAndView model = new ModelAndView("SuperAdmin/showVisitorSortedList");
 		try {
 
@@ -1454,7 +1480,8 @@ public class SuperAdminController {
 
 	@RequestMapping(value = "/addEventByAdmin", method = RequestMethod.GET)
 	public ModelAndView addEventByAdmin(HttpServletRequest request, HttpServletResponse response) {
-
+		Constants.mainAct=1;
+		Constants.subAct=13;
 		ModelAndView model = new ModelAndView("SuperAdmin/editEventByAdmin");
 		try {
 
