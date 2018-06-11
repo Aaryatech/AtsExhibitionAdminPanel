@@ -212,7 +212,7 @@
 						</c:otherwise>
 					</c:choose>
 					<a
-						href="${pageContext.request.contextPath}/showExhibitorList">All
+						href="${pageContext.request.contextPath}/exhibitorListByLocationAndCompType">All
 							Exhibitor List</a></li>
 				 
 				</ul>
@@ -341,9 +341,16 @@
 
 				  
 				  
-					<li><a
+					<c:choose>
+						<c:when test="${Constants.subAct==33}">
+							<li class="active"> 
+						</c:when>
+						<c:otherwise>
+							<li> 
+						</c:otherwise>
+					</c:choose><a
 						href="${pageContext.request.contextPath}/showExhibitorList">All
-							Exhibitor List</a></li>
+							Event Map Exhibitor List</a></li>
 							 
 					<c:choose>
 						<c:when test="${Constants.subAct==31}">

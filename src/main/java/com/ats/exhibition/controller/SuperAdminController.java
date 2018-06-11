@@ -138,8 +138,8 @@ public class SuperAdminController {
 	@RequestMapping(value = "/showExhibitorList", method = RequestMethod.GET)
 	public ModelAndView showExhibitorList(HttpServletRequest request, HttpServletResponse response) {
 		
-		Constants.mainAct=1;
-		Constants.subAct=16;
+		Constants.mainAct=3;
+		Constants.subAct=33;
 
 		ModelAndView model = new ModelAndView("SuperAdmin/showExhibitorList");
 		try {
@@ -516,8 +516,8 @@ public class SuperAdminController {
 	@RequestMapping(value = "/exhibitorListByLocationAndCompType", method = RequestMethod.GET)
 	public ModelAndView exhibitorListByLocationAndCompType(HttpServletRequest request, HttpServletResponse response) {
 
-		Constants.mainAct=3;
-		Constants.subAct=31;
+		Constants.mainAct=1;
+		Constants.subAct=16;
 		
 		ModelAndView model = new ModelAndView("SuperAdmin/showExhibitorListByLocation");
 		try {
