@@ -5,7 +5,8 @@
 
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-<body>
+
+<body >
 
 
 	<c:url var="allRecordwithDate" value="/allRecordwithDate"></c:url>

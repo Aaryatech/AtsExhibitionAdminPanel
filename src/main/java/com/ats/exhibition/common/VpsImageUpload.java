@@ -11,18 +11,18 @@ import org.springframework.web.multipart.MultipartFile;
 public class VpsImageUpload {
 
 	//public static final String FR_FOLDER = "/home/ats-12/";
-	public static final String FLOUR_MAP= "http://exhibition.aaryatechindia.in:12756/uploads/FLOURMAP/";
-	public static final String SPONSOR_FOLDER = "http://exhibition.aaryatechindia.in:12756/uploads/SPONSOR/";
+	public static final String FLOUR_MAP= "/home/aaryate1/exhibition.aaryatechindia.in/tomcat-8.0.18/webapps/uploads/FLOURMAP/";
+	public static final String SPONSOR_FOLDER = "/home/aaryate1/exhibition.aaryatechindia.in/tomcat-8.0.18/webapps/uploads/SPONSOR/";
 
-	public static final String GALLARY_FOLDER = "http://exhibition.aaryatechindia.in:12756/uploads/GALLARY/";
+	public static final String GALLARY_FOLDER = "/home/aaryate1/exhibition.aaryatechindia.in/tomcat-8.0.18/webapps/uploads/GALLARY/";
 	
-	public static final String M_SP_CAKE_FOLDER = "/opt/tomcat-latest/webapps/uploads/MSPCAKE/";
+	public static final String LOGO_FOLDER = "/home/aaryate1/exhibition.aaryatechindia.in/tomcat-8.0.18/webapps/uploads/LOGO/";
 	
-	public static final String RAW_MAT_IMAGE_FOLDER = "/opt/tomcat-latest/webapps/uploads/RAWMAT/";
+	public static final String EXHIBITOR_FOLDER = "/home/aaryate1/exhibition.aaryatechindia.in/tomcat-8.0.18/webapps/uploads/EXHIBITOR/";
 
-	public static final String GATE_ENTRY_IMAGE_FOLDER = "/opt/tomcat-latest/webapps/uploads/GATEENTRY/";
+	public static final String EVENT_FOLDER = "/home/aaryate1/exhibition.aaryatechindia.in/tomcat-8.0.18/webapps/uploads/EVENT/";
 	
-	public static final String LOGIS_BILL_FILE= "/opt/tomcat-latest/webapps/uploads/MSPCAKE/";
+	public static final String MEMBER_FOLDER="/home/aaryate1/exhibition.aaryatechindia.in/tomcat-8.0.18/webapps/uploads/MEMBER/";
 
 	private static final String FIELDMAP_FOLDER = null;
 	private static final String KYC_FOLDER = null;
@@ -52,7 +52,7 @@ public class VpsImageUpload {
 
 			} else if (imageType == 2) {
 
-				path = Paths.get(FLOUR_MAP + imageName);
+				path = Paths.get(SPONSOR_FOLDER + imageName);
 
 			} else if (imageType == 3) {
 
@@ -60,23 +60,23 @@ public class VpsImageUpload {
 
 			}else if (imageType == 4) {
 
-				path = Paths.get(M_SP_CAKE_FOLDER + imageName);
+				path = Paths.get(LOGO_FOLDER + imageName);
 
 			}
-			else if (imageType == 6) {
+			else if (imageType ==5) {
 
-				path = Paths.get(RAW_MAT_IMAGE_FOLDER + imageName);
+				path = Paths.get(EXHIBITOR_FOLDER + imageName);
 
 			}
 
+			else if (imageType ==6) {
+
+				path = Paths.get(EVENT_FOLDER + imageName);
+
+			}
 			else if (imageType == 7) {
 
-				path = Paths.get(GATE_ENTRY_IMAGE_FOLDER + imageName);
-
-			}
-			else if (imageType == 8) {
-
-				path = Paths.get(LOGIS_BILL_FILE + imageName);
+				path = Paths.get(MEMBER_FOLDER + imageName);
 
 			}
 

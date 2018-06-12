@@ -138,8 +138,8 @@ public class SuperAdminController {
 	@RequestMapping(value = "/showExhibitorList", method = RequestMethod.GET)
 	public ModelAndView showExhibitorList(HttpServletRequest request, HttpServletResponse response) {
 		
-		Constants.mainAct=3;
-		Constants.subAct=33;
+		Constants.mainAct=1;
+		Constants.subAct=16;
 
 		ModelAndView model = new ModelAndView("SuperAdmin/showExhibitorList");
 		try {
@@ -516,8 +516,8 @@ public class SuperAdminController {
 	@RequestMapping(value = "/exhibitorListByLocationAndCompType", method = RequestMethod.GET)
 	public ModelAndView exhibitorListByLocationAndCompType(HttpServletRequest request, HttpServletResponse response) {
 
-		Constants.mainAct=1;
-		Constants.subAct=16;
+		Constants.mainAct=3;
+		Constants.subAct=31;
 		
 		ModelAndView model = new ModelAndView("SuperAdmin/showExhibitorListByLocation");
 		try {
@@ -923,7 +923,7 @@ public class SuperAdminController {
 			try {
 				docFile = documentFile.get(0).getOriginalFilename();
 
-				upload.saveUploadedFiles(documentFile, Constants.FLOAR_MAP_TYPE,
+				upload.saveUploadedFiles(documentFile, Constants.EXHIBITOR_TYPE,
 						documentFile.get(0).getOriginalFilename());
 
 				System.out.println("upload method called for image Upload " + documentFile.toString());
@@ -1005,7 +1005,7 @@ public class SuperAdminController {
 			model.addObject("organiserList", organiserList);
 			model.addObject("companyTypeList", companyTypeList);
 			model.addObject("locationList", locationList);
-			model.addObject("imageUrl", Constants.imageUrl);
+			model.addObject("imageUrl", Constants.EXHIBITOR_URL);
 			model.addObject("edit", 1);
 
 		} catch (Exception e) {
@@ -1395,7 +1395,7 @@ public class SuperAdminController {
 			model.addObject("organiserList", organiserList);
 			model.addObject("isEdit", 1);
 
-			model.addObject("imageUrl", Constants.imageUrl);
+			model.addObject("imageUrl", Constants.EVENT_URL);
 
 			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", Location[].class);
 			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
@@ -1448,7 +1448,7 @@ public class SuperAdminController {
 			try {
 				docFile = documentFile.get(0).getOriginalFilename();
 
-				upload.saveUploadedFiles(documentFile, Constants.FLOAR_MAP_TYPE,
+				upload.saveUploadedFiles(documentFile, Constants.EVENT_TYPE,
 						documentFile.get(0).getOriginalFilename());
 
 				System.out.println("upload method called for image Upload " + documentFile.toString());

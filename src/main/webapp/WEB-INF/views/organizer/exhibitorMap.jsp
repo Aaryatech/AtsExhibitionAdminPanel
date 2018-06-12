@@ -111,28 +111,59 @@ input[type=checkbox]:checked:after {
 									     <input type="checkbox"  name="check" value="3" checked="checked"/><b>Exhibitor Name </b>
 									</c:when>
 									<c:otherwise>
-										 <input type="checkbox"  name="check" value="1"/><b>Mobile No.</b> OR
-									     <input type="checkbox"  name="check" value="2"/><b>Exhibitor Id </b>OR
-									     <input type="checkbox"  name="check" value="3"/><b>Exhibitor Name </b>
+										 <input type="checkbox"  name="check" value="1" onclick="document.getElementById('exh').disabled=false;document.getElementById('search').disabled=false;"/><b>Mobile No.</b> OR
+									     <input type="checkbox"  name="check" value="2" onclick="document.getElementById('exh').disabled=false;document.getElementById('search').disabled=false;"/><b>Exhibitor Id </b>OR
+									     <input type="checkbox"  name="check" value="3" onclick="document.getElementById('exh').disabled=false;document.getElementById('search').disabled=false;"/><b>Exhibitor Name </b>
 									</c:otherwise>
 									</c:choose>
 									   
 
 									     </div>
+									     	<c:choose>
+									<c:when test="${check==1}">
 									<div class="col-md-2">
-										<input type="text" name="exh" id="exh" class="form-control" value="${exh}"/>
+										<input type="text" name="exh" id="exh" class="form-control" value="${exh}"  required />
 									</div>
-
-
-								
-								
 									<div class="col-md-2" >
 										<input type="submit" class="btn btn-info" value="Search"
 											id="search"  >
+                                    </div>
+									</c:when>
+                                    <c:when test="${check==2}">
+                                    <div class="col-md-2">
+                                    <input type="text" name="exh" id="exh" class="form-control" required value="${exh}"/>
+                                    </div>
+                                    <div class="col-md-2" >
+										<input type="submit" class="btn btn-info" value="Search"
+											id="search"  >
+                                    </div>
+                                    </c:when>
+                                     <c:when test="${check==3}">
+                                     <div class="col-md-2">
+                                    <input type="text" name="exh" id="exh" class="form-control" required value="${exh}"/>
+                                    </div>
+                                    <div class="col-md-2" >
+										<input type="submit" class="btn btn-info" value="Search"
+											id="search"  >
+                                    </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                    <div class="col-md-2">
+                                    <input type="text" name="exh" id="exh" class="form-control" value="${exh}" required disabled/>
+                                    </div>
+                                    <div class="col-md-2" >
+										<input type="submit" class="btn btn-info" value="Search"
+											id="search" disabled >
+                                    </div>
+                                    </c:otherwise>
+                                    </c:choose>
 
+								
+								
+									
 <input type="hidden"   name="eventId" id="eventId" value="${eventId}"/>
 
-									</div>
+									
 									</form>
 								</div> 
 							
@@ -201,10 +232,10 @@ input[type=checkbox]:checked:after {
 
 									</div>
 								</div>
-
+</form>
 			</div>
 
-</form>
+
 
 		</div>
 

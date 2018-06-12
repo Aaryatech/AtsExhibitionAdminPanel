@@ -43,4 +43,9 @@
 	
 	
 	
+
+
+	<beans:bean id="multipartResolver"  
+class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	
 </beans:beans>

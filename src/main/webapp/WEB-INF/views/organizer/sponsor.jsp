@@ -2,64 +2,39 @@
 	pageEncoding="UTF-8"%><%@ taglib
 	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
- <style>
- .img-upload-btn { 
-    position: relative; 
-    overflow: hidden; 
-    padding-top: 95%;
-} 
-
-.img-upload-btn input[type=file] { 
-    position: absolute; 
-    top: 0; 
-    right: 0; 
-    min-width: 100%; 
-    min-height: 100%; 
-    font-size: 100px; 
-    text-align: right; 
-    filter: alpha(opacity=0); 
-    opacity: 0; 
-    outline: none; 
-    background: white; 
-    cursor: inherit; 
-    display: block; 
-} 
-
-.img-upload-btn i { 
-    position: absolute;
-    height:36px;
-    width: 16px;
-    top: 50%;
-    left: 50%;
-    margin-top: -8px;
-    margin-left: -8px;
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
+<!--  <style>
+.container {
+	margin-top: 1px;
 }
 
-.btn-radio {
-    position: relative; 
-    overflow: hidden; 
+.image-preview-input {
+	position: relative;
+	overflow: hidden;
+	margin: 0px;
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
 }
 
-.btn-radio input[type=radio] { 
-    position: absolute; 
-    top: 0; 
-    right: 0; 
-    min-width: 100%; 
-    min-height: 100%; 
-    font-size: 100px; 
-    text-align: right; 
-    filter: alpha(opacity=0); 
-    opacity: 0; 
-    outline: none; 
-    background: white; 
-    cursor: inherit; 
-    display: block; 
+.image-preview-input input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity = 0);
 }
- 
- </style>
+
+.image-preview-input-title {
+	margin-left: 2px;
+}
+</style>  -->
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
 
@@ -196,23 +171,50 @@
 									</div>
 
 									<div class="col-md-1"></div>
-										
-								</div>
-								<br>
-								  	<div class="box-content">
-                                   <div class="col-md-2">Remark</div>
+										  <div class="col-md-2">Remark</div>
 									<div class="col-md-3">
 										<input type="text" name="remark"
 											value="${sponsor.remark}" class="form-control"
 											placeholder="Remark"  />
 
 									</div>
-										<div class="col-md-1"></div>
-									<div class="col-md-2">Photo.*</div>	<div class="col-md-3">
-                                       <div class="img-picker" style="width: 200px; height: 150px;"></div></div>
-							
-									</div>
+								</div>
 								<br>
+								  	<div class="box-content">
+                                 
+											<div class="col-md-2">Photo *</div>
+					
+									<div class="col-md-3">
+										<div class="fileupload fileupload-new"
+											data-provides="fileupload">
+											<div class="fileupload-new img-thumbnail"
+												style="width: 250px; height: 70px;">
+												<img
+													src="${sponserImage}${sponsor.photo}"
+													onerror="this.src='http://www.placehold.it/150x150/EFEFEF/AAAAAA&amp;text=no+image"
+													
+													alt="" />
+											</div>
+											<div
+												class="fileupload-preview fileupload-exists img-thumbnail"
+												style="max-width: 230px; max-height: 150px; line-height: 20px;"></div>
+											<div>
+												<span class="btn btn-default btn-file"><span
+													class="fileupload-new">Select image</span> <span
+													class="fileupload-exists">Change</span> <input type="file"
+													class="file-input" name="img1" id="img1"
+													 /></span> <a href="#"
+													class="btn btn-default fileupload-exists"
+													data-dismiss="fileupload">Remove</a>
+													
+											</div>
+										</div>
+					
+									
+									 </div>
+									 <div class="col-md-1"></div>
+									 <br>
+						
 									<div class="col-md-12" style="text-align: center">
 										<input type="submit" class="btn btn-info" value="Submit"
 											id="submit"  >
@@ -222,6 +224,8 @@
 							</form>
                        </div>
                        <!-- BEGIN Main Content -->
+                       
+                       
 		<div class="box" id="pending">
 
 				<div class="box-content">
@@ -233,16 +237,16 @@
 							<thead>
 								<tr>
 									<th style="width: 18px">No</th>
-									<th>Sponsor Name</th>
-									<th>Event</th>
-									<th>Company </th>
-									<th>Designation</th> 
-									<th>Mobile</th>	
-									<th>Photo</th>
-									<th>Email</th>
-									<th>Website</th>
-						    		<th>Remark</th>		
-						    			<th>Action</th>		
+									<th class="col-md-1">Sponsor Name</th>
+									<th class="col-md-1">Event</th>
+									<th class="col-md-1">Company </th>
+									<th class="col-md-1">Designation</th> 
+									<th class="col-md-1">Mobile</th>	
+									<th class="col-md-3">Photo</th>
+									<th class="col-md-1">Email</th>
+									<th class="col-md-2" >Website</th>
+						    		<th class="col-md-2">Remark</th>		
+						    		<th class="col-md-1">Action</th>		
 								</tr>
 							</thead>
 							<tbody>
@@ -254,14 +258,14 @@
 										<td>${sponsorRes.company}</td>
 										<td>${sponsorRes.designation}</td>
 										<td>${sponsorRes.mobile}</td>
-										<td>${sponsorRes.photo}</td>
+										<td  class="col-md-4"><img src="${sponserImage}${sponsorRes.photo}" alt="no image available" height="100" width="100"></img></td>
 										<td>${sponsorRes.email}</td>
 										<td>${sponsorRes.website}</td>
 										<td>${sponsorRes.remark}</td>
 										 
-										 <td><a href="${pageContext.request.contextPath}/editSponsor/${sponsorRes.sponsorId}" data-toggle="tooltip" title="Edit"><span
+										 <td><a href="${pageContext.request.contextPath}/editSponsor/${sponsorRes.sponsorId}"><span
 												class="glyphicon glyphicon-edit"></span></a> 
-											<a href="${pageContext.request.contextPath}/deleteSponsor/${sponsorRes.sponsorId}" data-toggle="tooltip" title="Delete"
+											<a href="${pageContext.request.contextPath}/deleteSponsor/${sponsorRes.sponsorId}"
 											onClick="return confirm('Are you sure want to delete this record');"><span
 												class="glyphicon glyphicon-remove"></span></a></td>  
 									</tr>
@@ -347,8 +351,8 @@
 		src="${pageContext.request.contextPath}/resources/assets/ckeditor/ckeditor.js"></script>
 
 	<!--flaty scripts-->
-	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
-	<script type="text/javascript"
+ 	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
+ 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
@@ -372,89 +376,69 @@
 
 			}
 		}
-		(function ( $ ) {
-			 
-		    $.fn.imagePicker = function( options ) {
-		        
-		        // Define plugin options
-		        var settings = $.extend({
-		            // Input name attribute
-		            name: "photo",
-		            // Classes for styling the input
-		            class: "form-control btn btn-default btn-block",
-		            // Icon which displays in center of input
-		            icon: "glyphicon glyphicon-plus"
-		        }, options );
-		        
-		        // Create an input inside each matched element
-		        return this.each(function() {
-		            $(this).html(create_btn(this, settings));
-		        });
-		 
-		    };
-		 
-		    // Private function for creating the input element
-		    function create_btn(that, settings) {
-		        // The input icon element
-		        var picker_btn_icon = $('<i class="'+settings.icon+'"></i>');
-		        
-		        // The actual file input which stays hidden
-		        var picker_btn_input = $('<input type="file" name="'+settings.name+'" />');
-		        
-		        // The actual element displayed
-		        var picker_btn = $('<div class="'+settings.class+' img-upload-btn"></div>')
-		            .append(picker_btn_icon)
-		            .append(picker_btn_input);
-		            
-		        // File load listener
-		        picker_btn_input.change(function() {
-		            if ($(this).prop('files')[0]) {
-		                // Use FileReader to get file
-		                var reader = new FileReader();
-		                
-		                // Create a preview once image has loaded
-		                reader.onload = function(e) {
-		                    var preview = create_preview(that, e.target.result, settings);
-		                    $(that).html(preview);
-		                }
-		                
-		                // Load image
-		                reader.readAsDataURL(picker_btn_input.prop('files')[0]);
-		            }                
-		        });
+		</script>
+	<!-- 	<script type="text/javascript">
 
-		        return picker_btn
-		    };
-		    
-		    // Private function for creating a preview element
-		    function create_preview(that, src, settings) {
-		        
-		            // The preview image
-		            var picker_preview_image = $('<img src="'+src+'" class="img-responsive img-rounded" />');
-		            
-		            // The remove image button
-		            var picker_preview_remove = $('<button class="btn btn-link"><small>Remove</small></button>');
-		            
-		            // The preview element
-		            var picker_preview = $('<div class="text-center"></div>')
-		                .append(picker_preview_image)
-		                .append(picker_preview_remove);
+		$(document).on('click', '#close-preview', function(){ 
+		    $('.image-preview').popover('hide');
+		    // Hover befor close the preview
+		    $('.image-preview').hover(
+		        function () {
+		           $('.image-preview').popover('show');
+		        }, 
+		         function () {
+		           $('.image-preview').popover('hide');
+		        }
+		    );    
+		});
 
-		            // Remove image listener
-		            picker_preview_remove.click(function() {
-		                var btn = create_btn(that, settings);
-		                $(that).html(btn);
-		            });
-		            
-		            return picker_preview;
-		    };
-		    
-		}( jQuery ));
-
-		$(document).ready(function() {
-		    $('.img-picker').imagePicker({name: 'photo'});
-		})
-	</script>
+		$(function() {
+		    // Create the close button
+		    var closebtn = $('<button/>', {
+		        type:"button",
+		        text: 'x',
+		        id: 'close-preview',
+		        style: 'font-size: initial;',
+		    });
+		    closebtn.attr("class","close pull-right");
+		    // Set the popover default content
+		    $('.image-preview').popover({
+		        trigger:'manual',
+		        html:true,
+		        title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
+		        content: "There's no image",
+		        placement:'bottom'
+		    });
+		    // Clear event
+		    $('.image-preview-clear').click(function(){
+		        $('.image-preview').attr("data-content","").popover('hide');
+		        $('.image-preview-filename').val("");
+		        $('.image-preview-clear').hide();
+		        $('.image-preview-input input:file').val("");
+		        $(".image-preview-input-title").text("Browse"); 
+		    }); 
+		    // Create the preview image
+		    $(".image-preview-input input:file").change(function (){     
+		        var img = $('<img/>', {
+		            id: 'dynamic',
+		            width:250,
+		            height:200
+		        });      
+		        var file = this.files[0];
+		        var reader = new FileReader();
+		        // Set preview image into the popover data-content
+		        reader.onload = function (e) {
+		            $(".image-preview-input-title").text("Change");
+		            $(".image-preview-clear").show();
+		            $(".image-preview-filename").val(file.name);            
+		            img.attr('src', e.target.result);
+		            $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+		        }        
+		        reader.readAsDataURL(file);
+		    });  
+		});
+		</script> -->
+	
 
 </body>
 </html>

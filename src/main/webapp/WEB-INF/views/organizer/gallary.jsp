@@ -164,7 +164,7 @@
 									<tr class="table-flag-blue">
 										<td>${count.index+1}</td>
 										<td>${gallary.eventName}</td>
-										<td><a href="${url}${gallary.photoLink}" >${gallary.photoLink}</a>
+										<td><img src="${url}${gallary.photoLink}" alt="no image available" height="100" width="100"></img>
 										</td>
 										 <td><%-- <a href="${pageContext.request.contextPath}/editGallary/${gallary.photoId}"><span
 												class="glyphicon glyphicon-edit"></span></a> --%> 
@@ -248,8 +248,8 @@
 		src="${pageContext.request.contextPath}/resources/assets/ckeditor/ckeditor.js"></script>
 
 	<!--flaty scripts-->
-<%-- 	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
- --%>	<script type="text/javascript"
+ 	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
+ 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>

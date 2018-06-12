@@ -142,7 +142,7 @@ public class OrganizerController {
 			try {
 				docFile = documentFile.get(0).getOriginalFilename();
 
-				upload.saveUploadedFiles(documentFile, Constants.FLOAR_MAP_TYPE,
+				upload.saveUploadedFiles(documentFile, Constants.LOGO_TYPE,
 						documentFile.get(0).getOriginalFilename());
 
 				System.out.println("upload method called for image Upload " + documentFile.toString());
@@ -208,7 +208,7 @@ public class OrganizerController {
 
 			model.addObject("locationList", locationList);
 			model.addObject("isEdit", 1);
-			model.addObject("imageUrl", Constants.imageUrl);
+			model.addObject("imageUrl", Constants.LOGO_URL);
 			model.addObject("userType", userType);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -294,7 +294,7 @@ public class OrganizerController {
 			try {
 				docFile = documentFile.get(0).getOriginalFilename();
 
-				upload.saveUploadedFiles(documentFile, Constants.FLOAR_MAP_TYPE,
+				upload.saveUploadedFiles(documentFile, Constants.LOGO_TYPE,
 						documentFile.get(0).getOriginalFilename());
 
 				System.out.println("upload method called for image Upload " + documentFile.toString());
@@ -433,7 +433,7 @@ public class OrganizerController {
 					EventWithOrgName.class);
 			model.addObject("editEvent", editEvent);
 			model.addObject("isEdit", 1);
-			model.addObject("imageUrl", Constants.imageUrl);
+			model.addObject("imageUrl", Constants.LOGO_URL);
 
 			Location[] location = rest.getForObject(Constants.url + "/getAllLocationByIsUsed", Location[].class);
 			List<Location> locationList = new ArrayList<Location>(Arrays.asList(location));
@@ -512,7 +512,7 @@ public class OrganizerController {
 
 			model.addObject("organiser", organiser);
 			model.addObject("committeeMemberList", committeeMemberList);
-			model.addObject("url", Constants.imageUrl);
+			model.addObject("url", Constants.LOGO_URL);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -530,7 +530,7 @@ public class OrganizerController {
 			try {
 				img1 = image.get(0).getOriginalFilename();
 
-				upload.saveUploadedFiles(image, Constants.ITEM_IMAGE_TYPE, image.get(0).getOriginalFilename());
+				upload.saveUploadedFiles(image, Constants.MEMBER_TYPE, image.get(0).getOriginalFilename());
 
 				System.out.println("upload method called for image Upload " + image.toString());
 
@@ -682,7 +682,7 @@ public class OrganizerController {
 			try {
 				docFile = documentFile.get(0).getOriginalFilename();
 
-				upload.saveUploadedFiles(documentFile, Constants.FLOAR_MAP_TYPE,
+				upload.saveUploadedFiles(documentFile, Constants.EXHIBITOR_TYPE,
 						documentFile.get(0).getOriginalFilename());
 
 				System.out.println("upload method called for image Upload " + documentFile.toString());
@@ -788,7 +788,7 @@ public class OrganizerController {
 
 			model.addObject("companyTypeList", companyTypeList);
 			model.addObject("locationList", locationList);
-			model.addObject("imageUrl", Constants.imageUrl);
+			model.addObject("imageUrl", Constants.EXHIBITOR_URL);
 			model.addObject("edit", 1);
 
 		} catch (Exception e) {
@@ -977,6 +977,7 @@ public class OrganizerController {
 			model.addObject("companyList", companyList);
 			model.addObject("eventList", eventList);
 			model.addObject("sponsorList", sponsorListRes);
+			model.addObject("sponserImage", Constants.SPONSOR_IMAGE);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1046,6 +1047,7 @@ public class OrganizerController {
 			model.addObject("companyList", companyList);
 			model.addObject("eventList", eventList);
 			model.addObject("sponsorList", sponsorListRes);
+			model.addObject("sponserImage", Constants.SPONSOR_IMAGE);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1056,7 +1058,7 @@ public class OrganizerController {
 
 	@RequestMapping(value = "/insertSponsor", method = RequestMethod.POST)
 	public String insertSponsor(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("photo") List<MultipartFile> photo) {
+			@RequestParam("img1") List<MultipartFile> photo) {
 
 		try {
 			int sponsorId = 0;
@@ -1110,7 +1112,7 @@ public class OrganizerController {
 			if (photo.isEmpty())
 				sponsor.setPhoto("");
 			else
-				sponsor.setPhoto(photo.get(0).getOriginalFilename());
+				sponsor.setPhoto(curTimeStamp+"-"+photo.get(0).getOriginalFilename());
 			sponsor.setRemark(remark);
 			sponsor.setWebsite(website);
 			sponsor.setIsUsed(1);
@@ -1184,7 +1186,7 @@ public class OrganizerController {
 					List.class);
 
 			model.addObject("floarMapList", floarMapList);
-			model.addObject("URL", Constants.IMAGE_PATH);
+			model.addObject("URL", Constants.FLOAR_MAP_URL);
 			model.addObject("isEdit", 0);
 
 		} catch (Exception e) {
@@ -1215,7 +1217,7 @@ public class OrganizerController {
 					List.class);
 
 			model.addObject("floarMapList", floarMapList);
-			model.addObject("URL", Constants.IMAGE_PATH);
+			model.addObject("URL", Constants.FLOAR_MAP_URL);
 
 			EventWithOrgName[] eventWithOrgName = rest.postForObject(Constants.url + "/getAllEventsByorgIdAndIsUsed",
 					map, EventWithOrgName[].class);
@@ -1286,7 +1288,7 @@ public class OrganizerController {
 					upload.saveUploadedFiles(floarMap1, Constants.FLOAR_MAP_TYPE,
 							curTimeStamp + "-" + floarMap1.get(0).getOriginalFilename());
 					System.out.println("upload method called " + floarMap1.toString());
-					fMap1 = floarMap1.get(0).getOriginalFilename();
+					fMap1 = curTimeStamp+"-"+floarMap1.get(0).getOriginalFilename();
 
 				} catch (IOException e) {
 
@@ -1300,7 +1302,7 @@ public class OrganizerController {
 					upload.saveUploadedFiles(floarMap2, Constants.FLOAR_MAP_TYPE,
 							curTimeStamp + "-" + floarMap2.get(0).getOriginalFilename());
 					System.out.println("upload method called " + floarMap2.toString());
-					fMap2 = floarMap2.get(0).getOriginalFilename();
+					fMap2 = curTimeStamp+"-"+floarMap2.get(0).getOriginalFilename();
 
 				} catch (IOException e) {
 
@@ -1314,7 +1316,7 @@ public class OrganizerController {
 					upload.saveUploadedFiles(floarMap3, Constants.FLOAR_MAP_TYPE,
 							curTimeStamp + "-" + floarMap3.get(0).getOriginalFilename());
 					System.out.println("upload method called " + floarMap3.toString());
-					fMap3 = floarMap3.get(0).getOriginalFilename();
+					fMap3 =curTimeStamp+"-"+ floarMap3.get(0).getOriginalFilename();
 
 				} catch (IOException e) {
 
@@ -1328,7 +1330,7 @@ public class OrganizerController {
 					upload.saveUploadedFiles(floarMap4, Constants.FLOAR_MAP_TYPE,
 							curTimeStamp + "-" + floarMap4.get(0).getOriginalFilename());
 					System.out.println("upload method called " + floarMap4.toString());
-					fMap4 = floarMap4.get(0).getOriginalFilename();
+					fMap4 = curTimeStamp+"-"+floarMap4.get(0).getOriginalFilename();
 
 				} catch (IOException e) {
 
@@ -1341,22 +1343,22 @@ public class OrganizerController {
 
 			floarMap.setFloarMapId(floarMapId);
 			floarMap.setEventId(eventId);
-			if (fMap1 == "") {
+			if (!fMap1.contains(".")) {
 				fMap1 = request.getParameter("editFloarMap1");
-
+                   
 			}
 			floarMap.setFloarMap1(fMap1);
-			if (fMap2 == "") {
+			if (!fMap2 .contains(".")) {
 				fMap2 = request.getParameter("editFloarMap2");
 
 			}
 			floarMap.setFloarMap2(fMap2);
-			if (fMap3 == "") {
+			if (!fMap3.contains(".")) {
 				fMap3 = request.getParameter("editFloarMap3");
 
 			}
 			floarMap.setFloarMap3(fMap3);
-			if (fMap4 == "") {
+			if (!fMap4 .contains(".")) {
 				fMap4 = request.getParameter("editFloarMap4");
 
 			}
@@ -1653,7 +1655,7 @@ public class OrganizerController {
 			List<EventWithOrgName> eventList = new ArrayList<EventWithOrgName>(Arrays.asList(eventWithOrgName));
 
 			model.addObject("eventList", eventList);
-			model.addObject("url", Constants.IMAGE_PATH);
+			model.addObject("url", Constants.GALLARY_URL);
 
 			List<EventPhotoWithEventName> allGallaryList = rest.postForObject(Constants.url + "/getAllPhotoByOrgId",
 					map, List.class);
@@ -1708,7 +1710,7 @@ public class OrganizerController {
 			EventPhoto eventPhoto = new EventPhoto();
 			eventPhoto.setPhotoId(photoId);
 			eventPhoto.setEventId(eventId);
-			eventPhoto.setPhotoLink(photoLink);
+			eventPhoto.setPhotoLink(curTimeStamp + "-" +photoLink);
 			eventPhoto.setIsUsed(1);
 
 			EventPhoto eventPhotoRes = rest.postForObject(Constants.url + "saveEventPhoto", eventPhoto,

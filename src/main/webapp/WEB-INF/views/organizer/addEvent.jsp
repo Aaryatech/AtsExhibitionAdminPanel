@@ -332,12 +332,12 @@
 													
 											</div>
 										</div>
-					<input class="form-control" id="docPath" placeholder="Current Km" value="${editEvent.eventLogo}" size="16"
-											type="hidden" name="docPath"   />
+					
 									</div>
 									
 									 </div>
-									
+									<input class="form-control" id="docPath" placeholder="Current Km" value="${editEvent.eventLogo}" size="16"
+											type="hidden" name="docPath"   />
 								</div><br><br><br><br><br><br><br><br><br><br> 
 								
 								<div class=" box-content">
