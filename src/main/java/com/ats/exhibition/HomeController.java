@@ -63,7 +63,9 @@ public class HomeController {
 		String password = request.getParameter("userpassword");
 
 		ModelAndView mav = new ModelAndView("login");
-
+		
+		Constants.mainAct=0;
+		Constants.subAct=0;
 		res.setContentType("text/html");
 		try {
 			System.out.println("Login Process " + name);
