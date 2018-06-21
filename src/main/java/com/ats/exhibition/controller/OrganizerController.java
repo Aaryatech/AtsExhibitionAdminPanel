@@ -1128,7 +1128,7 @@ public class OrganizerController {
 		return "redirect:/addSponsor";
 	}
 
-	List<ScheduleDetail> scheduleDetailList = null;
+	List<ScheduleDetail> scheduleDetailList =  new ArrayList<>();
 
 	@RequestMapping(value = "/editSchedule/{scheduleId}", method = RequestMethod.GET)
 	public ModelAndView editSchedule(@PathVariable int scheduleId, HttpServletRequest request,
