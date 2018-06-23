@@ -14,6 +14,8 @@
 	<c:url var="getMixingAllListWithDate" value="/getMixingAllListWithDate"></c:url>
 	<c:url var="exhibitorMobileNo" value="/exhibitorMobileNo"></c:url>
 
+	<c:url var="isMobileNoExist" value="/isMobileNoExist"></c:url>
+
 
 	<div class="container" id="main-container">
 
@@ -272,7 +274,7 @@
 									<c:when test="${edit==1}"> 
 											<input type="text" name="usesrMob"
 												value="${editExhibitor.userMob}" class="form-control"
-												id="usesrMob" onkeyup="checkMobileNo();"
+												id="usesrMob" onchange="checkMobileNo();"
 												placeholder="Mobile No" pattern="^\d{10}$" readonly />
 									</c:when>
 									<c:otherwise> 

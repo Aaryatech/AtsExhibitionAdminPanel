@@ -89,6 +89,16 @@
 						<div class="col-md-3">
 							<input type="text" name="pkgAmt" id="pkgAmt" class="form-control"readonly/ >
 						</div>
+						<div class="col-md-2">No of Employees*</div>
+						<div class="col-md-3">
+							<select id="empNos" name="empNos" 
+								class="form-control chosen" required>
+								<option value="">Select No of Employees </option>
+								<c:forEach  var="i" begin="10" end="100" step="10">
+									<option value="${i}">${i}</option>
+								</c:forEach>
+							</select>
+						</div>
 
 					</div>
 					<br>

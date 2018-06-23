@@ -65,7 +65,8 @@
 									<div class="col-md-3">
 										<input type="text" id="companyTypeName" name="companyTypeName"
 											class="form-control" value="${editCompanyType.companyTypeName}"
-											placeholder=" Company Type Name" required /> <input
+											placeholder=" Company Type Name" required oninvalid="this.setCustomValidity('Enter Company Type Name Here')"
+    oninput="this.setCustomValidity('')"  /> <input
 											type="hidden" name="companyTypeId"
 											value="${editCompanyType.companyTypeId}" />
 									</div>
@@ -74,8 +75,9 @@
 									<div class="col-md-3">
 										<input type="text" id="companyTypeDesc" name="companyTypeDesc"
 											class="form-control" value="${editCompanyType.companyTypeDesc}"
-											placeholder=" Company Type Desc" required /> <input
-											type="hidden" name="companyTypeId"
+											placeholder=" Company Type Desc" required oninvalid="this.setCustomValidity('Enter Company Description Here')"
+    oninput="this.setCustomValidity('')" /> <input
+											type="hidden" name="companyTypeId" 
 											value="${editCompanyType.companyTypeId}" />
 									</div>
 

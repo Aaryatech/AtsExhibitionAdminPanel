@@ -71,7 +71,8 @@
 									<div class="col-md-3">
 										<input type="text" id="eventName" name="eventName"
 											class="form-control" value="${editEvent.eventName}"
-											placeholder=" Event Name " required /> 
+											placeholder=" Event Name " required oninvalid="this.setCustomValidity('Enter Event Name')"
+    oninput="this.setCustomValidity('')"  /> 
 											<input type="hidden" name="eventId" value="${editEvent.eventId}" />
 									</div>
 									<div class="col-md-1"></div>
@@ -79,7 +80,8 @@
 									<div class="col-md-3">
 										<input type="text" name="eventLocation"
 											value="${editEvent.eventLocation}" class="form-control"
-											placeholder="Event Location" required />
+											placeholder="Event Location" required oninvalid="this.setCustomValidity('Enter Event Location')"
+    oninput="this.setCustomValidity('')"  />
 									</div>
 									
 									 
@@ -92,7 +94,8 @@
 									<div class="col-md-3">
 										<input type="text" name="fromDate"
 											value="${editEvent.eventFromDate}" class="form-control date-picker"
-											placeholder="From Date" required />
+											placeholder="From Date" required oninvalid="this.setCustomValidity('Select Event From Date')"
+    oninput="this.setCustomValidity('')"  />
 									</div>
 									
 									<div class="col-md-1"></div>
@@ -100,7 +103,8 @@
 									<div class="col-md-3">
 										<input type="text" name="toDate"
 											value="${editEvent.eventToDate}" class="form-control date-picker"
-											placeholder="From To" required />
+											placeholder="From To" required oninvalid="this.setCustomValidity('Select Event To Date')"
+    oninput="this.setCustomValidity('')"  />
 									</div>
 
 
@@ -113,7 +117,8 @@
 									<div class="col-md-3">
 										<input type="time" name="fromTime"
 											value="${editEvent.fromTime}"   class="form-control"
-											placeholder="From Time" required />
+											placeholder="From Time" required oninvalid="this.setCustomValidity('Select Event From Time')"
+    oninput="this.setCustomValidity('')"  />
 									</div>
 									
 									<!-- <div class="col-md-1">
@@ -130,7 +135,8 @@
 									<div class="col-md-3">
 										<input type="time" name="toTime"
 											value="${editEvent.toTime}"   class="form-control"
-											placeholder="To Time" required />
+											placeholder="To Time" required oninvalid="this.setCustomValidity('Select Event To Time')"
+    oninput="this.setCustomValidity('')"  />
 
 									</div>
 									<!-- <div class="col-md-1">
@@ -150,7 +156,8 @@
 									<div class="col-md-2">About Event*</div>
 									<div class="col-md-3">
 										<textarea  name="aboutEvent" class="form-control"
-											placeholder="About Event" required >${editEvent.aboutEvent}</textarea>
+											placeholder="About Event" required oninvalid="this.setCustomValidity('Enter About Event')"
+    oninput="this.setCustomValidity('')"  >${editEvent.aboutEvent}</textarea>
 											 
 
 									</div><br>
@@ -166,7 +173,8 @@
 										<input type="text" name="pers1"
 											value="${editEvent.contactPersonName1}" class="form-control"
 											placeholder="Contact Person"   
-											required />
+											required oninvalid="this.setCustomValidity('Enter Contact Person Name 1')"
+    oninput="this.setCustomValidity('')"  />
 
 									</div>
 
@@ -175,7 +183,8 @@
 									<div class="col-md-3">
 										<input type="text" id="pers2" name="pers2"
 											 value="${editEvent.contactPersonName2 }" class="form-control"
-											placeholder="Contact Person " required>
+											placeholder="Contact Person " required oninvalid="this.setCustomValidity('Enter Contact Person Name 2')"
+    oninput="this.setCustomValidity('')" >
 
 									</div>
 
@@ -190,7 +199,8 @@
 										<input type="text" name="mob1"
 											value="${editEvent.person1Mob}" class="form-control"
 											placeholder="Mobile No"   pattern="^\d{10}$"
-											required />
+											required oninvalid="this.setCustomValidity('Enter Person 1 Contact Number')"
+    oninput="this.setCustomValidity('')"  />
 
 									</div>
 
@@ -200,7 +210,8 @@
 										<input type="text" name="mob2"
 											value="${editEvent.person2Mob}" class="form-control"
 											placeholder="Mobile No"   pattern="^\d{10}$"
-											required />
+											required oninvalid="this.setCustomValidity('Enter Person 2 Contact Number')"
+    oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -214,7 +225,8 @@
 									<div class="col-md-3">
 										<input type="email" name="email1"
 											value="${editEvent.person1EmailId}" class="form-control"
-											placeholder="Email"  required />
+											placeholder="Email"  required oninvalid="this.setCustomValidity('Enter Person 1 Email Id')"
+    oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -223,7 +235,8 @@
 									<div class="col-md-3">
 										<input type="email" name="email2"
 											value="${editEvent.person2EmailId}" class="form-control"
-											placeholder="Email" required />
+											placeholder="Email" required oninvalid="this.setCustomValidity('Enter Person 2 Email Id')"
+    oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -237,7 +250,8 @@
 									<div class="col-md-3">
 										<input type="text" name="latitude"
 											value="${editEvent.eventLocLat}" class="form-control"
-											placeholder="Latitude"  required />
+											placeholder="Latitude"  required oninvalid="this.setCustomValidity('Enter Location Latitude')"
+    oninput="this.setCustomValidity('')" />
 
 									</div>
  
@@ -246,7 +260,8 @@
 									<div class="col-md-3">
 										<input type="text" name="longitude"
 											value="${editEvent.eventLocLong}" class="form-control"
-											placeholder="Longitude" required />
+											placeholder="Longitude" required oninvalid="this.setCustomValidity('Enter Location  Longitude')"
+    oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -258,7 +273,8 @@
 								
 								<div class="col-md-2">Company Type*</div>
 									<div class="col-md-3">
-										<select  name="companyTypeId" id="companyTypeId" class="form-control chosen" required >
+										<select  name="companyTypeId" id="companyTypeId" class="form-control chosen" required oninvalid="this.setCustomValidity('Select Company Type')"
+    oninput="this.setCustomValidity('')" >
 											<option value="">select</option>
 										 <c:forEach items="${companyTypeList}" var="companyTypeList" >
 										 	<c:choose>
@@ -281,7 +297,8 @@
 											<div class="col-md-1"></div>
 									<div class="col-md-2">Select Location*</div>
 									<div class="col-md-3">
-										<select  name="location" id="location" class="form-control chosen" required >
+										<select  name="location" id="location" class="form-control chosen" required oninvalid="this.setCustomValidity('Select Location')"
+    oninput="this.setCustomValidity('')" >
 										<option value="">select</option>
 										  
 										 
@@ -324,7 +341,8 @@
 											<div>
 												<span class="btn btn-default btn-file"><span
 													class="fileupload-new">Select image</span> <span
-													class="fileupload-exists">Change</span> <input type="file"
+													class="fileupload-exists">Change</span> <input type="file" required oninvalid="this.setCustomValidity('Select Event Image')"
+    oninput="this.setCustomValidity('')"
 													class="file-input" name="documentFile" id="documentFile"
 													 /></span> <a href="#"
 													class="btn btn-default fileupload-exists"
@@ -443,9 +461,14 @@
 
 			if (pass != "" && pass1 != "") {
 				if (pass != pass1) {
+					
 					alert("Password Not Matched ");
+					
 					document.getElementById("submit").disabled = true;
+					
+					
 				} else {
+					
 					document.getElementById("submit").disabled = false;
 
 				}
