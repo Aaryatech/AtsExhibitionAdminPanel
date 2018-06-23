@@ -50,7 +50,9 @@
 					<i class="fa fa-bars"></i>Exhibitor Subscription
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor Subscription List</a> <a data-action="collapse" href="#"><i
+					<a
+						href="${pageContext.request.contextPath}/showExhibitorSubscriptionList">Exhibitor
+						Subscription List</a> <a data-action="collapse" href="#"><i
 						class="fa fa-chevron-up"></i></a>
 				</div>
 
@@ -64,7 +66,9 @@
 						<div class="col-md-2">Select Exhibitor*</div>
 						<div class="col-md-3">
 							<select id="exhId" name="exhId" class="form-control chosen"
-								required>
+								required
+								oninvalid="this.setCustomValidity('Please Select Exhibitor')"
+								oninput="this.setCustomValidity('')">
 								<option value="">Select Exhibitor</option>
 								<c:forEach items="${exhibitorList}" var="exhibitorList">
 
@@ -75,7 +79,9 @@
 						<div class="col-md-2">Select Package*</div>
 						<div class="col-md-3">
 							<select id="pkgId" name="pkgId" onchange="onPackage(this.value)"
-								class="form-control chosen" required>
+								class="form-control chosen" required
+								oninvalid="this.setCustomValidity('Please Select Package')"
+								oninput="this.setCustomValidity('')">
 								<option value="">Select Package</option>
 								<c:forEach items="${packageList}" var="packageList">
 									<option value="${packageList.pkgId}">${packageList.pkgName}</option>
@@ -91,10 +97,12 @@
 						</div>
 						<div class="col-md-2">No of Employees*</div>
 						<div class="col-md-3">
-							<select id="empNos" name="empNos" 
-								class="form-control chosen" required>
-								<option value="">Select No of Employees </option>
-								<c:forEach  var="i" begin="10" end="100" step="10">
+							<select id="empNos" name="empNos" class="form-control chosen"
+								required
+								oninvalid="this.setCustomValidity('Please Select  NO Of Employee')"
+								oninput="this.setCustomValidity('')">
+								<option value="">Select No of Employees</option>
+								<c:forEach var="i" begin="10" end="100" step="10">
 									<option value="${i}">${i}</option>
 								</c:forEach>
 							</select>
@@ -110,7 +118,9 @@
 							<input type="text" name="fromDate"
 								value="${editEmployee.empJoiningDate}" placeholder="From Date"
 								onblur="calculateToDate()" id="fromDate"
-								class="form-control date-picker" required />
+								class="form-control date-picker" required
+								oninvalid="this.setCustomValidity('Please Enter From Date')"
+								oninput="this.setCustomValidity('')" />
 						</div>
 
 
@@ -290,9 +300,9 @@
 			document.getElementById("remAmt").value = remAmt;
 
 		}
-		
+
 		function check() {
-			 
+
 			var pkgId = document.getElementById("pkgId").value;
 			var exhId = document.getElementById("exhId").value;
 
@@ -301,7 +311,7 @@
 			} else if (pkgId == "" || pkgId == null) {
 				alert("Select Pakage");
 			}
-			 
+
 		}
 	</script>
 

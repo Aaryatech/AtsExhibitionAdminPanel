@@ -104,7 +104,7 @@
 							<input type="text" name="fromDate"
 								value="${editEmployee.empJoiningDate}" placeholder="From Date"
 								onblur="calculateToDate()" id="fromDate"
-								class="form-control date-picker" required oninvalid="this.setCustomValidity('Enter Date')"
+								class="form-control date-picker" required oninvalid="this.setCustomValidity('Enter from Date')"
 											oninput="this.setCustomValidity('')" />
 						</div>
 

@@ -188,7 +188,9 @@
 									<div class="col-md-3">
 										<input type="text" id="pers2" name="pers2"
 											value="${editExhibitor.contactPersonName2 }"
-											class="form-control" placeholder="Contact Person " required>
+											class="form-control" placeholder="Contact Person " required
+											oninvalid="this.setCustomValidity('Please Enter Contact Person2')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -202,7 +204,9 @@
 									<div class="col-md-3">
 										<input type="text" name="mob1"
 											value="${editExhibitor.personMob1}" class="form-control"
-											placeholder="Mobile No" pattern="^\d{10}$" required />
+											placeholder="Mobile No" pattern="^\d{10}$" required
+											oninvalid="this.setCustomValidity('Enter Person1 Contact')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -212,7 +216,7 @@
 										<input type="text" name="mob2"
 											value="${editExhibitor.personMob2}" class="form-control"
 											placeholder="Mobile No" pattern="^\d{10}$" required
-											oninvalid="this.setCustomValidity('Please Enter Contact No2')"
+											oninvalid="this.setCustomValidity(' Enter Person2 Contact ')"
 											oninput="this.setCustomValidity('')" />
 
 									</div>
