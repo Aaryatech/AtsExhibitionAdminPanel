@@ -5,13 +5,13 @@
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/assets/bootstrap-datepicker/css/datepicker.css" />
- 
+
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
 
 
 	<c:url var="getMixingListWithDate" value="/getMixingListWithDate"></c:url>
-	<c:url var="getMixingAllListWithDate" value="/getMixingAllListWithDate"></c:url> 
+	<c:url var="getMixingAllListWithDate" value="/getMixingAllListWithDate"></c:url>
 
 
 	<div class="container" id="main-container">
@@ -48,13 +48,15 @@
 					<div class="box" id="todayslist">
 						<div class="box-title">
 							<h3>
-								<i class="fa fa-table"></i><c:choose>
-								<c:when test="${isEdit==1}">Edit Event</c:when>
-								<c:otherwise>Add Event</c:otherwise>
+								<i class="fa fa-table"></i>
+								<c:choose>
+									<c:when test="${isEdit==1}">Edit Event</c:when>
+									<c:otherwise>Add Event</c:otherwise>
 								</c:choose>
 							</h3>
 							<div class="box-tool">
-								<a href="${pageContext.request.contextPath}/showEventList"> Event List</a> <a data-action="collapse" href="#"><i
+								<a href="${pageContext.request.contextPath}/showEventList">
+									Event List</a> <a data-action="collapse" href="#"><i
 									class="fa fa-chevron-up"></i></a>
 							</div>
 
@@ -65,36 +67,37 @@
 								action="${pageContext.request.contextPath}/insertEventByAdmin"
 								method="post" enctype="multipart/form-data">
 
-								<div class="box-content"> 
-								
+								<div class="box-content">
+
 									<div class="col-md-2">Event Name*</div>
-									<div class="col-md-3"> 
+									<div class="col-md-3">
 										<input type="text" id="eventName" name="eventName"
 											class="form-control" value="${editEvent.eventName}"
-											placeholder=" Event Name " required /> 
-											<input type="hidden" name="eventId" value="${editEvent.eventId}" />
-											<%-- <input type="hidden" name="orgId" value="${editEvent.orgId}" /> --%>
+											placeholder=" Event Name " required /> <input type="hidden"
+											name="eventId" value="${editEvent.eventId}" />
+										<%-- <input type="hidden" name="orgId" value="${editEvent.orgId}" /> --%>
 									</div>
 									<div class="col-md-1"></div>
-										<div class="col-md-2">Organizer Name</div>
+									<div class="col-md-2">Organizer Name</div>
 									<div class="col-md-3">
-										<select  name="orgId" id="orgId" class="form-control chosen" required >
+										<select name="orgId" id="orgId" class="form-control chosen"
+											required>
 											<option value="">Select Organizer</option>
-										 <c:forEach items="${organiserList}" var="organiserList" >
-										 	<c:choose>
-										 		<c:when test="${organiserList.orgId==editEvent.orgId}">
-										 		<option value="${organiserList.orgId}" selected>${organiserList.orgName}</option>
-										 		</c:when>
-										 		<c:otherwise>
-										 		<option value="${organiserList.orgId}"> ${organiserList.orgName}</option>
-										 		</c:otherwise>
-										 	</c:choose> 
+											<c:forEach items="${organiserList}" var="organiserList">
+												<c:choose>
+													<c:when test="${organiserList.orgId==editEvent.orgId}">
+														<option value="${organiserList.orgId}" selected>${organiserList.orgName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${organiserList.orgId}"> ${organiserList.orgName}</option>
+													</c:otherwise>
+												</c:choose>
 											</c:forEach>
-										  
-											</select>
+
+										</select>
 
 									</div>
-									
+
 								</div>
 								<br>
 
@@ -103,16 +106,18 @@
 									<div class="col-md-2">From Date*</div>
 									<div class="col-md-3">
 										<input type="text" name="fromDate"
-											value="${editEvent.eventFromDate}" class="form-control date-picker"
-											placeholder="From Date" required />
+											value="${editEvent.eventFromDate}"
+											class="form-control date-picker" placeholder="From Date"
+											required />
 									</div>
-									
+
 									<div class="col-md-1"></div>
 									<div class="col-md-2">To Date*</div>
 									<div class="col-md-3">
 										<input type="text" name="toDate"
-											value="${editEvent.eventToDate}" class="form-control date-picker"
-											placeholder="To Date" required />
+											value="${editEvent.eventToDate}"
+											class="form-control date-picker" placeholder="To Date"
+											required />
 									</div>
 
 
@@ -124,10 +129,10 @@
 									<div class="col-md-2">From Time*</div>
 									<div class="col-md-3">
 										<input type="time" name="fromTime"
-											value="${editEvent.fromTime}"   class="form-control"
+											value="${editEvent.fromTime}" class="form-control"
 											placeholder="From Time" required />
 									</div>
-									
+
 									<!-- <div class="col-md-1">
 										<select id="orgType" name="orgType"  
 											class="form-control" required> 
@@ -140,9 +145,8 @@
 
 									<div class="col-md-2">To Time*</div>
 									<div class="col-md-3">
-										<input type="time" name="toTime"
-											value="${editEvent.toTime}"   class="form-control"
-											placeholder="To Time" required />
+										<input type="time" name="toTime" value="${editEvent.toTime}"
+											class="form-control" placeholder="To Time" required />
 
 									</div>
 									<!-- <div class="col-md-1">
@@ -153,47 +157,46 @@
 											<option value="2">PM</option>
 										</select>
 									</div> -->
- 
+
 								</div>
 								<br>
-								
+
 								<div class="box-content">
 
 									<div class="col-md-2">About Event*</div>
 									<div class="col-md-3">
-										<textarea  name="aboutEvent" class="form-control" placeholder="About Event" required >${editEvent.aboutEvent}</textarea>
-											 
+										<textarea name="aboutEvent" class="form-control"
+											placeholder="About Event" required>${editEvent.aboutEvent}</textarea>
+
 
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Event Location*</div>
 									<div class="col-md-3">
-										<textarea name="eventLocation"
-											class="form-control"
-											placeholder="Event Location" required >${editEvent.eventLocation}</textarea>
+										<textarea name="eventLocation" class="form-control"
+											placeholder="Event Location" required>${editEvent.eventLocation}</textarea>
 									</div>
-									
-								
- <br>
+
+
+									<br>
 								</div>
 								<br>
-								
+
 								<div class="box-content">
 
 									<div class="col-md-2">Contact Person1*</div>
 									<div class="col-md-3">
 										<input type="text" name="pers1"
 											value="${editEvent.contactPersonName1}" class="form-control"
-											placeholder="Contact Person1"   
-											required />
+											placeholder="Contact Person1" required />
 
 									</div>
 
 									<div class="col-md-1"></div>
-									<div class="col-md-2"> Contact Person2*</div>
+									<div class="col-md-2">Contact Person2*</div>
 									<div class="col-md-3">
 										<input type="text" id="pers2" name="pers2"
-											 value="${editEvent.contactPersonName2 }" class="form-control"
+											value="${editEvent.contactPersonName2 }" class="form-control"
 											placeholder="Contact Person2 " required>
 
 									</div>
@@ -201,39 +204,41 @@
 
 								</div>
 								<br>
-								
+
 								<div class="box-content">
 
 									<div class="col-md-2">Person1 Contact No.*</div>
 									<div class="col-md-3">
-										<input type="text" name="mob1"  id="mob1"
+										<input type="text" name="mob1" id="mob1"
 											value="${editEvent.person1Mob}" class="form-control"
-											placeholder="Person1 Contact No."    autofocus  pattern="^(\+\d{1,3}[- ]?)?\d{10}$" title="Enter 10 digit mobile number"
-											required />
+											placeholder="Person1 Contact No." autofocus
+											pattern="^(\+\d{1,3}[- ]?)?\d{10}$"
+											title="Enter 10 digit mobile number" required />
 
 									</div>
 
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Person2 Contact No.*</div>
 									<div class="col-md-3">
-										<input type="text" name="mob2" id="mob2" 
+										<input type="text" name="mob2" id="mob2"
 											value="${editEvent.person2Mob}" class="form-control"
-											placeholder="Person2 Contact No."    autofocus  pattern="^(\+\d{1,3}[- ]?)?\d{10}$" title="Enter 10 digit mobile number"
-											required />
+											placeholder="Person2 Contact No." autofocus
+											pattern="^(\+\d{1,3}[- ]?)?\d{10}$"
+											title="Enter 10 digit mobile number" required />
 
 									</div>
 
 
 								</div>
 								<br>
-								
+
 								<div class="box-content">
 
 									<div class="col-md-2">Person1 Email*</div>
 									<div class="col-md-3">
 										<input type="email" name="email1"
 											value="${editEvent.person1EmailId}" class="form-control"
-											placeholder="Person1 Email"  required />
+											placeholder="Person1 Email" required />
 
 									</div>
 
@@ -249,124 +254,188 @@
 
 								</div>
 								<br>
-								  
-								  <div class="box-content">
+
+								<div class="box-content">
+
+									<div class="col-md-2">Stall Size *</div>
+									<div class="col-md-3">
+										<input type="text" name="stall_size"
+											value="${editEvent.stallSize}"
+											pattern="[+-]?([0-9]*[.])?[0-9]+" class="form-control"
+											placeholder="Stall Size" required />
+
+									</div>
+
+									<div class="col-md-1"></div>
+									<div class="col-md-2">Price For Exhibitor*</div>
+									<div class="col-md-3">
+										<input type="text" name="price_for_exh" id="price_for_exh"
+											onchange="calcDisc()" class="form-control"
+											placeholder="Price For Exhibitor"
+											pattern="[+-]?([0-9]*[.])?[0-9]+" required />
+
+									</div>
+
+
+								</div>
+
+								<div class="box-content">
+
+									<div class="col-md-2">Discount % for Exhibitor</div>
+									<div class="col-md-3">
+										<input type="text" name="disc_per" id="disc_per"
+											onchange="calcDisc()" value="0"
+											pattern="[+-]?([0-9]*[.])?[0-9]+" class="form-control"
+											placeholder="Discount %" required />
+
+									</div>
+
+									<div class="col-md-1"></div>
+									<div class="col-md-2">Disounted Price</div>
+									<div class="col-md-3">
+										<input type="text" name="disc_price" id="disc_price"
+											value="00000" class="form-control" readonly="readonly"
+											placeholder="Disounted Price"
+											pattern="[+-]?([0-9]*[.])?[0-9]+" required />
+
+									</div>
+
+								</div>
+
+								<div class="box-content">
 
 									<div class="col-md-2">Latitude*</div>
 									<div class="col-md-3">
 										<input type="text" name="latitude"
-											value="${editEvent.eventLocLat}" pattern="[+-]?([0-9]*[.])?[0-9]+" class="form-control"
-											placeholder="Latitude"  required />
+											value="${editEvent.eventLocLat}"
+											pattern="[+-]?([0-9]*[.])?[0-9]+" class="form-control"
+											placeholder="Latitude" required />
 
 									</div>
- 
+
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Longitude*</div>
 									<div class="col-md-3">
 										<input type="text" name="longitude"
 											value="${editEvent.eventLocLong}" class="form-control"
-											placeholder="Longitude" pattern="[+-]?([0-9]*[.])?[0-9]+" required />
+											placeholder="Longitude" pattern="[+-]?([0-9]*[.])?[0-9]+"
+											required />
 
 									</div>
 
 
 								</div>
 								<br>
-								
+
 								<div class="box-content">
-								
-								<div class="col-md-2">Company Type*</div>
+
+									<div class="col-md-2">Company Type*</div>
 									<div class="col-md-3">
-										<select  name="companyTypeId" id="companyTypeId" class="form-control chosen" required >
+										<select name="companyTypeId" id="companyTypeId"
+											class="form-control chosen" required>
 											<option value="">select</option>
-										 <c:forEach items="${companyTypeList}" var="companyTypeList" >
-										 	<c:choose>
-										 		<c:when test="${companyTypeList.companyTypeId==editEvent.companyTypeId}">
-										 		<option value="${companyTypeList.companyTypeId}" selected>${companyTypeList.companyTypeName}</option>
-										 		</c:when>
-										 		<c:otherwise>
-										 		<option value="${companyTypeList.companyTypeId}"> ${companyTypeList.companyTypeName}</option>
-										 		</c:otherwise>
-										 	</c:choose>
-											
-										 
-									 
-									 	
+											<c:forEach items="${companyTypeList}" var="companyTypeList">
+												<c:choose>
+													<c:when
+														test="${companyTypeList.companyTypeId==editEvent.companyTypeId}">
+														<option value="${companyTypeList.companyTypeId}" selected>${companyTypeList.companyTypeName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${companyTypeList.companyTypeId}"> ${companyTypeList.companyTypeName}</option>
+													</c:otherwise>
+												</c:choose>
+
+
+
+
 											</c:forEach>
-										  
-											</select>
+
+										</select>
 
 									</div>
-											<div class="col-md-1"></div>
+									<div class="col-md-1"></div>
 									<div class="col-md-2">Select Location*</div>
 									<div class="col-md-3">
-										<select  name="location" id="location" class="form-control chosen" required >
-										<option value="">select</option>
-										  
-										 
-										  <c:forEach items="${locationList}" var="locationList" >
-										<c:choose>
-											<c:when test="${locationList.locationId==editEvent.locationId}">
-												<option value="${locationList.locationId}" selected>${locationList.locationName}</option>
-											</c:when>
-											<c:otherwise>
-											<option value="${locationList.locationId}">${locationList.locationName}</option>
-											</c:otherwise>
-										</c:choose>
-									 	
-											</c:forEach>  
-											
-											</select>
+										<select name="location" id="location"
+											class="form-control chosen" required>
+											<option value="">select</option>
+
+
+											<c:forEach items="${locationList}" var="locationList">
+												<c:choose>
+													<c:when
+														test="${locationList.locationId==editEvent.locationId}">
+														<option value="${locationList.locationId}" selected>${locationList.locationName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${locationList.locationId}">${locationList.locationName}</option>
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+
+										</select>
 
 									</div>
-									 
- 
+
+
 								</div>
-								
+
 								<div class="box-content">
 									<div class="form-group">
-									<div class="col-md-2">Image</div>
-									<div class="col-md-3">
-										<div class="fileupload fileupload-new"
-											data-provides="fileupload">
-											<div class="fileupload-new img-thumbnail"
-												style="width: 150px; height: 150px;">
-												<img
-													src="${imageUrl}${editEvent.eventLogo}"
-													onerror="this.src='http://www.placehold.it/150x150/EFEFEF/AAAAAA&amp;text=no+image"
-													
-													alt="" />
+										<div class="col-md-2">Image</div>
+										<div class="col-md-3">
+											<div class="fileupload fileupload-new"
+												data-provides="fileupload">
+												<div class="fileupload-new img-thumbnail"
+													style="width: 150px; height: 150px;">
+													<img src="${imageUrl}${editEvent.eventLogo}"
+														onerror="this.src='http://www.placehold.it/150x150/EFEFEF/AAAAAA&amp;text=no+image"
+														alt="" />
+												</div>
+												<div
+													class="fileupload-preview fileupload-exists img-thumbnail"
+													style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+												<div>
+													<span class="btn btn-default btn-file"><span
+														class="fileupload-new">Select image</span> <span
+														class="fileupload-exists">Change</span> <input type="file"
+														class="file-input" name="documentFile" id="documentFile" /></span>
+													<a href="#" class="btn btn-default fileupload-exists"
+														data-dismiss="fileupload">Remove</a>
+
+												</div>
 											</div>
-											<div
-												class="fileupload-preview fileupload-exists img-thumbnail"
-												style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-											<div>
-												<span class="btn btn-default btn-file"><span
-													class="fileupload-new">Select image</span> <span
-													class="fileupload-exists">Change</span> <input type="file"
-													class="file-input" name="documentFile" id="documentFile"
-													 /></span> <a href="#"
-													class="btn btn-default fileupload-exists"
-													data-dismiss="fileupload">Remove</a>
-													
-											</div>
+											<input class="form-control" id="docPath"
+												placeholder="Current Km" value="${editEvent.eventLogo}"
+												size="16" type="hidden" name="docPath" />
 										</div>
-					<input class="form-control" id="docPath" placeholder="Current Km" value="${editEvent.eventLogo}" size="16"
-											type="hidden" name="docPath"   />
+
 									</div>
-									
-									 </div>
-									
-								</div><br><br><br><br><br><br><br><br><br><br> 
-								
+
+								</div>
+
+
+
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
 										<input type="submit" class="btn btn-info" value="Submit"
-											onclick="check();" id="submit"  >
-
-
-   <a href="${pageContext.request.contextPath}/showEventList" >	<input type="button" class="btn btn-default" value="Cancel"
-										               	id="Cancel"  ></a>
+											onclick="check();" id="submit"> <a
+											href="${pageContext.request.contextPath}/showEventList">
+											<input type="button" class="btn btn-default" value="Cancel"
+											id="Cancel">
+										</a>
 
 									</div>
 								</div>
@@ -381,7 +450,7 @@
 			</div>
 			<!-- END Main Content -->
 			<footer>
-			<p>2018 © AARYATECH SOLUTIONS</p>
+				<p>2018 © AARYATECH SOLUTIONS</p>
 			</footer>
 
 			<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
@@ -508,6 +577,23 @@
 				}
 		}
 	</script>
+
+	<script type="text/javascript">
+	
+	function calcDisc() {
+		//alert("Hi");
+		var discPer = document.getElementById("disc_per").value;
+		//alert("Per" + discPer);
+		var price = document.getElementById("price_for_exh").value;
+
+		var disAmt=price*discPer/100;
+		 document.getElementById("disc_price").value=disAmt;
+		//alert("disAmt" +disAmt );
+		
+	}
+	
+	</script>
+
 
 </body>
 </html>

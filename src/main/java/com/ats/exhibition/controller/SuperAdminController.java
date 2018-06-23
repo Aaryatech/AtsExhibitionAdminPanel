@@ -45,6 +45,7 @@ import com.ats.exhibition.common.VpsImageUpload;
 import com.ats.model.CompanyType;
 import com.ats.model.ErrorMessage;
 import com.ats.model.EventExhMapping;
+import com.ats.model.EventSup;
 import com.ats.model.EventWithOrgName;
 import com.ats.model.Events;
 import com.ats.model.Exhibitor;
@@ -1492,6 +1493,25 @@ public class SuperAdminController {
 
 			Events res = rest.postForObject(Constants.url + "/saveEvents", event, Events.class);
 
+			
+			
+EventSup evnSup =new EventSup();
+			
+			String stallSize = request.getParameter("stall_size");
+			String priceForExh = request.getParameter("price_for_exh");
+			String discPer = request.getParameter("disc_per");
+			String discPrice = request.getParameter("disc_price");
+
+			evnSup.setEventId(res.getEventId());
+			
+			evnSup.setDiscountedPrice(Float.parseFloat(discPrice));
+			evnSup.setPriceForExh(Float.parseFloat(priceForExh));
+			evnSup.setStallSize(Float.parseFloat(stallSize));
+			evnSup.setDiscPer(Float.parseFloat(discPer));
+			
+			EventSup evenSupRes = rest.postForObject(Constants.url + "/saveEventSup", evnSup, EventSup.class);
+
+			
 			System.out.println("res " + res);
 
 		} catch (Exception e) {
