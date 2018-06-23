@@ -69,8 +69,9 @@
 									<div class="col-md-3">
 										<input type="text" id="memName" name="memName"
 											class="form-control" value="${editComMember.memberName}"
-											placeholder=" Member Name " required oninvalid="this.setCustomValidity('Enter Menember Name')"
-    oninput="this.setCustomValidity('')" /> <input type="hidden"
+											placeholder=" Member Name " required
+											oninvalid="this.setCustomValidity('Enter Menember Name')"
+											oninput="this.setCustomValidity('')" /> <input type="hidden"
 											name="memId" value="${editComMember.memId}" />
 									</div>
 									<div class="col-md-1"></div>
@@ -78,8 +79,9 @@
 									<div class="col-md-3">
 										<input type="text" name="designation"
 											value="${editComMember.designation}" class="form-control"
-											placeholder="Designation" required oninvalid="this.setCustomValidity('Enter Member Designation Here')"
-    oninput="this.setCustomValidity('')" />
+											placeholder="Designation" required
+											oninvalid="this.setCustomValidity('Enter Member Designation Here')"
+											oninput="this.setCustomValidity('')" />
 									</div>
 
 
@@ -92,8 +94,9 @@
 									<div class="col-md-3">
 										<input type="text" name="mob"
 											value="${editComMember.contactNo}" class="form-control"
-											placeholder="Contact No" pattern="^\d{10}$" required oninvalid="this.setCustomValidity('Enter Member Contact Number Here')"
-    oninput="this.setCustomValidity('')"  />
+											placeholder="Contact No" pattern="^\d{10}$" required
+											oninvalid="this.setCustomValidity('Enter Member Contact Number Here')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -102,8 +105,9 @@
 									<div class="col-md-3">
 										<input type="email" name="emailId"
 											value="${editComMember.emailId}" class="form-control"
-											placeholder="Email" required oninvalid="this.setCustomValidity('Enter Member Email  Here')"
-    oninput="this.setCustomValidity('')"  />
+											placeholder="Email" required
+											oninvalid="this.setCustomValidity('Enter Member Email  Here')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -117,8 +121,9 @@
 									<div class="col-md-3">
 										<input type="text" name="compName"
 											value="${editComMember.companyName}" class="form-control"
-											placeholder="Company Name" required oninvalid="this.setCustomValidity('Enter Member Company Name Here')"
-    oninput="this.setCustomValidity('')"  />
+											placeholder="Company Name" required
+											oninvalid="this.setCustomValidity('Enter Member Company Name Here')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -127,8 +132,9 @@
 									<div class="col-md-3">
 										<input type="text" name="remark"
 											value="${editComMember.remark}" class="form-control"
-											placeholder="Remark" required oninvalid="this.setCustomValidity('Enter Remark Here')"
-    oninput="this.setCustomValidity('')"  />
+											placeholder="Remark" required
+											oninvalid="this.setCustomValidity('Enter Remark Here')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -142,8 +148,9 @@
 									<div class="col-md-3">
 										<input type="file" id="image" name="image"
 											class="form-control" value="${editComMember.image}"
-											placeholder=" Image " required oninvalid="this.setCustomValidity('Select Member Image Here')"
-    oninput="this.setCustomValidity('')"  />
+											placeholder=" Image " required
+											oninvalid="this.setCustomValidity('Select Member Image Here')"
+											oninput="this.setCustomValidity('')" />
 										<%-- <input type="hidden"
 											name="image" value="${editComMember.image}" /> --%>
 									</div>

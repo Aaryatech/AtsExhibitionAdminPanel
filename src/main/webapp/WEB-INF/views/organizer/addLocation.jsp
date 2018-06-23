@@ -48,8 +48,9 @@
 								<i class="fa fa-table"></i>Add Location
 							</h3>
 							<div class="box-tool">
-								<a href="${pageContext.request.contextPath}/loctionList"> Location List</a> <a
-									data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
+								<a href="${pageContext.request.contextPath}/loctionList">
+									Location List</a> <a data-action="collapse" href="#"><i
+									class="fa fa-chevron-up"></i></a>
 							</div>
 
 						</div>
@@ -65,18 +66,20 @@
 									<div class="col-md-3">
 										<input type="text" id="locationName" name="locationName"
 											class="form-control" value="${editLocation.locationName}"
-											placeholder=" Location Name " required /> <input
-											type="hidden" name="locationId"
-											value="${editLocation.locationId}" />
+											placeholder=" Location Name " required
+											oninvalid="this.setCustomValidity('Enter Location Name')"
+											oninput="this.setCustomValidity('')" /> <input type="hidden"
+											name="locationId" value="${editLocation.locationId}" />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Location Longitude*</div>
 									<div class="col-md-3">
 										<input type="text" id="locationLongi" name="locationLongi"
 											class="form-control" value="${editLocation.locationLong}"
-											placeholder=" Location Longitude" required /> <input
-											type="hidden" name="locationId"
-											value="${editLocation.locationId}" />
+											placeholder=" Location Longitude" required
+											oninvalid="this.setCustomValidity('Enter Location Longitude')"
+											oninput="this.setCustomValidity('')" /> <input type="hidden"
+											name="locationId" value="${editLocation.locationId}" />
 									</div>
 
 
@@ -89,9 +92,10 @@
 									<div class="col-md-3">
 										<input type="text" id="locationLat" name="locationLat"
 											class="form-control" value="${editLocation.locationLat}"
-											placeholder=" Location Latitude" required /> <input
-											type="hidden" name="locationLat"
-											value="${editLocation.locationId}" />
+											placeholder=" Location Latitude" required
+											oninvalid="this.setCustomValidity('Enter Location Latitude')"
+											oninput="this.setCustomValidity('')" /> <input type="hidden"
+											name="locationLat" value="${editLocation.locationId}" />
 									</div>
 
 
@@ -100,10 +104,10 @@
 									<div class="col-md-3">
 										<input type="text" name="remark" placeholder="Remark"
 											value="${editLocation.remark}" id="remark"
-											class="form-control " required />
-											<input
-											type="hidden" name="locationLat"
-											value="${editLocation.locationId}" />
+											class="form-control " required
+											oninvalid="this.setCustomValidity('Enter Remark')"
+											oninput="this.setCustomValidity('')" /> <input type="hidden"
+											name="locationLat" value="${editLocation.locationId}" />
 									</div>
 
 

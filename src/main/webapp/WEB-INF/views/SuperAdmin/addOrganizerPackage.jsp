@@ -5,13 +5,13 @@
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/assets/bootstrap-datepicker/css/datepicker.css" />
- 
+
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
 
 
 	<c:url var="getMixingListWithDate" value="/getMixingListWithDate"></c:url>
-	<c:url var="getMixingAllListWithDate" value="/getMixingAllListWithDate"></c:url> 
+	<c:url var="getMixingAllListWithDate" value="/getMixingAllListWithDate"></c:url>
 
 
 	<div class="container" id="main-container">
@@ -51,7 +51,8 @@
 								<i class="fa fa-table"></i>Add Organizer Package
 							</h3>
 							<div class="box-tool">
-								<a href="${pageContext.request.contextPath}/organizerPakageList"> Organizer Package List</a> <a data-action="collapse" href="#"><i
+								<a href="${pageContext.request.contextPath}/organizerPakageList">
+									Organizer Package List</a> <a data-action="collapse" href="#"><i
 									class="fa fa-chevron-up"></i></a>
 							</div>
 
@@ -62,49 +63,53 @@
 								action="${pageContext.request.contextPath}/insertOrganizerPackage"
 								method="post">
 
-								<div class="box-content"> 
-								
+								<div class="box-content">
+
 									<div class="col-md-2">Package Name*</div>
 									<div class="col-md-3">
 										<input type="text" id="pkgName" name="pkgName"
 											class="form-control" value="${package1.pkgName}"
-											placeholder=" Package Name " required /> 
-											<input type="hidden" name="pkgId" value="${package1.pkgId}" /> 
+											placeholder=" Package Name " required
+											oninvalid="this.setCustomValidity('Please Enter Package Name')"
+											oninput="this.setCustomValidity('')" /> <input type="hidden"
+											name="pkgId" value="${package1.pkgId}" />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">No Of Days*</div>
 									<div class="col-md-3">
 										<input type="number" name="noOfDays"
 											value="${package1.subDuration}" class="form-control"
-											placeholder="No Of Days" required />
+											placeholder="No Of Days" required
+											oninvalid="this.setCustomValidity('Please Select No Of Days')"
+											oninput="this.setCustomValidity('')" />
 									</div>
-									
-									 
+
+
 								</div>
 								<br>
-  
+
 								<div class="box-content">
 
 									<div class="col-md-2">Package Amt*</div>
 									<div class="col-md-3">
-										<input type="number" name="pkgAmt"
-											value="${package1.pkgAmt}" class="form-control"
-											placeholder="Package Amt"    
-											required />
+										<input type="number" name="pkgAmt" value="${package1.pkgAmt}"
+											class="form-control" placeholder="Package Amt" required
+											oninvalid="this.setCustomValidity('Please Enter Package Amount')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
 									<div class="col-md-1"></div>
-									 
+
 
 								</div>
 								<br>
-								
-								  
+
+
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
 										<input type="submit" class="btn btn-info" value="Submit"
-											id="submit"  >
+											id="submit">
 
 
 
@@ -121,7 +126,7 @@
 			</div>
 			<!-- END Main Content -->
 			<footer>
-			<p>2018 © AARYATECH SOLUTIONS</p>
+				<p>2018 © AARYATECH SOLUTIONS</p>
 			</footer>
 
 			<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i

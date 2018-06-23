@@ -81,15 +81,20 @@
 									<div class="col-md-3">
 										<input type="text" id="orgName" name="orgName"
 											class="form-control" value="${editOrganiser.orgName}"
-											placeholder=" Organizer Name " required /> <input
-											maxlength="50" type="hidden" name="orgId" value="${editOrganiser.orgId}" />
+											placeholder=" Organizer Name " required
+											oninvalid="this.setCustomValidity('Enter Organizer Name')"
+											oninput="this.setCustomValidity('')" /> <input
+											maxlength="50" type="hidden" name="orgId"
+											value="${editOrganiser.orgId}" />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Organizer Address*</div>
 									<div class="col-md-3">
 										<input type="text" name="orgAdd"
 											value="${editOrganiser.orgAddress}" class="form-control"
-											maxlength="50" placeholder="Organizer Address" required />
+											maxlength="50" placeholder="Organizer Address" required
+											oninvalid="this.setCustomValidity('Enter Organizer Address')"
+											oninput="this.setCustomValidity('')" />
 									</div>
 
 
@@ -104,7 +109,9 @@
 											value="${editOrganiser.orgContactNo}" class="form-control"
 											maxlength="10" placeholder="Contact No" autofocus
 											pattern="^(\+\d{1,3}[- ]?)?\d{10}$"
-											title="Enter 10 digit mobile number" required />
+											title="Enter 10 digit mobile number" required
+											oninvalid="this.setCustomValidity('Enter Organizer Mobile No')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -113,7 +120,9 @@
 									<div class="col-md-3">
 										<input type="email" name="email" placeholder="Email"
 											value="${editOrganiser.orgEmailId}" id="email"
-											class="form-control " required />
+											class="form-control " required
+											oninvalid="this.setCustomValidity('Enter Organizer EmailId')"
+											oninput="this.setCustomValidity('')" />
 									</div>
 
 
@@ -132,9 +141,11 @@
 
 									<div class="col-md-2">Work, Area*</div>
 									<div class="col-md-3">
-										<input type="text" name="workArea"
-											maxlength="50" value="${editOrganiser.workAreaKeywords}"
-											class="form-control" placeholder="Work Area" required />
+										<input type="text" name="workArea" maxlength="50"
+											value="${editOrganiser.workAreaKeywords}"
+											class="form-control" placeholder="Work Area" required
+											oninvalid="this.setCustomValidity('Enter Work Area')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -142,7 +153,7 @@
 
 								</div>
 								<br>
-								
+
 								<div class="box-content">
 
 									<div class="col-md-2">Color1*</div>
@@ -155,9 +166,11 @@
 
 									<div class="col-md-2">Color2*</div>
 									<div class="col-md-3">
-										<input type="color" name="color2"
-											maxlength="50" value="${editOrganiser.color2}"
-											class="form-control" placeholder="Color" required />
+										<input type="color" name="color2" maxlength="50"
+											value="${editOrganiser.color2}" class="form-control"
+											placeholder="Color" required
+											oninvalid="this.setCustomValidity('Fill Color')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -165,7 +178,7 @@
 
 								</div>
 								<br>
-								
+
 								<div class="box-content">
 
 									<div class="col-md-2">Color3*</div>
@@ -178,9 +191,11 @@
 
 									<div class="col-md-2">Color4*</div>
 									<div class="col-md-3">
-										<input type="color" name="color4"
-											maxlength="50" value="${editOrganiser.color4}"
-											class="form-control" placeholder="Color" required />
+										<input type="color" name="color4" maxlength="50"
+											value="${editOrganiser.color4}" class="form-control"
+											placeholder="Color" required
+											oninvalid="this.setCustomValidity('Fill Color')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -245,25 +260,25 @@
 
 									<div class="col-md-2">Mobile No*</div>
 									<div class="col-md-3">
-									<c:choose>
-									<c:when test="${isEdit==1}">
-									<input type="text" name="mob" id="mob"
-											value="${editOrganiser.userMob}" class="form-control"
-											placeholder="Mobile No" autofocus onkeyup="checkMobileNo()"
-											pattern="^(\+\d{1,3}[- ]?)?\d{10}$"
-											title="Enter 10 digit mobile number" readonly />
-									
-									</c:when>
-									<c:otherwise> 
-									<input type="text" name="mob" id="mob"
-											value="${editOrganiser.userMob}" class="form-control"
-											placeholder="Mobile No" autofocus onkeyup="checkMobileNo()"
-											maxlength="10" pattern="^(\+\d{1,3}[- ]?)?\d{10}$"
-											title="Enter 10 digit mobile number" required />
-									
-									</c:otherwise>
-								</c:choose>
-										 
+										<c:choose>
+											<c:when test="${isEdit==1}">
+												<input type="text" name="mob" id="mob"
+													value="${editOrganiser.userMob}" class="form-control"
+													placeholder="Mobile No" autofocus onkeyup="checkMobileNo()"
+													pattern="^(\+\d{1,3}[- ]?)?\d{10}$"
+													title="Enter 10 digit mobile number" readonly />
+
+											</c:when>
+											<c:otherwise>
+												<input type="text" name="mob" id="mob"
+													value="${editOrganiser.userMob}" class="form-control"
+													placeholder="Mobile No" autofocus onkeyup="checkMobileNo()"
+													maxlength="10" pattern="^(\+\d{1,3}[- ]?)?\d{10}$"
+													title="Enter 10 digit mobile number" required />
+
+											</c:otherwise>
+										</c:choose>
+
 									</div>
 
 									<div class="col-md-1"></div>
@@ -271,7 +286,11 @@
 									<div class="col-md-3">
 										<input type="text" id="password" name="password"
 											value="${editOrganiser.userPassword }" class="form-control"
-											placeholder="Password " required>
+											placeholder="Password "
+											oninvalid="this.setCustomValidity('Enter Menember Name')"
+											oninput="this.setCustomValidity('')" requirde
+											oninvalid="this.setCustomValidity('Enter Password')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -306,8 +325,12 @@
 													<span class="btn btn-default btn-file"><span
 														class="fileupload-new">Select image</span> <span
 														class="fileupload-exists">Change</span> <input type="file"
-														class="file-input" name="documentFile" id="documentFile" /></span>
-													<a href="#" class="btn btn-default fileupload-exists"
+														oninvalid="this.setCustomValidity('Select Organizer Image Here')"
+														oninput="this.setCustomValidity('')"
+														/
+														class="file-input" name="documentFile"
+														id="documentFile" /></span> <a href="#"
+														class="btn btn-default fileupload-exists"
 														data-dismiss="fileupload">Remove</a>
 
 												</div>
@@ -325,16 +348,16 @@
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
 										<c:choose>
-											<c:when test="${isEdit==1}"> 
+											<c:when test="${isEdit==1}">
 												<input type="submit" class="btn btn-info" value="Submit"
-															onclick="check();" id="submit"  >
+													onclick="check();" id="submit">
 											</c:when>
-											<c:otherwise> 
+											<c:otherwise>
 												<input type="submit" class="btn btn-info" value="Submit"
-															onclick="check();" id="submit" disabled>
+													onclick="check();" id="submit" disabled>
 											</c:otherwise>
 										</c:choose>
-										
+
 										<c:choose>
 											<c:when test="${userType==0}">
 												<a href="${pageContext.request.contextPath}/orgnizerList">

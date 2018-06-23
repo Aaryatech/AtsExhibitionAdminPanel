@@ -34,10 +34,11 @@
 				<div>
 					<h1>
 
-						<i class="fa fa-file-o"></i> <c:choose>
-									<c:when test="${edit==1}">Edit Exhibitor</c:when>
-									<c:otherwise>Add Exhibitor</c:otherwise>
-								</c:choose>
+						<i class="fa fa-file-o"></i>
+						<c:choose>
+							<c:when test="${edit==1}">Edit Exhibitor</c:when>
+							<c:otherwise>Add Exhibitor</c:otherwise>
+						</c:choose>
 
 					</h1>
 				</div>
@@ -50,7 +51,8 @@
 					<div class="box" id="todayslist">
 						<div class="box-title">
 							<h3>
-								<i class="fa fa-table"></i><c:choose>
+								<i class="fa fa-table"></i>
+								<c:choose>
 									<c:when test="${edit==1}">Edit Exhibitor</c:when>
 									<c:otherwise>Add Exhibitor</c:otherwise>
 								</c:choose>
@@ -73,7 +75,9 @@
 									<div class="col-md-2">Select Organiser*</div>
 									<div class="col-md-3">
 										<select name="orgId" id="orgId" class="form-control chosen"
-											required>
+											required
+											oninvalid="this.setCustomValidity('Please Select Organizer')"
+											oninput="this.setCustomValidity('')">
 											<option value="">select</option>
 											<c:forEach items="${organiserList}" var="organiserList">
 												<c:choose>
@@ -103,15 +107,19 @@
 									<div class="col-md-3">
 										<input type="text" id="exhibitorName" name="exhibitorName"
 											class="form-control" value="${editExhibitor.exhName}"
-											placeholder=" Exhibitor Name " required /> <input
-											type="hidden" name="exhId" value="${editExhibitor.exhId}" />
+											placeholder=" Exhibitor Name " required
+											oninvalid="this.setCustomValidity('Enter Exhibitor Name')"
+											oninput="this.setCustomValidity('')" /> <input type="hidden"
+											name="exhId" value="${editExhibitor.exhId}" />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Company Name*</div>
 									<div class="col-md-3">
 										<input type="text" name="compnyName"
 											value="${editExhibitor.exhCompany}" class="form-control"
-											placeholder="Company Name" required />
+											placeholder="Company Name" required
+											oninvalid="this.setCustomValidity('Enter Company Name')"
+											oninput="this.setCustomValidity('')" />
 									</div>
 
 
@@ -123,7 +131,9 @@
 									<div class="col-md-2">Company Type*</div>
 									<div class="col-md-3">
 										<select name="companyTypeId" id="companyTypeId"
-											class="form-control chosen" required>
+											class="form-control chosen" required
+											oninvalid="this.setCustomValidity('Enter Compny Type')"
+											oninput="this.setCustomValidity('')">
 											<option value="">select</option>
 											<c:forEach items="${companyTypeList}" var="companyTypeList">
 												<c:choose>
@@ -149,7 +159,9 @@
 									<div class="col-md-2">About Company*</div>
 									<div class="col-md-3">
 										<textarea name="aboutCompany" class="form-control"
-											placeholder="About Company" required>${editExhibitor.aboutCompany}</textarea>
+											placeholder="About Company" required
+											oninvalid="this.setCustomValidity('Enter About Company')"
+											oninput="this.setCustomValidity('')">${editExhibitor.aboutCompany}</textarea>
 
 
 									</div>
@@ -165,7 +177,9 @@
 									<div class="col-md-3">
 										<input type="text" name="pers1"
 											value="${editExhibitor.contactPersonName1}"
-											class="form-control" placeholder="Contact Person" required />
+											class="form-control" placeholder="Contact Person" required
+											oninvalid="this.setCustomValidity('Please Enter Contact No1 ')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -197,7 +211,9 @@
 									<div class="col-md-3">
 										<input type="text" name="mob2"
 											value="${editExhibitor.personMob2}" class="form-control"
-											placeholder="Mobile No" pattern="^\d{10}$" required />
+											placeholder="Mobile No" pattern="^\d{10}$" required
+											oninvalid="this.setCustomValidity('Please Enter Contact No2')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -211,7 +227,9 @@
 									<div class="col-md-3">
 										<input type="email" name="email1"
 											value="${editExhibitor.personEmail2}" class="form-control"
-											placeholder="Email" required />
+											placeholder="Email" required
+											oninvalid="this.setCustomValidity('Please Enter Email Person1')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -220,7 +238,9 @@
 									<div class="col-md-3">
 										<input type="email" name="email2"
 											value="${editExhibitor.personEmail2}" class="form-control"
-											placeholder="Email" required />
+											placeholder="Email" required
+											oninvalid="this.setCustomValidity('Please Enter Email Person2')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -234,7 +254,9 @@
 									<div class="col-md-3">
 										<input type="text" name="latitude"
 											value="${editExhibitor.compLat}" class="form-control"
-											placeholder="Latitude" required />
+											placeholder="Latitude" required
+											oninvalid="this.setCustomValidity('Please Enter Latitude')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -243,7 +265,9 @@
 									<div class="col-md-3">
 										<input type="text" name="longitude"
 											value="${editExhibitor.compLong}" class="form-control"
-											placeholder="Longitude" required />
+											placeholder="Longitude" required
+											oninvalid="this.setCustomValidity('Please Enter Longitude')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -257,7 +281,9 @@
 									<div class="col-md-3">
 										<input type="text" name="address"
 											value="${editExhibitor.address}" class="form-control"
-											placeholder="Address" required />
+											placeholder="Address" required
+											oninvalid="this.setCustomValidity('Please Enter Address')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
@@ -265,7 +291,9 @@
 									<div class="col-md-2">Select Location*</div>
 									<div class="col-md-3">
 										<select name="location" id="location"
-											class="form-control chosen" required>
+											class="form-control chosen" required
+											oninvalid="this.setCustomValidity('Please Enter Location')"
+											oninput="this.setCustomValidity('')">
 											<option value="">select</option>
 
 
@@ -295,19 +323,21 @@
 									<div class="col-md-2">Mobile No*</div>
 									<div class="col-md-3">
 										<c:choose>
-									<c:when test="${edit==1}"> 
-											<input type="text" name="usesrMob"
-												value="${editExhibitor.userMob}" class="form-control"
-												id="usesrMob" onkeyup="checkMobileNo();"
-												placeholder="Mobile No" pattern="^\d{10}$" readonly />
-									</c:when>
-									<c:otherwise> 
-											<input type="text" name="usesrMob"
+											<c:when test="${edit==1}">
+												<input type="text" name="usesrMob"
 													value="${editExhibitor.userMob}" class="form-control"
 													id="usesrMob" onkeyup="checkMobileNo();"
-													placeholder="Mobile No" pattern="^\d{10}$" required />
-									</c:otherwise>
-								</c:choose> 
+													placeholder="Mobile No" pattern="^\d{10}$" readonly />
+											</c:when>
+											<c:otherwise>
+												<input type="text" name="usesrMob"
+													value="${editExhibitor.userMob}" class="form-control"
+													id="usesrMob" onkeyup="checkMobileNo();"
+													placeholder="Mobile No" pattern="^\d{10}$" required
+													oninvalid="this.setCustomValidity('Please Enter Mobile No')"
+													oninput="this.setCustomValidity('')" />
+											</c:otherwise>
+										</c:choose>
 
 									</div>
 
@@ -316,14 +346,16 @@
 									<div class="col-md-3">
 										<input type="password" name="password"
 											value="${editExhibitor.password}" class="form-control"
-											placeholder="Password" required />
+											placeholder="Password" required
+											oninvalid="this.setCustomValidity('Please Enter Password')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 
 
 								</div>
 								<br>
-								
+
 								<div class="box-content">
 									<div class="form-group">
 										<div class="col-md-2">Image</div>
@@ -343,8 +375,12 @@
 													<span class="btn btn-default btn-file"><span
 														class="fileupload-new">Select image</span> <span
 														class="fileupload-exists">Change</span> <input type="file"
-														class="file-input" name="documentFile" id="documentFile" /></span>
-													<a href="#" class="btn btn-default fileupload-exists"
+														oninvalid="this.setCustomValidity('Please insert Image here')"
+														oninput="this.setCustomValidity('')"
+														/
+														class="file-input" name="documentFile"
+														id="documentFile" /></span> <a href="#"
+														class="btn btn-default fileupload-exists"
 														data-dismiss="fileupload">Remove</a>
 
 												</div>
@@ -362,14 +398,15 @@
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
 										<c:choose>
-									<c:when test="${edit==1}"> 
-									<input type="submit" class="btn btn-info" value="Submit"
-											onclick="check();" id="submit"  ></c:when>
-									<c:otherwise> 
-									<input type="submit" class="btn btn-info" value="Submit"
-											onclick="check();" id="submit" disabled>
+											<c:when test="${edit==1}">
+												<input type="submit" class="btn btn-info" value="Submit"
+													onclick="check();" id="submit">
+											</c:when>
+											<c:otherwise>
+												<input type="submit" class="btn btn-info" value="Submit"
+													onclick="check();" id="submit" disabled>
 											</c:otherwise>
-								</c:choose> 
+										</c:choose>
 
 
 									</div>
