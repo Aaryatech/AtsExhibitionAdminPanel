@@ -46,6 +46,7 @@ import com.ats.model.ErrorMessage;
 import com.ats.model.EventExhMapping;
 import com.ats.model.EventPhoto;
 import com.ats.model.EventPhotoWithEventName;
+import com.ats.model.EventSup;
 import com.ats.model.EventWithOrgName;
 import com.ats.model.Events;
 import com.ats.model.Exhibitor;
@@ -406,7 +407,16 @@ public class OrganizerController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("eventId", eventId);
+			
+			
 			ErrorMessage delete = rest.postForObject(Constants.url + "/deleteEvent", map, ErrorMessage.class);
+			
+			EventSup editEventSup = rest.postForObject(Constants.url + "/getEventSupByEventId", map, EventSup.class);
+			//System.err.println("EventSup -> " +editEventSup.toString());
+			editEventSup.setIsUsed(0);
+			EventSup evenSupRes = rest.postForObject(Constants.url + "/saveEventSup", editEventSup, EventSup.class);
+
+			
 			System.out.println(delete);
 
 		} catch (Exception e) {
