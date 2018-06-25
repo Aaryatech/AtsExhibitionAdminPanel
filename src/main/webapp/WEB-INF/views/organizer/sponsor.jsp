@@ -75,7 +75,8 @@
 								<i class="fa fa-table"></i>Add Sponsor
 							</h3>
 							<div class="box-tool">
-								<a href="${pageContext.request.contextPath}/addSponsor">Sponsor List</a> <a data-action="collapse" href="#"><i
+								<a href="${pageContext.request.contextPath}/addSponsor">Sponsor
+									List</a> <a data-action="collapse" href="#"><i
 									class="fa fa-chevron-up"></i></a>
 							</div>
 
@@ -85,114 +86,123 @@
 							<form action="${pageContext.request.contextPath}/insertSponsor"
 								method="post" enctype="multipart/form-data">
 
-								 <div class="box-content"> 
+								<div class="box-content">
 									<div class="col-md-2">Sponsor Name*</div>
 									<div class="col-md-3">
 										<input type="text" id="sponsorName" name="sponsorName"
 											class="form-control" value="${sponsor.name}"
-											placeholder="Sponsor Name " required /> 
-											<input type="hidden" name="sponsorId" id="sponsorId" value="${sponsor.sponsorId}" />
+											placeholder="Sponsor Name " required
+											oninvalid="this.setCustomValidity('Enter Sponsor Name')"
+											oninput="this.setCustomValidity('')" /> <input type="hidden"
+											name="sponsorId" id="sponsorId" value="${sponsor.sponsorId}" />
 									</div>
-									 <div class="col-md-1"></div>
+									<div class="col-md-1"></div>
 									<div class="col-md-2">Event*</div>
 									<div class="col-md-3">
-										<select id="eventId" name="eventId"  
-											class="form-control" required>
-                                       <option value="">Select Event</option>
-										<c:forEach items="${eventList}" var="eventList" >
-										<c:choose>
-											<c:when test="${eventList.eventId==sponsor.eventId}">
-												<option value="${eventList.eventId}" selected>${eventList.eventName}</option>
-											</c:when>
-											<c:otherwise>
-											<option value="${eventList.eventId}">${eventList.eventName}</option>
-											</c:otherwise>
-										</c:choose>
-									 	
+										<select id="eventId" name="eventId" class="form-control"
+											required
+											oninvalid="this.setCustomValidity('Please Select Event')"
+											oninput="this.setCustomValidity('')">
+											<option value="">Select Event</option>
+											<c:forEach items="${eventList}" var="eventList">
+												<c:choose>
+													<c:when test="${eventList.eventId==sponsor.eventId}">
+														<option value="${eventList.eventId}" selected>${eventList.eventName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${eventList.eventId}">${eventList.eventName}</option>
+													</c:otherwise>
+												</c:choose>
+
 											</c:forEach>
 										</select>
 									</div>
 								</div>
 								<br>
-                       	<div class="box-content"> 
-								
+								<div class="box-content">
+
 									<div class="col-md-2">Company*</div>
 									<div class="col-md-3">
-										<select id="companyId" name="companyId"  
-											class="form-control" required>
-                                          <option value="">Select Company</option>
-										<c:forEach items="${companyList}" var="company" >
-									  <c:choose>
-											<c:when test="${sponsor.companyId==company.companyTypeId}">
-												<option value="${company.companyTypeId}" selected>${company.companyTypeName}</option>
-											</c:when>
-											<c:otherwise>
-											<option value="${company.companyTypeId}">${company.companyTypeName}</option>
-											</c:otherwise>
-										</c:choose>  
-									 	
+										<select id="companyId" name="companyId" class="form-control"
+											required>
+											<option value="">Select Company</option>
+											<c:forEach items="${companyList}" var="company">
+												<c:choose>
+													<c:when test="${sponsor.companyId==company.companyTypeId}">
+														<option value="${company.companyTypeId}" selected>${company.companyTypeName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${company.companyTypeId}">${company.companyTypeName}</option>
+													</c:otherwise>
+												</c:choose>
+
 											</c:forEach>
 										</select>
 									</div>
 									<div class="col-md-1"></div>
-									 <div class="col-md-2">Designation*</div>
+									<div class="col-md-2">Designation*</div>
 									<div class="col-md-3">
 										<input type="text" name="designation"
 											value="${sponsor.designation}" class="form-control"
-											placeholder="Designation"  required />
-									</div>
-								</div> 
-								<br>
-								<div class="box-content">
-                             <div class="col-md-2">Mobile No.*</div>
-									<div class="col-md-3">
-										<input type="text" name="mobile"
-											value="${sponsor.mobile}" class="form-control"
-											placeholder="Mobile No"   pattern="^\d{10}$"
-											required />
-									</div>
-									<div class="col-md-1"></div>
-									<div class="col-md-2"> Email*</div>
-									<div class="col-md-3">
-										<input type="email" name="emailId" id="emailId"
-											value="${sponsor.email}" class="form-control"
-											placeholder="Email"  required />
+											placeholder="Designation" required
+											oninvalid="this.setCustomValidity('Enter Designation')"
+											oninput="this.setCustomValidity('')" />
 									</div>
 								</div>
 								<br>
-								
+								<div class="box-content">
+									<div class="col-md-2">Mobile No.*</div>
+									<div class="col-md-3">
+										<input type="text" name="mobile" value="${sponsor.mobile}"
+											class="form-control" placeholder="Mobile No"
+											pattern="^\d{10}$" required
+											oninvalid="this.setCustomValidity('Enter Sponsor Mobile No')"
+											oninput="this.setCustomValidity('')" />
+									</div>
+									<div class="col-md-1"></div>
+									<div class="col-md-2">Email*</div>
+									<div class="col-md-3">
+										<input type="email" name="emailId" id="emailId"
+											value="${sponsor.email}" class="form-control"
+											placeholder="Email" required
+											oninvalid="this.setCustomValidity('Enter Sponsor Email Id')"
+											oninput="this.setCustomValidity('')" />
+									</div>
+								</div>
+								<br>
+
 								<div class="box-content">
 
 									<div class="col-md-2">Website*</div>
 									<div class="col-md-3">
-										<input type="text" name="website"
-											value="${sponsor.website}" class="form-control"
-											placeholder="Website Link"  required />
+										<input type="text" name="website" value="${sponsor.website}"
+											class="form-control" placeholder="Website Link" required
+											oninvalid="this.setCustomValidity('Enter Website Link')"
+											oninput="this.setCustomValidity('')" />
 									</div>
 
 									<div class="col-md-1"></div>
-										  <div class="col-md-2">Remark</div>
+									<div class="col-md-2">Remark</div>
 									<div class="col-md-3">
-										<input type="text" name="remark"
-											value="${sponsor.remark}" class="form-control"
-											placeholder="Remark"  />
+										<input type="text" name="remark" value="${sponsor.remark}"
+											class="form-control" placeholder="Remark" required
+											oninvalid="this.setCustomValidity('Enter Remark')"
+											oninput="this.setCustomValidity('')" />
 
 									</div>
 								</div>
 								<br>
-								  	<div class="box-content">
-                                 
-											<div class="col-md-2">Photo *</div>
-					
+								<div class="box-content">
+
+									<div class="col-md-2">Photo *</div>
+
 									<div class="col-md-3">
 										<div class="fileupload fileupload-new"
 											data-provides="fileupload">
 											<div class="fileupload-new img-thumbnail"
 												style="width: 250px; height: 70px;">
-												<img
-													src="${sponserImage}${sponsor.photo}"
+												<img src="${sponserImage}${sponsor.photo}"
 													onerror="this.src='http://www.placehold.it/150x150/EFEFEF/AAAAAA&amp;text=no+image"
-													
 													alt="" />
 											</div>
 											<div
@@ -202,103 +212,107 @@
 												<span class="btn btn-default btn-file"><span
 													class="fileupload-new">Select image</span> <span
 													class="fileupload-exists">Change</span> <input type="file"
-													class="file-input" name="img1" id="img1"
-													 /></span> <a href="#"
+													oninvalid="this.setCustomValidity('Please Insert Image Here')"
+													oninput="this.setCustomValidity('')" class="file-input"
+													name="img1" id="img1" /></span> <a href="#"
 													class="btn btn-default fileupload-exists"
 													data-dismiss="fileupload">Remove</a>
-													
+
 											</div>
 										</div>
-					
-									
-									 </div>
-									 <div class="col-md-1"></div>
-									 <br>
-						
-									<div class="col-md-12" style="text-align: center">
-										<input type="submit" class="btn btn-info" value="Submit"
-											id="submit"  >
+
 
 									</div>
-								 
+									<div class="col-md-1"></div>
+									<br>
+
+									<div class="col-md-12" style="text-align: center">
+										<input type="submit" class="btn btn-info" value="Submit"
+											id="submit">
+
+									</div>
 							</form>
-                       </div>
-                       <!-- BEGIN Main Content -->
-                       
-                       
-		<div class="box" id="pending">
-
-				<div class="box-content">
-
-					<br /> 
-					<div class="clearfix"></div>
-					<div class="table-responsive" style="border: 0">
-						<table class="table table-advance" id="table1">
-							<thead>
-								<tr>
-									<th style="width: 18px">No</th>
-									<th class="col-md-1">Sponsor Name</th>
-									<th class="col-md-1">Event</th>
-									<th class="col-md-1">Company </th>
-									<th class="col-md-1">Designation</th> 
-									<th class="col-md-1">Mobile</th>	
-									<th class="col-md-3">Photo</th>
-									<th class="col-md-1">Email</th>
-									<th class="col-md-2" >Website</th>
-						    		<th class="col-md-2">Remark</th>		
-						    		<th class="col-md-1">Action</th>		
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${sponsorList}" var="sponsorRes" varStatus="count">
-									<tr class="table-flag-blue">
-										<td>${count.index+1}</td>
-										<td>${sponsorRes.name}</td>
-										<td>${sponsorRes.eventName}</td>
-										<td>${sponsorRes.company}</td>
-										<td>${sponsorRes.designation}</td>
-										<td>${sponsorRes.mobile}</td>
-										<td  class="col-md-4"><img src="${sponserImage}${sponsorRes.photo}" alt="no image available" height="100" width="100"></img></td>
-										<td>${sponsorRes.email}</td>
-										<td>${sponsorRes.website}</td>
-										<td>${sponsorRes.remark}</td>
-										 
-										 <td><a href="${pageContext.request.contextPath}/editSponsor/${sponsorRes.sponsorId}"><span
-												class="glyphicon glyphicon-edit"></span></a> 
-											<a href="${pageContext.request.contextPath}/deleteSponsor/${sponsorRes.sponsorId}"
-											onClick="return confirm('Are you sure want to delete this record');"><span
-												class="glyphicon glyphicon-remove"></span></a></td>  
-									</tr>
-								</c:forEach>
+						</div>
+						<!-- BEGIN Main Content -->
 
 
-							</tbody>
-						</table>
-					</div>
-				</div>
-</div>
-			</div>
-						
+						<div class="box" id="pending">
+
+							<div class="box-content">
+
+								<br />
+								<div class="clearfix"></div>
+								<div class="table-responsive" style="border: 0">
+									<table class="table table-advance" id="table1">
+										<thead>
+											<tr>
+												<th style="width: 18px">No</th>
+												<th class="col-md-1">Sponsor Name</th>
+												<th class="col-md-1">Event</th>
+												<th class="col-md-1">Company</th>
+												<th class="col-md-1">Designation</th>
+												<th class="col-md-1">Mobile</th>
+												<th class="col-md-3">Photo</th>
+												<th class="col-md-1">Email</th>
+												<th class="col-md-2">Website</th>
+												<th class="col-md-2">Remark</th>
+												<th class="col-md-1">Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${sponsorList}" var="sponsorRes"
+												varStatus="count">
+												<tr class="table-flag-blue">
+													<td>${count.index+1}</td>
+													<td>${sponsorRes.name}</td>
+													<td>${sponsorRes.eventName}</td>
+													<td>${sponsorRes.company}</td>
+													<td>${sponsorRes.designation}</td>
+													<td>${sponsorRes.mobile}</td>
+													<td class="col-md-4"><img
+														src="${sponserImage}${sponsorRes.photo}"
+														alt="no image available" height="100" width="100"></img></td>
+													<td>${sponsorRes.email}</td>
+													<td>${sponsorRes.website}</td>
+													<td>${sponsorRes.remark}</td>
+
+													<td><a
+														href="${pageContext.request.contextPath}/editSponsor/${sponsorRes.sponsorId}"><span
+															class="glyphicon glyphicon-edit"></span></a> <a
+														href="${pageContext.request.contextPath}/deleteSponsor/${sponsorRes.sponsorId}"
+														onClick="return confirm('Are you sure want to delete this record');"><span
+															class="glyphicon glyphicon-remove"></span></a></td>
+												</tr>
+											</c:forEach>
+
+
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 
-
 				</div>
 			</div>
-			<!-- END Main Content -->
-			<footer>
-			<p>2018 © AARYATECH SOLUTIONS</p>
-			</footer>
 
-			<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
-				class="fa fa-chevron-up"></i></a>
+
 		</div>
-		<!-- END Content -->
+	</div>
+	<!-- END Main Content -->
+	<footer>
+		<p>2018 © AARYATECH SOLUTIONS</p>
+	</footer>
+
+	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
+		class="fa fa-chevron-up"></i></a>
+	</div>
+	<!-- END Content -->
 	</div>
 	<!-- END Container -->
 
 	<!--basic scripts-->
-	
+
 	<!--basic scripts-->
 	<script
 		src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -351,8 +365,8 @@
 		src="${pageContext.request.contextPath}/resources/assets/ckeditor/ckeditor.js"></script>
 
 	<!--flaty scripts-->
- 	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
- 	<script type="text/javascript"
+	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
+	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
@@ -376,7 +390,7 @@
 
 			}
 		}
-		</script>
+	</script>
 	<!-- 	<script type="text/javascript">
 
 		$(document).on('click', '#close-preview', function(){ 
@@ -438,7 +452,7 @@
 		    });  
 		});
 		</script> -->
-	
+
 
 </body>
 </html>

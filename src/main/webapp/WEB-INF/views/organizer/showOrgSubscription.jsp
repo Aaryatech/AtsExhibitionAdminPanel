@@ -50,7 +50,8 @@
 					<i class="fa fa-bars"></i>Organizer Subscription
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/orgSubscriptionList">Organizer Subscription List</a> <a data-action="collapse" href="#"><i
+					<a href="${pageContext.request.contextPath}/orgSubscriptionList">Organizer
+						Subscription List</a> <a data-action="collapse" href="#"><i
 						class="fa fa-chevron-up"></i></a>
 				</div>
 
@@ -64,18 +65,21 @@
 						<div class="col-md-2">Select Organizer*</div>
 						<div class="col-md-3">
 							<select id="orgId" name="orgId" class="form-control chosen"
-								required>
+								required oninvalid="this.setCustomValidity('Select Organizer')"
+								oninput="this.setCustomValidity('')">
 								<option value="">Select Organizer</option>
 								<c:forEach items="${organiserList}" var="organiserList">
 
-								<option value="${organiserList.orgId}">${organiserList.orgName}</option>
+									<option value="${organiserList.orgId}">${organiserList.orgName}</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div class="col-md-2">Select Package*</div>
 						<div class="col-md-3">
 							<select id="pkgId" name="pkgId" onchange="onPackage(this.value)"
-								class="form-control chosen" required>
+								class="form-control chosen" required
+								oninvalid="this.setCustomValidity('Select Package')"
+								oninput="this.setCustomValidity('')">
 								<option value="">Select Package</option>
 								<c:forEach items="${packageList}" var="packageList">
 									<option value="${packageList.pkgId}">${packageList.pkgName}</option>
@@ -87,7 +91,7 @@
 					<div class="box-content">
 						<div class="col-md-2">Package Amount*</div>
 						<div class="col-md-3">
-							<input type="text" name="pkgAmt" id="pkgAmt" class="form-control" readonly/ >
+							<input type="text" name="pkgAmt" id="pkgAmt" class="form-control"readonly/ >
 						</div>
 
 					</div>
@@ -97,10 +101,11 @@
 
 						<div class="col-md-2">From Date</div>
 						<div class="col-md-3">
-							<input type="text" name="fromDate"
-								value="${editEmployee.empJoiningDate}" placeholder="From Date"
+							<input type="text" name="fromDate" placeholder="From Date"
 								onblur="calculateToDate()" id="fromDate"
-								class="form-control date-picker" required />
+								class="form-control date-picker" required
+								oninvalid="this.setCustomValidity('Enter From Date')"
+								oninput="this.setCustomValidity('')" />
 						</div>
 
 
@@ -108,7 +113,7 @@
 						<div class="col-md-3">
 							<input type="text" name="toDate"
 								value="${editEmployee.empJoiningDate}" placeholder="To Date"
-								id="toDate" class="form-control date-picker" required / readonly/>
+								id="toDate" class="form-control date-picker" required / readonly />
 						</div>
 
 
@@ -130,7 +135,7 @@
 	<!-- END Main Content -->
 	<footer>
 		<p>2018 © AARYATECH SOLUTIONS</p>
-	</footer> 
+	</footer>
 	<a id="btn-scrollup" class="btn btn-circle btn-lg" href="#"><i
 		class="fa fa-chevron-up"></i></a>
 	<!--basic scripts-->
@@ -204,7 +209,7 @@
 		}
 	</script>
 
-	
+
 
 
 	<script type="text/javascript">
@@ -279,9 +284,9 @@
 			document.getElementById("remAmt").value = remAmt;
 
 		}
-		
+
 		function check() {
-				
+
 			var pkgId = document.getElementById("pkgId").value;
 			var orgId = document.getElementById("orgId").value;
 
@@ -290,7 +295,7 @@
 			} else if (pkgId == "" || pkgId == null) {
 				alert("Select Pakage");
 			}
-			 
+
 		}
 	</script>
 

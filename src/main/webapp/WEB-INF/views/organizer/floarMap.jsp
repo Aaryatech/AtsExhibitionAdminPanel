@@ -6,7 +6,7 @@
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
-<body >
+<body>
 
 
 	<c:url var="allRecordwithDate" value="/allRecordwithDate"></c:url>
@@ -48,81 +48,91 @@
 					<i class="fa fa-bars"></i>Floar Map
 				</h3>
 				<div class="box-tool">
-					<a href="${pageContext.request.contextPath}/addSchedule"></a> <a data-action="collapse" href="#"><i
-						class="fa fa-chevron-up"></i></a>
+					<a href="${pageContext.request.contextPath}/addSchedule"></a> <a
+						data-action="collapse" href="#"><i class="fa fa-chevron-up"></i></a>
 				</div>
 
 			</div>
-			   <form action="${pageContext.request.contextPath}/insertFloarMap" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="floarMapId" id="floarMapId" value="${floarMap.floarMapId}"/>
-				<input type="hidden" name="editFloarMap1" id="editFloarMap1" value="${floarMap.floarMap1}"/>
-				<input type="hidden" name="isEdit" id="isEdit" value="${isEdit}"/>
-		
-				<input type="hidden" name="editFloarMap2" id="editFloarMap2" value="${floarMap.floarMap2}"/>
-		
-				<input type="hidden" name="editFloarMap3" id="editFloarMap3" value="${floarMap.floarMap3}"/>
-		
-				<input type="hidden" name="editFloarMap4" id="editFloarMap4" value="${floarMap.floarMap4}"/>
-		
-		<div class=" box-content" >
-		<div class="box-content">
-		<div class="col-md-2">Event*</div>
-									<div class="col-md-3">
-										<select id="eventId" name="eventId" class="form-control"
-											required>
-											<option value="">Select Event</option>
-											<c:forEach items="${eventList}" var="eventList">
-												<c:choose>
-													<c:when test="${eventList.eventId==floarMap.eventId}">
-														<option value="${eventList.eventId}" selected>${eventList.eventName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${eventList.eventId}">${eventList.eventName}</option>
-													</c:otherwise>
-												</c:choose>
+			<form action="${pageContext.request.contextPath}/insertFloarMap"
+				method="post" enctype="multipart/form-data">
+				<input type="hidden" name="floarMapId" id="floarMapId"
+					value="${floarMap.floarMapId}" /> <input type="hidden"
+					name="editFloarMap1" id="editFloarMap1"
+					value="${floarMap.floarMap1}" /> <input type="hidden"
+					name="isEdit" id="isEdit" value="${isEdit}" /> <input
+					type="hidden" name="editFloarMap2" id="editFloarMap2"
+					value="${floarMap.floarMap2}" /> <input type="hidden"
+					name="editFloarMap3" id="editFloarMap3"
+					value="${floarMap.floarMap3}" /> <input type="hidden"
+					name="editFloarMap4" id="editFloarMap4"
+					value="${floarMap.floarMap4}" />
 
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col-md-1"></div>
-									<div class="col-md-2">Floar Map1 *</div>
-									<div class="col-md-3">
-										<input type="file" id="floarMap1" name="floarMap1"
-											 placeholder="Floar Map1"  />
-									</div>
-									
-				</div><br><br>
+				<div class=" box-content">
+					<div class="box-content">
+						<div class="col-md-2">Event*</div>
+						<div class="col-md-3">
+							<select id="eventId" name="eventId" class="form-control" required
+								oninvalid="this.setCustomValidity('Please Select Event')"
+								oninput="this.setCustomValidity('')">
+								<option value="">Select Event</option>
+								<c:forEach items="${eventList}" var="eventList">
+									<c:choose>
+										<c:when test="${eventList.eventId==floarMap.eventId}">
+											<option value="${eventList.eventId}" selected>${eventList.eventName}</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${eventList.eventId}">${eventList.eventName}</option>
+										</c:otherwise>
+									</c:choose>
+
+								</c:forEach>
+							</select>
+						</div>
+						<div class="col-md-1"></div>
+						<div class="col-md-2">Floar Map1 *</div>
+						<div class="col-md-3">
+							<input type="file" id="floarMap1" name="floarMap1"
+								placeholder="Floar Map1" required
+								oninvalid="this.setCustomValidity('Enter Floar Map1')"
+								oninput="this.setCustomValidity('')" />
+						</div>
+
+					</div>
+					<br> <br>
 					<div class="box-content">
 
-									<div class="col-md-2">Floar Map2: *</div>
-									<div class="col-md-3">
-										<input type="file" id="floarMap2" name="floarMap2"
-											 placeholder="Floar Map2"  />
-									</div>
-									<div class="col-md-1"></div>
+						<div class="col-md-2">Floar Map2: *</div>
+						<div class="col-md-3">
+							<input type="file" id="floarMap2" name="floarMap2"
+								placeholder="Floar Map2" />
+						</div>
+						<div class="col-md-1"></div>
 
-									<div class="col-md-2">Floar Map3 *</div>
-									<div class="col-md-3">
-										<input type="file" id="floarMap3" name="floarMap3"
-											 placeholder="Floar Map3"  />
-									</div>
-								</div><br>
-			<div class="box-content">
+						<div class="col-md-2">Floar Map3 *</div>
+						<div class="col-md-3">
+							<input type="file" id="floarMap3" name="floarMap3"
+								placeholder="Floar Map3" />
+						</div>
+					</div>
+					<br>
+					<div class="box-content">
 
-									<div class="col-md-2">Floar Map4: *</div>
-									<div class="col-md-3">
-										<input type="file" id="floarMap4" name="floarMap4"
-											 placeholder="Floar Map4" value="${URL}${floarMap.floarMap4}" />
-									</div>
-									<div class="col-md-1"></div>
+						<div class="col-md-2">Floar Map4: *</div>
+						<div class="col-md-3">
+							<input type="file" id="floarMap4" name="floarMap4"
+								placeholder="Floar Map4" value="${URL}${floarMap.floarMap4}" />
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+					<div class="box-content">
+						<div class="col-md-3" style="text-align: center">
+							<input type="submit" class="btn btn-info" value="Save">
+
+						</div>
+					</div>
 				</div>
-								<div class="box-content">
-									<div class="col-md-3" style="text-align: center">
-										<input type="submit" class="btn btn-info" value="Save">
+			</form>
 
-									</div></div>	</div>
-				</form>					
-		
 			<div class=" box-content">
 
 				<div class="box-content">
@@ -143,53 +153,57 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${floarMapList}" var="floarMap" varStatus="count">
+								<c:forEach items="${floarMapList}" var="floarMap"
+									varStatus="count">
 									<tr class="table-flag-blue">
 										<td>${count.index+1}</td>
 										<td>${floarMap.eventName}</td>
-										<td>
-										<c:choose>
-										<c:when test="${floarMap.floarMap1 eq ''}">
-										
-										</c:when>
-										<c:otherwise>
-									<a href="${URL}${floarMap.floarMap1}" target="_blank">Floar Map1</a>
-										
-										</c:otherwise>
-										</c:choose>
-										</td>
 										<td><c:choose>
-										<c:when test="${floarMap.floarMap2 eq ''}">
-										
-										</c:when>
-										<c:otherwise>
-									<a href="${URL}${floarMap.floarMap2}" target="_blank">Floar Map2</a>
-										
-										</c:otherwise>
-										</c:choose></td>
+												<c:when test="${floarMap.floarMap1 eq ''}">
+
+												</c:when>
+												<c:otherwise>
+													<a href="${URL}${floarMap.floarMap1}" target="_blank">Floar
+														Map1</a>
+
+												</c:otherwise>
+											</c:choose></td>
 										<td><c:choose>
-										<c:when test="${floarMap.floarMap3 eq ''}">
-										
-										</c:when>
-										<c:otherwise>
-									<a href="${URL}${floarMap.floarMap3}" target="_blank">Floar Map3</a>
-										
-										</c:otherwise>
-										</c:choose></td>
+												<c:when test="${floarMap.floarMap2 eq ''}">
+
+												</c:when>
+												<c:otherwise>
+													<a href="${URL}${floarMap.floarMap2}" target="_blank">Floar
+														Map2</a>
+
+												</c:otherwise>
+											</c:choose></td>
 										<td><c:choose>
-										<c:when test="${floarMap.floarMap4 eq ''}">
-										
-										</c:when>
-										<c:otherwise>
-									<a href="${URL}${floarMap.floarMap4}" target="_blank">Floar Map4</a>
-										
-										</c:otherwise>
-										</c:choose></td>
-										 <td><a href="${pageContext.request.contextPath}/editFloarMap/${floarMap.floarMapId}"><span
-												class="glyphicon glyphicon-edit"></span></a> 
-											<a href="${pageContext.request.contextPath}/deleteFloarMap/${floarMap.floarMapId}"
+												<c:when test="${floarMap.floarMap3 eq ''}">
+
+												</c:when>
+												<c:otherwise>
+													<a href="${URL}${floarMap.floarMap3}" target="_blank">Floar
+														Map3</a>
+
+												</c:otherwise>
+											</c:choose></td>
+										<td><c:choose>
+												<c:when test="${floarMap.floarMap4 eq ''}">
+
+												</c:when>
+												<c:otherwise>
+													<a href="${URL}${floarMap.floarMap4}" target="_blank">Floar
+														Map4</a>
+
+												</c:otherwise>
+											</c:choose></td>
+										<td><a
+											href="${pageContext.request.contextPath}/editFloarMap/${floarMap.floarMapId}"><span
+												class="glyphicon glyphicon-edit"></span></a> <a
+											href="${pageContext.request.contextPath}/deleteFloarMap/${floarMap.floarMapId}"
 											onClick="return confirm('Are you sure want to delete this record');"><span
-												class="glyphicon glyphicon-remove"></span></a></td>  
+												class="glyphicon glyphicon-remove"></span></a></td>
 									</tr>
 								</c:forEach>
 
@@ -199,7 +213,7 @@
 					</div>
 				</div>
 
-			</div> 
+			</div>
 
 
 

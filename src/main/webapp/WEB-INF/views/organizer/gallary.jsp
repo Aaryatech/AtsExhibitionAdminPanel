@@ -66,7 +66,7 @@
 		<div class="page-title">
 			<div>
 				<h1>
-					<i class="fa fa-file-o"></i>Gallary Of Event
+					<i class="fa fa-file-o"></i>Gallery Of Event
 				</h1>
 
 				<!-- <h4>Bill for franchises</h4> -->
@@ -87,16 +87,18 @@
 				</div>
 
 			</div>
-				<div class=" box-content">
-			<form action="${pageContext.request.contextPath}/insertGallary"
-				method="post" enctype="multipart/form-data">
-				<input type="hidden" name="photoId" id="photoId"
-					value="${gallary.photoId}" /> <input type="hidden" name="count" id="count" value="${count}" />
+			<div class=" box-content">
+				<form action="${pageContext.request.contextPath}/insertGallary"
+					method="post" enctype="multipart/form-data">
+					<input type="hidden" name="photoId" id="photoId"
+						value="${gallary.photoId}" /> <input type="hidden" name="count"
+						id="count" value="${count}" />
 
 					<div class="box-content">
 						<div class="col-md-2">Event*</div>
 						<div class="col-md-3">
-							<select id="eventId" name="eventId" class="form-control" required onchange="onEventChange(this.value)">
+							<select id="eventId" name="eventId" class="form-control" required
+								onchange="onEventChange(this.value)">
 								<option value="">Select Event</option>
 								<c:forEach items="${eventList}" var="eventList">
 									<c:choose>
@@ -128,7 +130,7 @@
 										<span class="glyphicon glyphicon-folder-open"></span> <span
 											class="image-preview-input-title">Browse</span> <input
 											type="file" accept="image/png, image/jpeg, image/gif"
-											name="img1" required/>
+											name="img1" required />
 										<!-- rename it -->
 									</div>
 								</span>
@@ -139,46 +141,49 @@
 					<br>
 					<div class="box-content">
 						<div class="col-md-12" style="text-align: center">
-							<input type="submit" class="btn btn-info" value="Save" id="savePhoto">
+							<input type="submit" class="btn btn-info" value="Save"
+								id="savePhoto">
 
 						</div>
 					</div>
-				
-			</form></div>
-				<div class="box-content">
-					<br /> <br />
-					<div class="clearfix"></div>
-					<div class="table-responsive" style="border: 0">
-						<table class="table table-advance" id="table1">
-							<thead>
-								<tr>
-									<th style="width:29px">No</th>
-									<th>Event</th>
-									<th>Photo</th>
-								
-									<th>Action</th>
+
+				</form>
+			</div>
+			<div class="box-content">
+				<br /> <br />
+				<div class="clearfix"></div>
+				<div class="table-responsive" style="border: 0">
+					<table class="table table-advance" id="table1">
+						<thead>
+							<tr>
+								<th style="width: 29px">No</th>
+								<th>Event</th>
+								<th>Photo</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${gallaryList}" var="gallary" varStatus="count">
+								<tr class="table-flag-blue">
+									<td>${count.index+1}</td>
+									<td>${gallary.eventName}</td>
+									<td><img src="${url}${gallary.photoLink}"
+										alt="no image available" height="100" width="100"></img></td>
+									<td>
+										<%-- <a href="${pageContext.request.contextPath}/editGallary/${gallary.photoId}"><span
+												class="glyphicon glyphicon-edit"></span></a> --%> <a
+										href="${pageContext.request.contextPath}/deleteGallary/${gallary.photoId}"
+										onClick="return confirm('Are you sure want to delete this record');"><span
+											class="glyphicon glyphicon-remove"></span></a>
+									</td>
 								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${gallaryList}" var="gallary" varStatus="count">
-									<tr class="table-flag-blue">
-										<td>${count.index+1}</td>
-										<td>${gallary.eventName}</td>
-										<td><img src="${url}${gallary.photoLink}" alt="no image available" height="100" width="100"></img>
-										</td>
-										 <td><%-- <a href="${pageContext.request.contextPath}/editGallary/${gallary.photoId}"><span
-												class="glyphicon glyphicon-edit"></span></a> --%> 
-											<a href="${pageContext.request.contextPath}/deleteGallary/${gallary.photoId}"
-											onClick="return confirm('Are you sure want to delete this record');"><span
-												class="glyphicon glyphicon-remove"></span></a></td>  
-									</tr>
-								</c:forEach>
+							</c:forEach>
 
 
-							</tbody>
-						</table>
-					</div>
+						</tbody>
+					</table>
 				</div>
+			</div>
 
 		</div>
 
@@ -248,99 +253,92 @@
 		src="${pageContext.request.contextPath}/resources/assets/ckeditor/ckeditor.js"></script>
 
 	<!--flaty scripts-->
- 	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
- 	<script type="text/javascript"
+	<script src="${pageContext.request.contextPath}/resources/js/flaty.js"></script>
+	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
 	<script type="text/javascript">
+		$(document).on('click', '#close-preview', function() {
+			$('.image-preview').popover('hide');
+			// Hover befor close the preview
+			$('.image-preview').hover(function() {
+				$('.image-preview').popover('show');
+			}, function() {
+				$('.image-preview').popover('hide');
+			});
+		});
 
-$(document).on('click', '#close-preview', function(){ 
-    $('.image-preview').popover('hide');
-    // Hover befor close the preview
-    $('.image-preview').hover(
-        function () {
-           $('.image-preview').popover('show');
-        }, 
-         function () {
-           $('.image-preview').popover('hide');
-        }
-    );    
-});
+		$(function() {
+			// Create the close button
+			var closebtn = $('<button/>', {
+				type : "button",
+				text : 'x',
+				id : 'close-preview',
+				style : 'font-size: initial;',
+			});
+			closebtn.attr("class", "close pull-right");
+			// Set the popover default content
+			$('.image-preview').popover({
+				trigger : 'manual',
+				html : true,
+				title : "<strong>Preview</strong>" + $(closebtn)[0].outerHTML,
+				content : "There's no image",
+				placement : 'bottom'
+			});
+			// Clear event
+			$('.image-preview-clear').click(function() {
+				$('.image-preview').attr("data-content", "").popover('hide');
+				$('.image-preview-filename').val("");
+				$('.image-preview-clear').hide();
+				$('.image-preview-input input:file').val("");
+				$(".image-preview-input-title").text("Browse");
+			});
+			// Create the preview image
+			$(".image-preview-input input:file").change(
+					function() {
+						var img = $('<img/>', {
+							id : 'dynamic',
+							width : 250,
+							height : 200
+						});
+						var file = this.files[0];
+						var reader = new FileReader();
+						// Set preview image into the popover data-content
+						reader.onload = function(e) {
+							$(".image-preview-input-title").text("Change");
+							$(".image-preview-clear").show();
+							$(".image-preview-filename").val(file.name);
+							img.attr('src', e.target.result);
+							$(".image-preview").attr("data-content",
+									$(img)[0].outerHTML).popover("show");
+						}
+						reader.readAsDataURL(file);
+					});
+		});
+	</script>
+	<script type="text/javascript">
+		function onEventChange(eventId) {
+			$.getJSON('${getPhotoCount}', {
 
-$(function() {
-    // Create the close button
-    var closebtn = $('<button/>', {
-        type:"button",
-        text: 'x',
-        id: 'close-preview',
-        style: 'font-size: initial;',
-    });
-    closebtn.attr("class","close pull-right");
-    // Set the popover default content
-    $('.image-preview').popover({
-        trigger:'manual',
-        html:true,
-        title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
-        content: "There's no image",
-        placement:'bottom'
-    });
-    // Clear event
-    $('.image-preview-clear').click(function(){
-        $('.image-preview').attr("data-content","").popover('hide');
-        $('.image-preview-filename').val("");
-        $('.image-preview-clear').hide();
-        $('.image-preview-input input:file').val("");
-        $(".image-preview-input-title").text("Browse"); 
-    }); 
-    // Create the preview image
-    $(".image-preview-input input:file").change(function (){     
-        var img = $('<img/>', {
-            id: 'dynamic',
-            width:250,
-            height:200
-        });      
-        var file = this.files[0];
-        var reader = new FileReader();
-        // Set preview image into the popover data-content
-        reader.onload = function (e) {
-            $(".image-preview-input-title").text("Change");
-            $(".image-preview-clear").show();
-            $(".image-preview-filename").val(file.name);            
-            img.attr('src', e.target.result);
-            $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
-        }        
-        reader.readAsDataURL(file);
-    });  
-});
-</script>
-<script type="text/javascript">
-function onEventChange(eventId)
-{
-   $.getJSON('${getPhotoCount}', {
-		
-	   eventId:eventId,
-	
-		ajax : 'true',
+				eventId : eventId,
 
-	}, function(data) {
-		
-		if(data>8)
-			{
-			 alert("Your Event Photo  Limit Is Over!!");
-			 document.getElementById("savePhoto").disabled=true;
-			}
-		else
-			{
-			 document.getElementById("savePhoto").disabled=false;
+				ajax : 'true',
 
-			}
-       // document.getElementById("count").value=data;
-	});
-	
-	
-}
-</script>
+			}, function(data) {
+
+				if (data > 8) {
+					alert("Your Event Photo  Limit Is Over!!");
+					document.getElementById("savePhoto").disabled = true;
+				} else {
+					document.getElementById("savePhoto").disabled = false;
+
+				}
+				// document.getElementById("count").value=data;
+			});
+
+		}
+	</script>
 
 </body>
 </html>

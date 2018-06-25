@@ -75,8 +75,8 @@
 											class="form-control" value="${editEvent.eventName}"
 											placeholder=" Event Name " required
 											oninvalid="this.setCustomValidity('Enter Event Name')"
-											oninput="this.setCustomValidity('')" /> <input
-											type="hidden" name="eventId" value="${editEvent.eventId}" />
+											oninput="this.setCustomValidity('')" /> <input type="hidden"
+											name="eventId" value="${editEvent.eventId}" />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Event Location*</div>
@@ -366,8 +366,8 @@
 														required
 														oninvalid="this.setCustomValidity('Select Event Image')"
 														oninput="this.setCustomValidity('')" class="file-input"
-														name="documentFile" id="documentFile" /></span> <a
-														href="#" class="btn btn-default fileupload-exists"
+														name="documentFile" id="documentFile" /></span> <a href="#"
+														class="btn btn-default fileupload-exists"
 														data-dismiss="fileupload">Remove</a>
 
 												</div>
@@ -380,16 +380,8 @@
 										placeholder="Current Km" value="${editEvent.eventLogo}"
 										size="16" type="hidden" name="docPath" />
 								</div>
-								<br>
-								<br>
-								<br>
-								<br>
-								<br>
-								<br>
-								<br>
-								<br>
-								<br>
-								<br>
+								<br> <br> <br> <br> <br> <br> <br>
+								<br> <br> <br>
 
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">

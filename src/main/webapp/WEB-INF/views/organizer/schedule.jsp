@@ -5,7 +5,7 @@
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/assets/bootstrap-datepicker/css/datepicker.css" />
- 
+
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
 
@@ -13,10 +13,10 @@
 
 		<!-- BEGIN Sidebar -->
 		<div id="sidebar" class="navbar-collapse collapse">
-<c:url var="insertScheduleDetail" value="/insertScheduleDetail"/>
-<c:url var="deleteScheduleDetail" value="/deleteScheduleDetail"/>
-<c:url var="editScheduleDetail" value="/editScheduleDetail"/>
-<c:url var="editSchedule" value="/editSchedule"/>
+			<c:url var="insertScheduleDetail" value="/insertScheduleDetail" />
+			<c:url var="deleteScheduleDetail" value="/deleteScheduleDetail" />
+			<c:url var="editScheduleDetail" value="/editScheduleDetail" />
+			<c:url var="editSchedule" value="/editSchedule" />
 			<jsp:include page="/WEB-INF/views/include/navigation.jsp"></jsp:include>
 
 			<div id="sidebar-collapse" class="visible-lg">
@@ -55,26 +55,34 @@
 							</div>
 
 						</div>
-            <form action="${pageContext.request.contextPath}/addScheduleDetail" method="post" id="form1">
-						<div class=" box-content" style="border: 4px solid #b6d1f2;">
-							<input type="hidden" id="scheduleHeaderId" name="scheduleHeaderId"
-										 value="${scheduleRes.scheduleId}" required />
+						<form
+							action="${pageContext.request.contextPath}/addScheduleDetail"
+							method="post" id="form1">
+							<div class=" box-content" style="border: 4px solid #b6d1f2;">
+								<input type="hidden" id="scheduleHeaderId"
+									name="scheduleHeaderId" value="${scheduleRes.scheduleId}"
+									required />
 								<div class="box-content">
 									<div class="col-md-2">Date *</div>
 									<div class="col-md-3">
 										<input type="text" name="dates" id="date"
-											class="form-control date-picker" placeholder="dd-mm-yyyy" onblur="convertDate();" value="${scheduleRes.date}" required />
+											class="form-control date-picker" placeholder="dd-mm-yyyy"
+											onblur="convertDate();" value="${scheduleRes.date}" required
+											oninvalid="this.setCustomValidity('Enter Date')"
+											oninput="this.setCustomValidity('')" />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Event*</div>
 									<div class="col-md-3">
 										<select id="eventId" name="eventId" class="form-control"
-											required>
+											required
+											oninvalid="this.setCustomValidity('Please Select Event')"
+											oninput="this.setCustomValidity('')">
 											<option value="">Select Event</option>
 											<c:forEach items="${eventList}" var="eventList">
 												<c:choose>
 													<c:when test="${eventList.eventId==scheduleRes.eventId}">
-														<option  value="${eventList.eventId}" selected>${eventList.eventName}</option>
+														<option value="${eventList.eventId}" selected>${eventList.eventName}</option>
 													</c:when>
 													<c:otherwise>
 														<option value="${eventList.eventId}">${eventList.eventName}</option>
@@ -90,7 +98,8 @@
 								<div class="box-content">
 									<div class="col-md-2">Day*</div>
 									<div class="col-md-3">
-										<input type="text" id="day" name="day" value="${scheduleRes.dayName}" class="form-control"
+										<input type="text" id="day" name="day"
+											value="${scheduleRes.dayName}" class="form-control"
 											placeholder="Day" readonly />
 									</div>
 								</div>
@@ -100,13 +109,17 @@
 									<div class="col-md-2">Topic *</div>
 									<div class="col-md-3">
 										<input type="text" id="topic" name="topic"
-											class="form-control" placeholder="Topic"  />
+											class="form-control" placeholder="Topic" required
+											oninvalid="this.setCustomValidity('Enter Topic')"
+											oninput="this.setCustomValidity('')" />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Speaker *</div>
 									<div class="col-md-3">
 										<input type="text" id="speaker" name="speaker"
-											class="form-control" placeholder="Speaker"  />
+											class="form-control" placeholder="Speaker" required
+											oninvalid="this.setCustomValidity('Enter Speaker')"
+											oninput="this.setCustomValidity('')" />
 									</div>
 								</div>
 								</br>
@@ -115,14 +128,18 @@
 									<div class="col-md-2">From Time *</div>
 									<div class="col-md-3">
 										<input type="time" id="fromTime" name="fromTime"
-											class="form-control" placeholder="From Time"  />
+											class="form-control" placeholder="From Time" required
+											oninvalid="this.setCustomValidity('Enter From time')"
+											oninput="this.setCustomValidity('')" />
 									</div>
 									<div class="col-md-1"></div>
 
 									<div class="col-md-2">To Time *</div>
 									<div class="col-md-3">
 										<input type="time" id="toTime" name="toTime"
-											class="form-control" placeholder="To Time"  />
+											class="form-control" placeholder="To Time" required
+											oninvalid="this.setCustomValidity('Enter to time')"
+											oninput="this.setCustomValidity('')" />
 									</div>
 								</div>
 								</br>
@@ -130,25 +147,27 @@
 									<div class="col-md-2">Venue *</div>
 									<div class="col-md-3">
 										<textarea id="venue" name="venue" class="form-control"
-											placeholder="Venue" ></textarea>
+											placeholder="Venue"></textarea>
 									</div>
 									<div class="col-md-1"></div>
 
 									<div class="col-md-2">Available Seats *</div>
 									<div class="col-md-3">
 										<input type="number" id="availSeat" name="availSeat"
-											class="form-control" placeholder="Available Seats"  />
+											class="form-control" placeholder="Available Seats" />
 									</div>
 								</div>
 								</br>
-                              <div class="box-content">
-                              	<div class="col-md-1"></div>
+								<div class="box-content">
+									<div class="col-md-1"></div>
 									<div class="col-md-2">Remark *</div>
 									<div class="col-md-3">
 										<textarea id="remark" name="remark" class="form-control"
-											placeholder="Remark" ></textarea>
+											placeholder="Remark" required
+											oninvalid="this.setCustomValidity('Enter Remark')"
+											oninput="this.setCustomValidity('')"></textarea>
 									</div>
-									</div>
+								</div>
 
 								<div class="col-md-1"></div>
 								<div class="box-content">
@@ -156,55 +175,63 @@
 										<input type="button" class="btn btn-info" value="Add Detail"
 											id="add">
 
-									</div></div></div>
-								<div class="box" id="pending">
-
-									<div class="box-content">
-
-										<br />
-										<div class="clearfix"></div>
-										<div class="table-responsive" style="border: 0">
-											<table class="table table-advance" id="table1">
-												<thead>
-													<tr>
-														<th style="width: 18px">No</th>
-														<th>Topic</th>
-														<th>Speaker</th>
-														<th>From Time</th>
-														<th>To Time</th>
-														<th>Venue</th>
-														<th>Available Seats</th>
-														<th>Action</th>
-													</tr>
-												</thead>
-												<tbody>
-                               <c:forEach items="${scheduleRes.scheduleDetailList}" var="schedule" varStatus="count">
-									<tr class="table-flag-blue">
-										<td>${count.index+1}</td>
-										<td>${schedule.topic}</td>
-										<td>${schedule.speaker}</td>
-										<td>${schedule.fromTime}</td>
-										<td>${schedule.toTime}</td>
-										<td>${schedule.venue}</td>
-										<td>${schedule.seatsAvailable}</td>
-										 
-										 <td><a href='#' class='action_btn' onclick="editScheduleDetail(${count.index})"> <abbr title='edit'> <i class='fa fa-edit  fa-lg' ></i></abbr> </a> <a href='#' class='action_btn' onclick="deleteScheduleDetail(${count.index})"><abbr title='Delete'><i class='fa fa-trash-o  fa-lg'></i></abbr></a></td>  
-									</tr>
-								</c:forEach>
-												</tbody>
-											</table>
-										</div>
 									</div>
 								</div>
+							</div>
+							<div class="box" id="pending">
+
 								<div class="box-content">
-									<div class="col-md-12" style="text-align: center">
-										<input type="submit" class="btn btn-info" value="Submit"
-											id="submit">
 
+									<br />
+									<div class="clearfix"></div>
+									<div class="table-responsive" style="border: 0">
+										<table class="table table-advance" id="table1">
+											<thead>
+												<tr>
+													<th style="width: 18px">No</th>
+													<th>Topic</th>
+													<th>Speaker</th>
+													<th>From Time</th>
+													<th>To Time</th>
+													<th>Venue</th>
+													<th>Available Seats</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${scheduleRes.scheduleDetailList}"
+													var="schedule" varStatus="count">
+													<tr class="table-flag-blue">
+														<td>${count.index+1}</td>
+														<td>${schedule.topic}</td>
+														<td>${schedule.speaker}</td>
+														<td>${schedule.fromTime}</td>
+														<td>${schedule.toTime}</td>
+														<td>${schedule.venue}</td>
+														<td>${schedule.seatsAvailable}</td>
+
+														<td><a href='#' class='action_btn'
+															onclick="editScheduleDetail(${count.index})"> <abbr
+																title='edit'> <i class='fa fa-edit  fa-lg'></i></abbr>
+														</a> <a href='#' class='action_btn'
+															onclick="deleteScheduleDetail(${count.index})"><abbr
+																title='Delete'><i class='fa fa-trash-o  fa-lg'></i></abbr></a></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
 									</div>
 								</div>
-							</form>
-						
+							</div>
+							<div class="box-content">
+								<div class="col-md-12" style="text-align: center">
+									<input type="submit" class="btn btn-info" value="Submit"
+										id="submit">
+
+								</div>
+							</div>
+						</form>
+
 					</div>
 
 				</div>
@@ -283,7 +310,7 @@
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
-<script type="text/javascript">
+	<script type="text/javascript">
 
 var editFlag=false;
 var key1=0;
@@ -505,7 +532,7 @@ function validation() {
 }
 
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 function deleteScheduleDetail(key){
 	var isDel=confirm('Are you sure want to delete this record');
 	if(isDel==true)
