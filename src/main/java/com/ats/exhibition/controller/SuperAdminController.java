@@ -79,9 +79,9 @@ public class SuperAdminController {
 
 	@RequestMapping(value = "/showEventList", method = RequestMethod.GET)
 	public ModelAndView showEventList(HttpServletRequest request, HttpServletResponse response) {
-		
-		Constants.mainAct=1;
-		Constants.subAct=14;
+
+		Constants.mainAct = 1;
+		Constants.subAct = 14;
 
 		ModelAndView model = new ModelAndView("SuperAdmin/showEventList");
 		try {
@@ -138,9 +138,9 @@ public class SuperAdminController {
 
 	@RequestMapping(value = "/showExhibitorList", method = RequestMethod.GET)
 	public ModelAndView showExhibitorList(HttpServletRequest request, HttpServletResponse response) {
-		
-		Constants.mainAct=1;
-		Constants.subAct=16;
+
+		Constants.mainAct = 1;
+		Constants.subAct = 16;
 
 		ModelAndView model = new ModelAndView("SuperAdmin/showExhibitorList");
 		try {
@@ -225,9 +225,9 @@ public class SuperAdminController {
 			}
 
 			if (eventId[0].equals("0")) {
-				 
-					eventIdList = "0";
-			 
+
+				eventIdList = "0";
+
 			} else {
 				for (int i = 0; i < eventId.length; i++) {
 					eventIdList = eventIdList + "," + eventId[i];
@@ -291,8 +291,8 @@ public class SuperAdminController {
 
 	@RequestMapping(value = "sortedExhibitorListPdf/{eventId}/{locationId}/{compType}/{orgId}", method = RequestMethod.GET)
 	public void sortedExhibitorListPdf(@PathVariable String eventId[], @PathVariable String locationId[],
-			@PathVariable String compType[],@PathVariable int orgId, HttpServletRequest request, HttpServletResponse response)
-			throws FileNotFoundException {
+			@PathVariable String compType[], @PathVariable int orgId, HttpServletRequest request,
+			HttpServletResponse response) throws FileNotFoundException {
 
 		List<SortedExhibitor> sortedExhibitorList = new ArrayList<SortedExhibitor>();
 		BufferedOutputStream outStream = null;
@@ -321,9 +321,9 @@ public class SuperAdminController {
 		}
 
 		if (eventId[0].equals("0")) {
-			 
-				eventIdList = "0";
-		 
+
+			eventIdList = "0";
+
 		} else {
 			for (int i = 0; i < eventId.length; i++) {
 				eventIdList = eventIdList + "," + eventId[i];
@@ -517,9 +517,9 @@ public class SuperAdminController {
 	@RequestMapping(value = "/exhibitorListByLocationAndCompType", method = RequestMethod.GET)
 	public ModelAndView exhibitorListByLocationAndCompType(HttpServletRequest request, HttpServletResponse response) {
 
-		Constants.mainAct=3;
-		Constants.subAct=31;
-		
+		Constants.mainAct = 3;
+		Constants.subAct = 31;
+
 		ModelAndView model = new ModelAndView("SuperAdmin/showExhibitorListByLocation");
 		try {
 
@@ -586,7 +586,7 @@ public class SuperAdminController {
 			ExhibitorWithOrgName[] exhibitorWithOrgName = rest.postForObject(
 					Constants.url + "/sortedExhibitorListByLocationAndCompType", map, ExhibitorWithOrgName[].class);
 			sortedExhibitorList = new ArrayList<ExhibitorWithOrgName>(Arrays.asList(exhibitorWithOrgName));
-			
+
 			System.out.println(sortedExhibitorList);
 
 		} catch (Exception e) {
@@ -629,9 +629,9 @@ public class SuperAdminController {
 	@RequestMapping(value = "/addOrganizerPackage", method = RequestMethod.GET)
 	public ModelAndView exhibitorListByOrgId(HttpServletRequest request, HttpServletResponse response) {
 
-		Constants.mainAct=2;
-		Constants.subAct=24;
-		
+		Constants.mainAct = 2;
+		Constants.subAct = 24;
+
 		ModelAndView model = new ModelAndView("SuperAdmin/addOrganizerPackage");
 		try {
 
@@ -645,9 +645,9 @@ public class SuperAdminController {
 	@RequestMapping(value = "/organizerPakageList", method = RequestMethod.GET)
 	public ModelAndView organizerPakageList(HttpServletRequest request, HttpServletResponse response) {
 
-		Constants.mainAct=2;
-		Constants.subAct=23;
-		
+		Constants.mainAct = 2;
+		Constants.subAct = 23;
+
 		ModelAndView model = new ModelAndView("SuperAdmin/organizerPakageList");
 		try {
 
@@ -735,8 +735,8 @@ public class SuperAdminController {
 	@RequestMapping(value = "/addExhibitorPackage", method = RequestMethod.GET)
 	public ModelAndView addExhibitorPackage(HttpServletRequest request, HttpServletResponse response) {
 
-		Constants.mainAct=2;
-		Constants.subAct=22;
+		Constants.mainAct = 2;
+		Constants.subAct = 22;
 		ModelAndView model = new ModelAndView("SuperAdmin/addExhibitorPackage");
 		try {
 
@@ -749,9 +749,9 @@ public class SuperAdminController {
 
 	@RequestMapping(value = "/exhibitorPakageList", method = RequestMethod.GET)
 	public ModelAndView exhibitorPakageList(HttpServletRequest request, HttpServletResponse response) {
-		
-		Constants.mainAct=2;
-		Constants.subAct=21;
+
+		Constants.mainAct = 2;
+		Constants.subAct = 21;
 
 		ModelAndView model = new ModelAndView("SuperAdmin/exhibitorPakageList");
 		try {
@@ -864,9 +864,9 @@ public class SuperAdminController {
 
 	@RequestMapping(value = "/addExhibitorBySuperAdmin", method = RequestMethod.GET)
 	public ModelAndView addExhibitorBySuperAdmin(HttpServletRequest request, HttpServletResponse response) {
-		
-		Constants.mainAct=1;
-		Constants.subAct=15;
+
+		Constants.mainAct = 1;
+		Constants.subAct = 15;
 
 		ModelAndView model = new ModelAndView("SuperAdmin/addExhibitorBySuperAdmin");
 		try {
@@ -894,7 +894,8 @@ public class SuperAdminController {
 	}
 
 	@RequestMapping(value = "/insertExhibitorBySuperAdmin", method = RequestMethod.POST)
-	public String insertExhibitor(@RequestParam("documentFile") List<MultipartFile> documentFile,HttpServletRequest request, HttpServletResponse response) {
+	public String insertExhibitor(@RequestParam("documentFile") List<MultipartFile> documentFile,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 			String exhId = request.getParameter("exhId");
@@ -915,10 +916,10 @@ public class SuperAdminController {
 			String usesrMob = request.getParameter("usesrMob");
 			String password = request.getParameter("password");
 			int orgId = Integer.parseInt(request.getParameter("orgId"));
-			
+
 			String document = request.getParameter("docPath");
 			System.out.println(companyType);
-			
+
 			VpsImageUpload upload = new VpsImageUpload();
 			String docFile = null;
 			try {
@@ -977,7 +978,7 @@ public class SuperAdminController {
 
 		return "redirect:/exhibitorListByLocationAndCompType";
 	}
-	
+
 	@RequestMapping(value = "/editExhibitorBySuperAdmin/{exhId}", method = RequestMethod.GET)
 	public ModelAndView editExhibitorBySuperAdmin(@PathVariable int exhId, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -1002,7 +1003,7 @@ public class SuperAdminController {
 
 			Organiser[] organiser = rest.getForObject(Constants.url + "/getAllOrganisersByIsUsed", Organiser[].class);
 			List<Organiser> organiserList = new ArrayList<Organiser>(Arrays.asList(organiser));
-			
+
 			model.addObject("organiserList", organiserList);
 			model.addObject("companyTypeList", companyTypeList);
 			model.addObject("locationList", locationList);
@@ -1015,9 +1016,10 @@ public class SuperAdminController {
 
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/deleteExhibitorBySuperAdmin/{exhId}", method = RequestMethod.GET)
-	public String deleteExhibitorBySuperAdmin(@PathVariable int exhId, HttpServletRequest request, HttpServletResponse response) {
+	public String deleteExhibitorBySuperAdmin(@PathVariable int exhId, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		// ModelAndView model = new ModelAndView("organizer/addOrganizer");
 		try {
@@ -1039,9 +1041,9 @@ public class SuperAdminController {
 	@RequestMapping(value = "/showVisitorSortedList", method = RequestMethod.GET)
 	public ModelAndView showVisitorSortedList(HttpServletRequest request, HttpServletResponse response) {
 
-		Constants.mainAct=3;
-		Constants.subAct=32;
-		
+		Constants.mainAct = 3;
+		Constants.subAct = 32;
+
 		ModelAndView model = new ModelAndView("SuperAdmin/showVisitorSortedList");
 		try {
 
@@ -1449,8 +1451,7 @@ public class SuperAdminController {
 			try {
 				docFile = documentFile.get(0).getOriginalFilename();
 
-				upload.saveUploadedFiles(documentFile, Constants.EVENT_TYPE,
-						documentFile.get(0).getOriginalFilename());
+				upload.saveUploadedFiles(documentFile, Constants.EVENT_TYPE, documentFile.get(0).getOriginalFilename());
 
 				System.out.println("upload method called for image Upload " + documentFile.toString());
 
@@ -1493,25 +1494,22 @@ public class SuperAdminController {
 
 			Events res = rest.postForObject(Constants.url + "/saveEvents", event, Events.class);
 
-			
-			
-EventSup evnSup =new EventSup();
-			
+			EventSup evnSup = new EventSup();
+
 			String stallSize = request.getParameter("stall_size");
 			String priceForExh = request.getParameter("price_for_exh");
 			String discPer = request.getParameter("disc_per");
 			String discPrice = request.getParameter("disc_price");
 
 			evnSup.setEventId(res.getEventId());
-			
+
 			evnSup.setDiscountedPrice(Float.parseFloat(discPrice));
 			evnSup.setPriceForExh(Float.parseFloat(priceForExh));
 			evnSup.setStallSize(Float.parseFloat(stallSize));
 			evnSup.setDiscPer(Float.parseFloat(discPer));
-			
+
 			EventSup evenSupRes = rest.postForObject(Constants.url + "/saveEventSup", evnSup, EventSup.class);
 
-			
 			System.out.println("res " + res);
 
 		} catch (Exception e) {
@@ -1580,8 +1578,8 @@ EventSup evnSup =new EventSup();
 
 	@RequestMapping(value = "/addEventByAdmin", method = RequestMethod.GET)
 	public ModelAndView addEventByAdmin(HttpServletRequest request, HttpServletResponse response) {
-		Constants.mainAct=1;
-		Constants.subAct=13;
+		Constants.mainAct = 1;
+		Constants.subAct = 13;
 		ModelAndView model = new ModelAndView("SuperAdmin/editEventByAdmin");
 		try {
 
