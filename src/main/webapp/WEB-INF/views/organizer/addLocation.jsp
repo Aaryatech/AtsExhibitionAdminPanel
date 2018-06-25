@@ -85,6 +85,7 @@
 
 								</div>
 								<br>
+<br>
 
 								<div class="box-content">
 
@@ -112,6 +113,8 @@
 
 
 								</div>
+								<br>
+								<br>
 								<br>
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">

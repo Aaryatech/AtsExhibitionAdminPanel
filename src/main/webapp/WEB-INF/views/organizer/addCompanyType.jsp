@@ -68,9 +68,8 @@
 											value="${editCompanyType.companyTypeName}"
 											placeholder=" Company Type Name" required
 											oninvalid="this.setCustomValidity('Enter Company Type Name Here')"
-											oninput="this.setCustomValidity('')" /> <input
-											type="hidden" name="companyTypeId"
-											value="${editCompanyType.companyTypeId}" />
+											oninput="this.setCustomValidity('')" /> <input type="hidden"
+											name="companyTypeId" value="${editCompanyType.companyTypeId}" />
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">Company Type Desc</div>
@@ -86,7 +85,7 @@
 
 
 								</div>
-								<br>
+								<br> <br>
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
 										<input type="submit" class="btn btn-info" value="Submit"
@@ -105,6 +104,50 @@
 
 				</div>
 			</div>
+
+
+			<div class=" box-content">
+
+				<div class="box-content">
+
+					<br /> <br />
+					<div class="clearfix"></div>
+					<div class="table-responsive" style="border: 0">
+						<table class="table table-advance" id="table1">
+							<thead>
+								<tr>
+									<th style="width: 18px">Sr No</th>
+									<th>Company Type Name</th>
+									<th>Company Type Desc</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${companyList}" var="companyList"
+									varStatus="count">
+									<tr class="table-flag-blue">
+										<td>${count.index+1}</td>
+										<td>${companyList.companyTypeName}</td>
+										<td>${companyList.companyTypeDesc}</td>
+
+
+										<td><a
+											href="${pageContext.request.contextPath}/editCompanyType/${companyList.companyTypeId}"><span
+												class="glyphicon glyphicon-edit"></span></a> <a
+											href="${pageContext.request.contextPath}/deleteCompanyType/${companyList.companyTypeId}"
+											onClick="return confirm('Are you sure want to delete this record');"><span
+												class="glyphicon glyphicon-remove"></span></a></td>
+									</tr>
+								</c:forEach>
+
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+
 			<!-- END Main Content -->
 			<footer>
 				<p>2018 © AARYATECH SOLUTIONS</p>

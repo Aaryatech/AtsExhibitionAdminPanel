@@ -147,6 +147,11 @@ public class LocationController {
 		ModelAndView model = new ModelAndView("organizer/addCompanyType");
 		try {
 
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed",
+					CompanyType[].class);
+			List<CompanyType> companyList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+
+			model.addObject("companyList", companyList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -214,6 +219,12 @@ public class LocationController {
 					map, CompanyType.class);
 			model.addObject("editCompanyType", editCompanyType);
 
+			CompanyType[] companyType = rest.getForObject(Constants.url + "/getAllCompaniesByIsUsed",
+					CompanyType[].class);
+			List<CompanyType> companyList = new ArrayList<CompanyType>(Arrays.asList(companyType));
+
+			model.addObject("companyList", companyList);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -236,15 +247,14 @@ public class LocationController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/companyTypeList";
+		return "redirect:/addCompanyType";
 	}
 
 	@RequestMapping(value = "/showOrgSubscription", method = RequestMethod.GET)
 	public ModelAndView showOrgSubscription(HttpServletRequest request, HttpServletResponse response) {
-		
-		Constants.mainAct=2;
-		Constants.subAct=25;
-		
+
+		Constants.mainAct = 2;
+		Constants.subAct = 25;
 
 		ModelAndView model = new ModelAndView("organizer/showOrgSubscription");
 		try {
@@ -482,7 +492,7 @@ public class LocationController {
 
 				orgSubscriptionDetail.setPaymentDate(targetFormat.format(ymdPayDate));
 				orgSubscriptionDetail.setPaymentAmt(paidAmt);
-				//orgSubscriptionDetail.setChequeDate("0000-00-00");
+				// orgSubscriptionDetail.setChequeDate("0000-00-00");
 
 				if (isCheque.equalsIgnoreCase("2")) {
 
@@ -513,7 +523,7 @@ public class LocationController {
 			} else {
 
 				orgSubscriptionDetail.setBankName("");
-				//orgSubscriptionDetail.setChequeDate("0000-00-00");
+				// orgSubscriptionDetail.setChequeDate("0000-00-00");
 				orgSubscriptionDetail.setTrNo("");
 
 			}
@@ -525,7 +535,7 @@ public class LocationController {
 
 			if (isPay == 1) {
 				orgSubscriptionDetail.setSubId(res.getSubId());
-				orgSubscriptionDetail.setIsUsed(1); 
+				orgSubscriptionDetail.setIsUsed(1);
 				System.out.println("subId" + res.getSubId());
 				orgSubscriptionDetail.setSubId(res.getSubId());
 				OrgSubscriptionDetail res1 = rest.postForObject(Constants.url + "/saveOrgSubscrptionDetails",
@@ -543,9 +553,9 @@ public class LocationController {
 
 	@RequestMapping(value = "/orgSubscriptionList", method = RequestMethod.GET)
 	public ModelAndView orgSubscriptionList(HttpServletRequest request, HttpServletResponse response) {
-		
-		Constants.mainAct=2;
-		Constants.subAct=26;
+
+		Constants.mainAct = 2;
+		Constants.subAct = 26;
 
 		ModelAndView model = new ModelAndView("organizer/orgSubscriptionList");
 		try {
@@ -577,7 +587,7 @@ public class LocationController {
 			map.add("subId", subId);
 			OrgSubscriptionWithName orgSubscription = rest.postForObject(
 					Constants.url + "/getSubDetailsBySubIdAndIsUSed", map, OrgSubscriptionWithName.class);
-			
+
 			res = rest.postForObject(Constants.url + "/getSubHeaderById", map, OrgSubscription.class);
 
 			System.out.println("edit object " + orgSubscription.toString());
@@ -600,8 +610,7 @@ public class LocationController {
 
 		return model;
 	}
-	
-	
+
 	@RequestMapping(value = "/addSubScriptionDetailTransaction", method = RequestMethod.POST)
 	public String addSubScriptionDetailTransaction(HttpServletRequest request, HttpServletResponse response) {
 
@@ -614,10 +623,10 @@ public class LocationController {
 			Date now = new Date();
 			String strDate = sdfDate.format(now);
 			String paymentDate = "00-00-0000";
-			//String orgId = request.getParameter("orgId");
-			//String pkgId = request.getParameter("pkgId");
-			//String fromDate = request.getParameter("fromDate");
-			//String toDate = request.getParameter("toDate");
+			// String orgId = request.getParameter("orgId");
+			// String pkgId = request.getParameter("pkgId");
+			// String fromDate = request.getParameter("fromDate");
+			// String toDate = request.getParameter("toDate");
 			int isPay = Integer.parseInt(request.getParameter("isPay"));
 			String pkgAmt = request.getParameter("pkgAmt");
 			String isCheque = request.getParameter("isCheque");
@@ -630,7 +639,6 @@ public class LocationController {
 			}
 			String chequeDate = request.getParameter("chequeDate");
 
-		 
 			System.out.println("IsPay" + isPay);
 			System.out.println("chequeDate" + chequeDate);
 			float totalPaidAmt = Float.parseFloat(request.getParameter("totalPaidAmt"));
@@ -638,18 +646,20 @@ public class LocationController {
 
 			String remAmt = request.getParameter("remAmt");
 
-			/*Date ymdFromDate = null;
-			Date ymdToDate = null;*/
+			/*
+			 * Date ymdFromDate = null; Date ymdToDate = null;
+			 */
 			Date ymdPayDate = null;
 			Date ymdchequeDate = null;
 
 			try {
-				//ymdFromDate = originalFormat.parse(fromDate);
-				//ymdToDate = originalFormat.parse(toDate);
+				// ymdFromDate = originalFormat.parse(fromDate);
+				// ymdToDate = originalFormat.parse(toDate);
 				ymdPayDate = originalFormat.parse(paymentDate);
 
-//				System.out.println("From date :   " + targetFormat.format(ymdFromDate));
-//				System.out.println("TDate ymdToDate = null;\r\n" + "o Date :   " + targetFormat.format(ymdToDate));
+				// System.out.println("From date : " + targetFormat.format(ymdFromDate));
+				// System.out.println("TDate ymdToDate = null;\r\n" + "o Date : " +
+				// targetFormat.format(ymdToDate));
 
 			} catch (ParseException ex) {
 				// Handle Exception.
@@ -661,7 +671,7 @@ public class LocationController {
 
 				orgSubscriptionDetail.setPaymentDate(targetFormat.format(ymdPayDate));
 				orgSubscriptionDetail.setPaymentAmt(paidAmt);
-				//orgSubscriptionDetail.setChequeDate("0000-00-00");
+				// orgSubscriptionDetail.setChequeDate("0000-00-00");
 
 				if (isCheque.equalsIgnoreCase("2")) {
 
@@ -692,19 +702,19 @@ public class LocationController {
 			} else {
 
 				orgSubscriptionDetail.setBankName("");
-				//orgSubscriptionDetail.setChequeDate("0000-00-00");
+				// orgSubscriptionDetail.setChequeDate("0000-00-00");
 				orgSubscriptionDetail.setTrNo("");
 
 			}
 
-			res.setPaidAmt(paidAmt+totalPaidAmt);
+			res.setPaidAmt(paidAmt + totalPaidAmt);
 			res.setRemAmt(Float.parseFloat(remAmt));
 
 			res = rest.postForObject(Constants.url + "/saveOrgSubscription", res, OrgSubscription.class);
 
 			if (isPay == 1) {
 				orgSubscriptionDetail.setSubId(res.getSubId());
-				orgSubscriptionDetail.setIsUsed(1); 
+				orgSubscriptionDetail.setIsUsed(1);
 				System.out.println("subId" + res.getSubId());
 				orgSubscriptionDetail.setSubId(res.getSubId());
 				OrgSubscriptionDetail res1 = rest.postForObject(Constants.url + "/saveOrgSubscrptionDetails",
