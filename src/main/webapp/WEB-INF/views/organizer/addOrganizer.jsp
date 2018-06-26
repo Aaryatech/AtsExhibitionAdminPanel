@@ -264,7 +264,8 @@
 											<c:when test="${isEdit==1}">
 												<input type="text" name="mob" id="mob"
 													value="${editOrganiser.userMob}" class="form-control"
-													placeholder="Mobile No" autofocus onkeyup="checkMobileNo()"
+													placeholder="Used For Login" autofocus
+													onkeyup="checkMobileNo()"
 													pattern="^(\+\d{1,3}[- ]?)?\d{10}$"
 													title="Enter 10 digit mobile number" readonly />
 
@@ -272,8 +273,9 @@
 											<c:otherwise>
 												<input type="text" name="mob" id="mob"
 													value="${editOrganiser.userMob}" class="form-control"
-													placeholder="Mobile No" autofocus onkeyup="checkMobileNo()"
-													maxlength="10" pattern="^(\+\d{1,3}[- ]?)?\d{10}$"
+													placeholder="Used For Login" autofocus
+													onkeyup="checkMobileNo()" maxlength="10"
+													pattern="^(\+\d{1,3}[- ]?)?\d{10}$"
 													title="Enter 10 digit mobile number" required />
 
 											</c:otherwise>
@@ -288,7 +290,7 @@
 											value="${editOrganiser.userPassword }" class="form-control"
 											placeholder="Password "
 											oninvalid="this.setCustomValidity('Enter Menember Name')"
-											oninput="this.setCustomValidity('')" requirde
+											oninput="this.setCustomValidity('')" required
 											oninvalid="this.setCustomValidity('Enter Password')"
 											oninput="this.setCustomValidity('')" />
 

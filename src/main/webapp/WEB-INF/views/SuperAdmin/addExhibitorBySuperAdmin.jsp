@@ -331,13 +331,13 @@
 												<input type="text" name="usesrMob"
 													value="${editExhibitor.userMob}" class="form-control"
 													id="usesrMob" onkeyup="checkMobileNo();"
-													placeholder="Mobile No" pattern="^\d{10}$" readonly />
+													placeholder="Used For Login" pattern="^\d{10}$" readonly />
 											</c:when>
 											<c:otherwise>
 												<input type="text" name="usesrMob"
 													value="${editExhibitor.userMob}" class="form-control"
 													id="usesrMob" onkeyup="checkMobileNo();"
-													placeholder="Mobile No" pattern="^\d{10}$" required
+													placeholder="Used For Login" pattern="^\d{10}$" required
 													oninvalid="this.setCustomValidity('Please Enter Mobile No')"
 													oninput="this.setCustomValidity('')" />
 											</c:otherwise>
@@ -380,7 +380,7 @@
 														class="fileupload-new">Select image</span> <span
 														class="fileupload-exists">Change</span> <input type="file"
 														oninvalid="this.setCustomValidity('Please insert Image here')"
-														oninput="this.setCustomValidity('')" class="file-input"
+														oninput="this.setCustomValidity('')" / class="file-input"
 														name="documentFile" id="documentFile" /></span> <a href="#"
 														class="btn btn-default fileupload-exists"
 														data-dismiss="fileupload">Remove</a>
@@ -396,6 +396,7 @@
 
 								</div>
 								<br> <br> <br> <br> <br> <br> <br>
+								<br> <br> <br> <br>
 
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
