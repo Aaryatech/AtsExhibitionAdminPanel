@@ -14,6 +14,11 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -38,9 +43,11 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
+	@Autowired
+	private JavaMailSender mailSender;
+
+
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -51,6 +58,26 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
+		
+		
+		try {
+
+			
+			 SimpleMailMessage email = new SimpleMailMessage();
+		        email.setTo("akshaykasar72@gmail.com");
+		        email.setSubject("test auto email");
+		        email.setText("Hi, This is test email");
+
+
+		        mailSender.send(email);
+		        
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+e.printStackTrace();
+		}
+		
+		
 		
 		return "login";
 	}

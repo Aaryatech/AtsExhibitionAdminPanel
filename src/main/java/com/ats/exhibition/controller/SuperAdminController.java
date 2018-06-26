@@ -20,13 +20,26 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.io.InputStreamSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
@@ -74,6 +87,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 @Controller
 @Scope("session")
 public class SuperAdminController {
+	
+	@Autowired
+	private JavaMailSender mailSender;
 
 	RestTemplate rest = new RestTemplate();
 
@@ -969,7 +985,27 @@ public class SuperAdminController {
 			System.out.println("exhibitor " + exhibitor);
 
 			Exhibitor res = rest.postForObject(Constants.url + "/saveExhibitor", exhibitor, Exhibitor.class);
+			if(res!=null)
+			{
+				if (exhId.equalsIgnoreCase("") || exhId.equalsIgnoreCase(null))
+				{
+					mailSender.send(new MimeMessagePreparator() {
 
+						@Override
+						public void prepare(MimeMessage mimeMessage) throws Exception {
+							MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+							messageHelper.setTo(email1);
+							messageHelper.setSubject("Email Testing");
+							messageHelper.setText("your User Name: " + usesrMob + "and Password: " + password);
+							 
+						} 
+					}); 
+					
+				}
+					 
+			}
+		 	
+			 
 			System.out.println("res " + res);
 
 		} catch (Exception e) {
