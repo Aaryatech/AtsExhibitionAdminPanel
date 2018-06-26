@@ -380,10 +380,8 @@
 														class="fileupload-new">Select image</span> <span
 														class="fileupload-exists">Change</span> <input type="file"
 														oninvalid="this.setCustomValidity('Please insert Image here')"
-														oninput="this.setCustomValidity('')"
-														/
-														class="file-input" name="documentFile"
-														id="documentFile" /></span> <a href="#"
+														oninput="this.setCustomValidity('')" class="file-input"
+														name="documentFile" id="documentFile" /></span> <a href="#"
 														class="btn btn-default fileupload-exists"
 														data-dismiss="fileupload">Remove</a>
 
