@@ -54,145 +54,133 @@
 
 			</div>
 			<div class=" box-content">
-				<form action="${pageContext.request.contextPath}/sumbitMapping"
-					method="post">
+			<form action="${pageContext.request.contextPath}/sumbitMapping"
+								method="post">
 					<div class="box-content">
-
-						<div class="col-md-2">Select Event*</div>
-						<div class="col-md-3">
-							<select id="eventId" name="eventId" class="form-control chosen"
-								required
-								oninvalid="this.setCustomValidity('Please Select Event')"
-								oninput="this.setCustomValidity('')">
-								<option value=" ">Select Event</option>
-								<c:forEach items="${eventList}" var="eventList">
-									<c:choose>
-										<c:when test="${eventList.eventId==eventId}">
-											<option value="${eventList.eventId}" selected>${eventList.eventName}</option>
-										</c:when>
-										<c:otherwise>
-											<option value="${eventList.eventId}">${eventList.eventName}</option>
-										</c:otherwise>
-									</c:choose>
-
-								</c:forEach>
-							</select>
-
-						</div>
-
-
-					</div>
-					<br>
-					<div class=" box-content">
-						<div class="col-md-12" style="text-align: center">
-							<input type="button" class="btn btn-info" value="Search"
-								onclick="searchExibitor()" id="search"> <input
-								type="hidden" name="eventId" id="eventId" value="${eventId}" />
-
-						</div>
-					</div>
-					<c:set var="sts" value="${0}"></c:set>
-					<c:forEach items="${eventExhMappingList}" var="eventExhMappingList">
-						<c:choose>
-							<c:when test="${eventExhMappingList.mapId!=0}">
-								<c:set var="sts" value="${1}"></c:set>
-							</c:when>
-						</c:choose>
-					</c:forEach>
-
-					<div class="box-content">
-						<br /> <br />
-						<div class="clearfix"></div>
-						<div class="table-responsive" style="border: 0">
-							<table class="table table-advance" id="table1">
-								<thead>
-									<tr>
+ 
+									<div class="col-md-2">Select Event*</div>
+									<div class="col-md-3">
+										<select id="eventId" name="eventId" class="form-control chosen" required >  
+										<option value=" ">Select Event</option>
+										<c:forEach items="${eventList}" var="eventList" >
 										<c:choose>
-											<c:when test="${sts==1}">
-												<th style="width: 18px"><input type="checkbox"
-													onClick="selectAll(this)" disabled /></th>
+											<c:when test="${eventList.eventId==eventId}">
+												<option value="${eventList.eventId}" selected>${eventList.eventName}</option>
 											</c:when>
 											<c:otherwise>
-												<th style="width: 18px"><input type="checkbox"
-													onClick="selectAll(this)" /></th>
+											<option value="${eventList.eventId}">${eventList.eventName}</option>
 											</c:otherwise>
 										</c:choose>
-
-										<th style="width: 18px">Sr No</th>
-										<th>Exhibitor Name</th>
-										<th class="col-md-2">Stall No</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${eventExhMappingList}"
-										var="eventExhMappingList" varStatus="count">
-										<tr class="table-flag-blue">
-											<td><c:choose>
-													<c:when test="${eventExhMappingList.mapId!=0}">
-														<input type="checkbox" name="select_to_approve"
-															id="select_to_approve${eventExhMappingList.exhId}"
-															value="${eventExhMappingList.exhId}" disabled />
-													</c:when>
-													<c:otherwise>
-														<input type="checkbox" name="select_to_approve"
-															id="select_to_approve${eventExhMappingList.exhId}"
-															value="${eventExhMappingList.exhId}" />
-													</c:otherwise>
-												</c:choose></td>
-
-											<td>${count.index+1}</td>
-											<c:forEach items="${exhibitorList}" var="exhibitorList"
-												varStatus="count">
-												<c:choose>
-													<c:when
-														test="${exhibitorList.exhId==eventExhMappingList.exhId}">
-														<td>${exhibitorList.exhName}</td>
-														<c:choose>
-															<c:when test="${eventExhMappingList.mapId!=0}">
-																<td><input type="text"
-																	name="stallNo${eventExhMappingList.exhId}"
-																	id="stallNo${eventExhMappingList.exhId}"
-																	class="form-control"
-																	value="${eventExhMappingList.stallNo}" disabled /></td>
-															</c:when>
-															<c:when test="${eventExhMappingList.mapId==0}">
-																<td><input type="text"
-																	name="stallNo${eventExhMappingList.exhId}"
-																	id="stallNo${eventExhMappingList.exhId}"
-																	class="form-control" /></td>
-															</c:when>
-														</c:choose>
-													</c:when>
-												</c:choose>
+									 	
 											</c:forEach>
+											</select>
 
-											<td><c:choose>
-													<c:when test="${eventExhMappingList.mapId!=0}">
-														<a
-															href="${pageContext.request.contextPath}/deleteExhibitorFromMapping/${eventExhMappingList.mapId}/${eventExhMappingList.eventId}"
-															onClick="return confirm('Are you sure want to delete this record');"><span
-															class="glyphicon glyphicon-remove"></span></a>
-													</c:when>
-												</c:choose></td>
-										</tr>
+									</div>
+
+
+								</div>
+								<br>
+								<div class=" box-content">
+									<div class="col-md-12" style="text-align: center">
+										<input type="button" class="btn btn-info" value="Search"
+										onclick="searchExibitor()"	id="search"  >
+
+                       <input type="hidden"   name="eventId" id="eventId" value="${eventId}"/>
+
+									</div>
+								</div> 
+								<c:set var="sts" value="${0}"></c:set>
+									<c:forEach items="${eventExhMappingList}" var="eventExhMappingList">
+												<c:choose>
+														<c:when test="${eventExhMappingList.mapId!=0}">
+														<c:set var="sts" value="${1}"></c:set>
+														</c:when>
+												</c:choose>
 									</c:forEach>
 
+				<div class="box-content"> 
+					<br /> <br />
+					<div class="clearfix"></div>
+					<div class="table-responsive" style="border: 0">
+						<table class="table table-advance" id="table1">
+							<thead>
+								<tr>
+											 <c:choose>
+											<c:when test="${sts==1}">
+											 <th style="width:18px"><input type="checkbox" onClick="selectAll(this)" disabled/></th>
+											 </c:when>
+											<c:otherwise>
+											<th style="width:18px"><input type="checkbox" id="all" onClick="selectAll(this)" /></th>
+											</c:otherwise>
+											</c:choose>
+								
+									<th style="width: 18px">Sr No</th>
+									<th >Exhibitor Name</th> 
+								 	<th class="col-md-2">Stall No</th>
+								 	<th >Mobile No</th>
+									<th >Email</th>
+									<th >Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${eventExhMappingList}" var="eventExhMappingList" varStatus="count">
+									<tr class="table-flag-blue">
+									<td><c:choose>
+											<c:when test="${eventExhMappingList.mapId!=0}">
+											<input type="checkbox"   name="select_to_approve" id="select_to_approve${eventExhMappingList.exhId}" value="${eventExhMappingList.exhId}" disabled/>
+											</c:when>
+											<c:otherwise>
+											<input type="checkbox"   name="select_to_approve" id="select_to_approve${eventExhMappingList.exhId}" onchange="checkUncheck(${eventExhMappingList.exhId})" value="${eventExhMappingList.exhId}" />
+											</c:otherwise>
+											</c:choose>
+											</td>
+									
+										<td>${count.index+1}</td>
+											<c:forEach items="${exhibitorList}" var="exhibitorList" varStatus="count">
+											<c:choose>
+											<c:when test="${exhibitorList.exhId==eventExhMappingList.exhId}">
+											<td>${exhibitorList.exhName}</td>
+												 <c:choose>
+													<c:when test="${eventExhMappingList.mapId!=0}">
+													<td><input type="text" name="stallNo${eventExhMappingList.exhId}" id="stallNo${eventExhMappingList.exhId}" class="form-control" value="${eventExhMappingList.stallNo}" disabled/></td>
+													</c:when>
+														<c:when test="${eventExhMappingList.mapId==0}">
+													<td><input type="text" name="stallNo${eventExhMappingList.exhId}" id="stallNo${eventExhMappingList.exhId}" class="form-control" autofocus="autofocus" title="Enter Stall No" /></td>
+													</c:when>
+												</c:choose>
+											<td>${exhibitorList.userMob}</td>
+											<td>${exhibitorList.personEmail1}</td>
+											</c:when>
+											</c:choose>
+										  </c:forEach>
+										 
+										 <td> 
+										 <c:choose>
+											<c:when test="${eventExhMappingList.mapId!=0}">
+											<a href="${pageContext.request.contextPath}/deleteExhibitorFromMapping/${eventExhMappingList.mapId}/${eventExhMappingList.eventId}"
+											onClick="return confirm('Are you sure want to delete this record');"><span
+												class="glyphicon glyphicon-remove"></span></a>
+											</c:when>
+											</c:choose>
+											
+											</td>  
+									</tr>
+								</c:forEach>
 
-								</tbody>
-							</table>
-						</div>
+
+							</tbody>
+						</table>
 					</div>
-					<br>
+				</div><br>
+				
+				<div class=" box-content">
+				<div class="col-md-12" style="text-align: center">
+										<input type="submit" class="btn btn-info" value="Submit"
+											id="submit"  >
 
-					<div class=" box-content">
-						<div class="col-md-12" style="text-align: center">
-							<input type="submit" class="btn btn-info" value="Submit"
-								id="submit">
-
-						</div>
-					</div>
-				</form>
+				</div>
+			</div>
+</form>
 			</div>
 
 
@@ -270,19 +258,60 @@
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/assets/data-tables/bootstrap3/dataTables.bootstrap.js"></script>
-	<script>
-		function searchExibitor() {
-
-			var eventId = $('#eventId').val();
-			// alert(eventId)
-			if (eventId != "" && eventId != null) {
-				window.location.href = '${pageContext.request.contextPath}/eventMapList/'
-						+ eventId + '';
-
+		<script>
+function searchExibitor() {
+	 
+		var eventId = $('#eventId').val();
+		// alert(eventId)
+		if(eventId!="" && eventId!=null)
+			{
+			window.location.href='${pageContext.request.contextPath}/eventMapList/'+eventId+'';
+			
 			}
+	
+	 
+}
 
-		}
-	</script>
+function checkUncheck(exhId) {
+	  
+	   
+	  
+				if(document.getElementById("select_to_approve"+exhId).checked == true)
+					{ 
+					 document.getElementById("stallNo"+exhId).required = true;
+				 
+					} 
+				else
+					{
+					document.getElementById("stallNo"+exhId).required = false;
+					}
+					 
+}
+
+function selectAll(source) {
+	 
+	 
+	 checkboxes = document.getElementsByName('select_to_approve');
+	  
+	 
+	 for (i = 0; i < checkboxes.length; i++) {
+	     
+	     if(document.getElementById("select_to_approve"+checkboxes[i].value).checked==false)
+	     {
+	    	 document.getElementById("stallNo"+checkboxes[i].value).required = true;
+	     }
+	     else
+    	 {
+	    	 document.getElementById("stallNo"+checkboxes[i].value).required = false;
+    	 }
+	     
+	     
+	    }
+	  
+	
+}
+
+ </script>
 
 </body>
 </html>
