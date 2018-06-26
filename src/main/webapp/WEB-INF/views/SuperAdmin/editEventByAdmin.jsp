@@ -89,7 +89,8 @@
 														<option value="${organiserList.orgId}" selected>${organiserList.orgName}</option>
 													</c:when>
 													<c:otherwise>
-														<option value="${organiserList.orgId}"> ${organiserList.orgName}</option>
+														<option value="${organiserList.orgId}">
+															${organiserList.orgName}</option>
 													</c:otherwise>
 												</c:choose>
 											</c:forEach>
@@ -166,7 +167,7 @@
 									<div class="col-md-2">About Event*</div>
 									<div class="col-md-3">
 										<textarea name="aboutEvent" class="form-control"
-											placeholder="About Event" required>${editEvent.aboutEvent}</textarea>
+											maxlength="350" placeholder="About Event" required>${editEvent.aboutEvent}</textarea>
 
 
 									</div>
@@ -174,13 +175,13 @@
 									<div class="col-md-2">Event Location*</div>
 									<div class="col-md-3">
 										<textarea name="eventLocation" class="form-control"
-											placeholder="Event Location" required>${editEvent.eventLocation}</textarea>
+											maxlength="400" placeholder="Event Location" required>${editEvent.eventLocation}</textarea>
 									</div>
 
 
 									<br>
 								</div>
-								<br><br>
+								<br> <br>
 
 								<div class="box-content">
 
@@ -271,7 +272,8 @@
 									<div class="col-md-3">
 										<input type="text" name="price_for_exh" id="price_for_exh"
 											onchange="calcDisc()" class="form-control"
-											placeholder="Price For Exhibitor" value="${editEventSup.priceForExh}"
+											placeholder="Price For Exhibitor"
+											value="${editEventSup.priceForExh}"
 											pattern="[+-]?([0-9]*[.])?[0-9]+" required />
 
 									</div>
@@ -295,8 +297,8 @@
 									<div class="col-md-2">Disounted Price</div>
 									<div class="col-md-3">
 										<input type="text" name="disc_price" id="disc_price"
-											value="${editEventSup.discountedPrice}" class="form-control" readonly="readonly"
-											placeholder="Disounted Price"
+											value="${editEventSup.discountedPrice}" class="form-control"
+											readonly="readonly" placeholder="Disounted Price"
 											pattern="[+-]?([0-9]*[.])?[0-9]+" required />
 
 									</div>
@@ -343,7 +345,8 @@
 														<option value="${companyTypeList.companyTypeId}" selected>${companyTypeList.companyTypeName}</option>
 													</c:when>
 													<c:otherwise>
-														<option value="${companyTypeList.companyTypeId}"> ${companyTypeList.companyTypeName}</option>
+														<option value="${companyTypeList.companyTypeId}">
+															${companyTypeList.companyTypeName}</option>
 													</c:otherwise>
 												</c:choose>
 											</c:forEach>
@@ -413,16 +416,8 @@
 
 
 
-								<br>
-								<br>
-								<br>
-								<br>
-								<br>
-								<br>
-								<br>
-								<br>
-								<br>
-								<br>
+								<br> <br> <br> <br> <br> <br> <br>
+								<br> <br> <br>
 
 								<div class=" box-content">
 									<div class="col-md-12" style="text-align: center">
@@ -538,57 +533,61 @@
 
 			}
 		}
-		  $('#mob1').on('input', function(e) {
-			   this.setCustomValidity('')
-			     if ($(this).val().length>10) {
-			       this.setCustomValidity('Please enter 10 digit valid mobile No.')
-			     }
-			     // e.target.checkValidity()
-			     this.reportValidity();
-			   })
-			    $('#mob2').on('input', function(e) {
-			   this.setCustomValidity('')
-			     if ($(this).val().length>10) {
-			       this.setCustomValidity('Please enter 10 digit valid mobile No.')
-			     }
-			     // e.target.checkValidity()
-			     this.reportValidity();
-			   })
-			   
-			  function check() {
-			   
+		$('#mob1')
+				.on(
+						'input',
+						function(e) {
+							this.setCustomValidity('')
+							if ($(this).val().length > 10) {
+								this
+										.setCustomValidity('Please enter 10 digit valid mobile No.')
+							}
+							// e.target.checkValidity()
+							this.reportValidity();
+						})
+		$('#mob2')
+				.on(
+						'input',
+						function(e) {
+							this.setCustomValidity('')
+							if ($(this).val().length > 10) {
+								this
+										.setCustomValidity('Please enter 10 digit valid mobile No.')
+							}
+							// e.target.checkValidity()
+							this.reportValidity();
+						})
+
+		function check() {
+
 			var companyTypeId = document.getElementById("companyTypeId").value;
 			var location = document.getElementById("location").value;
 			var orgId = document.getElementById("orgId").value;
-			
+
 			if (orgId == "" || orgId == null) {
-				 alert("Select Organisation");
+				alert("Select Organisation");
+			} else if (companyTypeId == "" || companyTypeId == null) {
+				alert("Select Company Type");
+			} else if (location == "" || location == null) {
+				alert("Select Location");
 			}
-			else if (companyTypeId == "" || companyTypeId == null) {
-				 alert("Select Company Type");
-			}
-			else if(location == "" || location == null)
-				{
-					 alert("Select Location");
-				}
 		}
 	</script>
 
 	<script type="text/javascript">
-	
-	function calcDisc() {
-		//alert("Hi");
-		var discPer = document.getElementById("disc_per").value;
-		//alert("Per" + discPer);
-		var price = document.getElementById("price_for_exh").value;
+		function calcDisc() {
+			//alert("Hi");
+			var discPer = document.getElementById("disc_per").value;
+			//alert("Per" + discPer);
+			var price = document.getElementById("price_for_exh").value;
 
-		var disAmt=price*discPer/100;
-		
-		var discPrice=price-disAmt;
-		 document.getElementById("disc_price").value=discPrice;
-		//alert("disAmt" +disAmt );
-		
-	}
+			var disAmt = price * discPer / 100;
+
+			var discPrice = price - disAmt;
+			document.getElementById("disc_price").value = discPrice;
+			//alert("disAmt" +disAmt );
+
+		}
 	</script>
 
 
