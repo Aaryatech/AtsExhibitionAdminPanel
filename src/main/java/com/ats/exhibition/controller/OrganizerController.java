@@ -192,6 +192,26 @@ public class OrganizerController {
 			Organiser res = rest.postForObject(Constants.url + "/saveOrganiser", organiser, Organiser.class);
 
 			System.out.println("res " + res);
+			
+			if(res!=null)
+			{
+				if (orgId.equalsIgnoreCase("") || orgId.equalsIgnoreCase(null))
+				{
+					mailSender.send(new MimeMessagePreparator() {
+
+						@Override
+						public void prepare(MimeMessage mimeMessage) throws Exception {
+							MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+							messageHelper.setTo(email);
+							messageHelper.setSubject("Email Testing");
+							messageHelper.setText("Orgnisar User Name: " + mob + "and Password: " + password);
+							 
+						} 
+					}); 
+					
+				}
+					 
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
