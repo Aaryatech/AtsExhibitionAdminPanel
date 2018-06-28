@@ -250,41 +250,7 @@
 							<a href="${pageContext.request.contextPath}/addLocation">Add
 								Location</a>
 							</li>
-							<c:choose>
-								<c:when test="${Constants.subAct==57}">
-									<li class="active">
-								</c:when>
-								<c:otherwise>
-									<li>
-								</c:otherwise>
-							</c:choose>
-							<a href="${pageContext.request.contextPath}/showGallary">Gallary</a>
-							</li>
 
-							<c:choose>
-								<c:when test="${Constants.subAct==58}">
-									<li class="active">
-								</c:when>
-								<c:otherwise>
-									<li>
-								</c:otherwise>
-							</c:choose>
-							<a href="${pageContext.request.contextPath}/addSponsor">Add
-								Sponsor</a>
-							</li>
-
-
-							<c:choose>
-								<c:when test="${Constants.subAct==54}">
-									<li class="active">
-								</c:when>
-								<c:otherwise>
-									<li>
-								</c:otherwise>
-							</c:choose>
-							<a href="${pageContext.request.contextPath}/showFloarMap">Floar
-								Map</a>
-							</li>
 						</ul>
 						</li>
 
@@ -553,7 +519,41 @@
 					<a href="${pageContext.request.contextPath}/committeeMemberList">Committee
 						Member List</a>
 					</li>
+					<c:choose>
+						<c:when test="${Constants.subAct==57}">
+							<li class="active">
+						</c:when>
+						<c:otherwise>
+							<li>
+						</c:otherwise>
+					</c:choose>
+					<a href="${pageContext.request.contextPath}/showGallary">Gallary</a>
+					</li>
 
+					<c:choose>
+						<c:when test="${Constants.subAct==58}">
+							<li class="active">
+						</c:when>
+						<c:otherwise>
+							<li>
+						</c:otherwise>
+					</c:choose>
+					<a href="${pageContext.request.contextPath}/addSponsor">Add
+						Sponsor</a>
+					</li>
+
+
+					<c:choose>
+						<c:when test="${Constants.subAct==54}">
+							<li class="active">
+						</c:when>
+						<c:otherwise>
+							<li>
+						</c:otherwise>
+					</c:choose>
+					<a href="${pageContext.request.contextPath}/showFloarMap">Floar
+						Map</a>
+					</li>
 
 				</ul>
 				</li>
