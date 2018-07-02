@@ -62,14 +62,14 @@ public class HomeController {
 		
 		try {
 
-			
+			/*
 			 SimpleMailMessage email = new SimpleMailMessage();
 		        email.setTo("akshaykasar72@gmail.com");
 		        email.setSubject("test auto email");
 		        email.setText("Hi, This is test email");
 
 
-		        mailSender.send(email);
+		        mailSender.send(email);*/
 		        
 			
 		}catch (Exception e) {

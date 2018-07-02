@@ -13,26 +13,90 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
+<link rel="stylesheet"
+	href="resources/css/login.css">
 <!--base css styles-->
 <link rel="stylesheet"
-	href="resources/assets/bootstrap/css/bootstrap.min.css">
+	href="resources/assets/bootstrap/css/bootstrap.min.css"><!-- 
 <link rel="stylesheet"
 	href="resources/assets/font-awesome/css/font-awesome.min.css">
 
-<!--page specific css styles-->
+page specific css styles
 
-<!--flaty css styles-->
+flaty css styles
 <link rel="stylesheet" href="resources/css/flaty.css">
-<link rel="stylesheet" href="resources/css/flaty-responsive.css">
+<link rel="stylesheet" href="resources/css/flaty-responsive.css"> -->
 
 <link rel="shortcut icon" href="resources/img/favicon.png">
 
+<style type="text/css">
+
+</style>
 </head>
-<body class="login-page">
+<body class="container bg-overlay">
+
+<div class="login-wrap">
+	<div class="login-html">
+		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"><!-- Sign Up --></label>
+		<div class="login-form">
+		<form id="form-login" action="loginProcess" method="post">
+		
+			<div class="sign-in-htm">
+				<div class="group">
+					<label for="user" class="label" style="text-align: left; ">Username</label>
+					<input name="username" id="username"  type="text" class="input" required  oninvalid="this.setCustomValidity('Please Enter Valid User Name')"
+    oninput="this.setCustomValidity('')" >
+				</div>
+				<div class="group">
+					<label for="pass" class="label" style="text-align: left; ">Password</label>
+					<input id="userpassword" name="userpassword" type="password" class="input" required data-type="password" oninvalid="this.setCustomValidity('Please Enter Valid Password')"
+    oninput="this.setCustomValidity('')" >
+				</div>
+				<div class="group">
+					<input id="check" type="checkbox" class="check" checked>
+					<label for="check"><span class="icon" ></span> Keep me Signed in</label>
+				</div>
+				<div class="group">
+					<input type="submit" class="button" value="Sign In">
+				</div>
+				<div class="hr"></div>
+				<div class="foot-lnk">
+					<a href="#forgot"style="color:white;">Forgot Password?</a>
+				</div>
+			</div>
+			</form>
+			<div class="sign-up-htm">
+				<div class="group">
+					<label for="user" class="label">Username</label>
+					<input id="user" type="text" class="input">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Password</label>
+					<input id="pass" type="password" class="input" data-type="password">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Repeat Password</label>
+					<input id="pass" type="password" class="input" data-type="password">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Email Address</label>
+					<input id="pass" type="text" class="input">
+				</div>
+				<div class="group">
+					<input type="submit" class="button" value="Sign Up">
+				</div>
+				<div class="hr"></div>
+				<div class="foot-lnk">
+					<label for="tab-1" style="color:white;">Already Member?</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 	<!-- BEGIN Main Content -->
-	<div class="login-wrapper">
+	<%-- <div class="login-wrapper">
 		<!-- BEGIN Login Form -->
 		<form id="form-login" action="loginProcess" method="post">
 			<h3>Login to your account</h3>
@@ -150,7 +214,7 @@
 			</p>
 		</form>
 		<!-- END Register Form -->
-	</div>
+	</div> --%>
 	<!-- END Main Content -->
 
 	<!--basic scripts-->
